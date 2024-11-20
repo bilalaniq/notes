@@ -13,7 +13,8 @@ can be accessed and modified efficiently. Common data structures include:
    - Fixed size, which makes them efficient for accessing elements.
 
 */
-#include"../chernocpp/cpp_cource/arrays.cpp"
+// #include"../chernocpp/cpp_cource/arrays.cpp"
+#include"../cpp_cource/arrays.cpp"
 /*
 
 2. **Linked Lists**:
