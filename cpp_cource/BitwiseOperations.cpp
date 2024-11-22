@@ -8,7 +8,75 @@ Here’s a detailed explanation of the bitwise operators in C++:
 
 ---
 
-### **1. Bitwise AND (`&`)**
+-------------------------------- Bitwise Left Shift (`<<`)-------------------------------------
+- Shifts the bits of a number to the left by a specified number of positions.
+- Adds zeros on the right.
+
+for example lets take an no 6 which is 0110 in binary when we apply left shift on 0110 it will become 1100 which will be 12
+if you are an keen absorver then you will relize that by doing an left shift we are mutiplying the no by 2 
+6 x 2 = 12
+
+**Syntax**: `value << positions`
+
+**Example**:
+int main()
+{
+	int a = 5; // Binary: 0101
+	a <<= 1;   //the binary will become 1010          5 x 2 = 10
+	std::cout << a;  
+}
+
+here i have done left shift by one bit i can do more than one shift 
+by doing left shift of more than one bit we are multiplying the no by 2^n where the n is the no of bits you want to shift lets see 
+an example 
+
+int main()
+{
+	int a = 5; // Binary: 0101
+	a <<= 2;   //the binary will become 1010          5 x 2^2 = 5 x 4 = 20
+	std::cout << a;     
+}
+
+bitwise left shift (<<) operator works the same way for both signed and unsigned integers, but there are key differences to be
+aware of when dealing with signed integers.
+// first you need to learn how to convert negative nos to binary(i donot know either 🧑‍💻😒)
+
+1. Find the binary representation of the positive number
+2 .Invert all the bits (bitwise NOT)
+3 .Add 1 to the result
+
+for example 
+lets take an example 5 first we will represent the no 5 in binary which is 0000 0101
+then Invert all the bits which will then become 1111 1010 now we will add 1 in this 
+1010 + 1 = 1111 1011 which is -5 in binary now we will do left shift on this
+1011 << 1 = 1111 0110  which is -10 in decimal
+
+*/
+// if you want to learn about decimal to binary conversion and vice versa click here
+#include"../Binary/decimal_to_binary.cpp"
+/*
+
+---------------------------------------------Bitwise Right Shift (`>>`)----------------------------------
+- Shifts the bits of a number to the right by a specified number of positions.
+- Behavior differs for signed and unsigned types:
+  - **Signed**: Preserves the sign bit (arithmetic shift).
+  - **Unsigned**: Fills with zeros (logical shift).
+
+**Syntax**: `value >> positions`
+
+**Example**:
+```cpp
+int a = 5; // Binary: 0101
+int result = a >> 1; // Binary: 0010
+// Output: 2
+```
+
+
+
+
+
+
+--------------------------------------------------- Bitwise AND (`&`)------------------------------------
 - Performs a bit-by-bit AND operation.
 - If both bits are `1`, the result is `1`; otherwise, it is `0`.
 
@@ -89,35 +157,6 @@ int result = ~a; // Binary: 11111111 11111111 11111111 11111010
 
 ---
 
-### **5. Bitwise Left Shift (`<<`)**
-- Shifts the bits of a number to the left by a specified number of positions.
-- Adds zeros on the right.
-
-**Syntax**: `value << positions`
-
-**Example**:
-```cpp
-int a = 5; // Binary: 0101
-int result = a << 1; // Binary: 1010
-// Output: 10
-```
-
----
-
-### **6. Bitwise Right Shift (`>>`)**
-- Shifts the bits of a number to the right by a specified number of positions.
-- Behavior differs for signed and unsigned types:
-  - **Signed**: Preserves the sign bit (arithmetic shift).
-  - **Unsigned**: Fills with zeros (logical shift).
-
-**Syntax**: `value >> positions`
-
-**Example**:
-```cpp
-int a = 5; // Binary: 0101
-int result = a >> 1; // Binary: 0010
-// Output: 2
-```
 
 ---
 
