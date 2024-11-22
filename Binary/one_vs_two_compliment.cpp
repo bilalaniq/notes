@@ -66,8 +66,8 @@ now if i add this with +5 we will get 0 answer
 so this shows that why two's compliment is prefered over one's compliment
 
 in summary one's compliment has two flaws 
-1. it canot represent 0 which make it very complex to intigrate on hard ware 
-2. it canot do binary arithmatics
+1. it canot represent 0 correctly This creates unnecessary complexity in both hardware implementation and binary arithmetic
+2. Complexity in Binary Arithmetic:
 
 
 */

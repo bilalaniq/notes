@@ -95,7 +95,10 @@ Invert all the bits (flip 0s to 1s and 1s to 0s).
 #include"one_vs_two_compliment.cpp"
 /*
 
-------------------------------------------Excess-K (Bias) Representation----------------------------------
+
+
+
+
 */
 
 
@@ -104,3 +107,54 @@ Invert all the bits (flip 0s to 1s and 1s to 0s).
 
 // now we will learn how to convert binary to decimal click here
 #include"binary_to_decimal.cpp"
+
+
+
+
+/*
+
+
+---------------------------------floating nos-------------------------------
+floating-point numbers are usually represented in specialized formats like IEEE 754 
+to represent floating no in binary we use
+------------------------------------------Excess-K (Bias) Representation----------------------------------
+Excess-K is a way of encoding exponents by adding a constant value (called the bias K) to the actual exponent. This allows 
+the exponent to be stored as an unsigned integer.
+
+it involves the following steps
+1. Convert the Absolute Value to Binary
+
+2. Normalize the Number
+Normalization is a process used to adjust the representation of a number in a floating-point format.
+The goal of normalization is to express the number in a form where the most significant (left-most) digit is always 1. 
+This allows for the most efficient use of the available bits in the mantissa (fractional part).
+
+3. Apply the Bias to the Exponent
+4. Find the Mantissa
+5. Determine the Sign Bit
+6. Combine All Parts
+
+
+-------------------------positive floating no-------------------
+lets take 13.75 as an example 
+
+1. Convert the Number to Binary
+
+>>>>Integer part
+13 = 1101
+>>>>Fractional part 
+0.75 × 2 = 1.5 → take the 1 (first bit)
+0.5 × 2 = 1.0 → take the 1 (second bit)
+so 0.75 in binary is 0.11 
+
+2. Normalize the Binary Number
+The goal is to express it in scientific notation such that the binary point is after the first 1.
+1.10111 x 2^3
+
+3. Apply the Bias to the Exponent
+
+
+
+
+
+*/
