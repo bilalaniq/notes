@@ -52,14 +52,14 @@ there are in total 4 ways to convert/represent negative decimal no to binary
 1.Two's Complement (the most commonly used method)
 2.Sign and Magnitude
 3.One's Complement
-4.Excess-K (Bias) Representation
+4.Excess-K (Bias) Representation (but used for floating nos)
 
 
 --------------------------------Two's Complement----------------------------
 
 to convert negative decimal no to binary we it should go through the following steps (Two's Complement)
 1. Find the binary representation of the positive number
-2 .Invert all the bits (bitwise NOT) 2 
+2 .Invert all the bits (bitwise NOT)  / one's compliment
 3 .Add 1 to the result
 
 lets take -13 as an example 
@@ -98,26 +98,13 @@ Invert all the bits (flip 0s to 1s and 1s to 0s).
 
 
 
-
-*/
-
-
-
-
-
-// now we will learn how to convert binary to decimal click here
-#include"binary_to_decimal.cpp"
-
-
-
-
-/*
-
-
 ---------------------------------floating nos-------------------------------
+
 floating-point numbers are usually represented in specialized formats like IEEE 754 
 to represent floating no in binary we use
+
 ------------------------------------------Excess-K (Bias) Representation----------------------------------
+
 Excess-K is a way of encoding exponents by adding a constant value (called the bias K) to the actual exponent. This allows 
 the exponent to be stored as an unsigned integer.
 
@@ -152,9 +139,14 @@ The goal is to express it in scientific notation such that the binary point is a
 1.10111 x 2^3
 
 3. Apply the Bias to the Exponent
+For IEEE 754 single-precision (32-bit), the exponent is stored using an 8-bit exponent with a bias of 127.
 
 
 
+-------------------------negative floating no-------------------
 
 
 */
+
+// now we will learn how to convert binary to decimal click here
+#include"binary_to_decimal.cpp"

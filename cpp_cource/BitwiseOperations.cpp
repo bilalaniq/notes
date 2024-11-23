@@ -39,10 +39,10 @@ int main()
 
 bitwise left shift (<<) operator works the same way for both signed and unsigned integers, but there are key differences to be
 aware of when dealing with signed integers.
-// first you need to learn how to convert negative nos to binary(i donot know either 🧑‍💻😒)
+// first you need to learn how to convert negative nos to binary
 
 1. Find the binary representation of the positive number
-2 .Invert all the bits (bitwise NOT)
+2 .Invert all the bits (bitwise NOT) / one's compliment
 3 .Add 1 to the result
 
 for example 
@@ -50,6 +50,10 @@ lets take an example 5 first we will represent the no 5 in binary which is 0000 
 then Invert all the bits which will then become 1111 1010 now we will add 1 in this 
 1010 + 1 = 1111 1011 which is -5 in binary now we will do left shift on this
 1011 << 1 = 1111 0110  which is -10 in decimal
+
+
+
+also note that left shift works same for both sighned and unsighned nos
 
 */
 // if you want to learn about decimal to binary conversion and vice versa click here
@@ -62,14 +66,36 @@ then Invert all the bits which will then become 1111 1010 now we will add 1 in t
   - **Signed**: Preserves the sign bit (arithmetic shift).
   - **Unsigned**: Fills with zeros (logical shift).
 
-**Syntax**: `value >> positions`
 
-**Example**:
-```cpp
-int a = 5; // Binary: 0101
-int result = a >> 1; // Binary: 0010
-// Output: 2
-```
+for Unsigned integer
+
+int main()
+{
+	unsigned int a = 8; // Binary: 0000 0000 0000 1000    in 16 bit
+	a >>= 1;   //the binary will become 0000 0000 0000 0100          whcih is 4 in decimal
+	std::cout << a;
+}
+
+for signed integer
+#include <iostream>
+
+int main() {
+    int a = -8;  // Binary: 1111 1111 1111 1000 in 16-bit signed integer
+    a >>= 1;      // Right shift by 1  1111 1111 1111 1100    which is -4 
+    std::cout << a;  // Output the result
+}
+
+
+---------------------------------should you use left and right shift in your code---------------------
+If you want to optimize code that involves dividing or multiplying by 2, shifting is often the best approach, as it's much faster 
+than using the / or * operators.
+but is this correct not because the modren compliers are desighned for efficiency when the encounter an multiplicasion and division by 2
+the compilers replace the code like a / 2 or a * 2 by doing left and right shift
+so it is wise to use / and * as they are more readable
+
+
+
+
 
 
 
@@ -78,6 +104,8 @@ int result = a >> 1; // Binary: 0010
 
 --------------------------------------------------- Bitwise AND (`&`)------------------------------------
 - Performs a bit-by-bit AND operation.
+note that it is different from && which is an logical And where this is an single and 
+the logical and is used to perform operasion on bool where the single and performs operations on bits
 - If both bits are `1`, the result is `1`; otherwise, it is `0`.
 
 **Truth Table**:
@@ -88,10 +116,7 @@ int result = a >> 1; // Binary: 0010
 |   1   |   0   |    0   |
 |   1   |   1   |    1   |
 
-**Example**:
-```cpp
-#include <iostream>
-using namespace std;
+
 
 int main() {
     int a = 5;  // Binary: 0101
@@ -100,9 +125,38 @@ int main() {
     cout << "a & b = " << result << endl; // Output: 1
     return 0;
 }
-```
 
----
+now you may be asking that where can this be used in cpp 
+it has many use cases some are as followed
+
+>>>>>>>>>masking
+Masking is a technique used to isolate specific bits in a number. 
+You use the bitwise AND operator with a mask (a number that has certain bits set to 1, which you want to preserve, while 
+others are set to 0) to isolate bits of interest.
+
+for example if you want the last 4 bits then we use masking technique 
+0000 0000 1110 1001
+0000 0000 0000 1111     we will chose such no/binary which has set to 1 bit at which you want to preserve while the rest are set to 0
+--------------------     afterapplying and operasion
+0000 0000 0000 1001 
+
+by using this tecnique we can preserve the selected bits
+
+
+lets see this in action in cpp
+int number = 0b11011010; // Binary representation of the number
+int mask = 0b11110000;   // Mask with bits we want to preserve
+int result = number & mask; // The result will preserve only the bits in the mask (high nibble)
+
+std::cout << std::bitset<8>(result) << std::endl; // Output: 11010000
+
+if you want to learn aboot std::bitset click here
+*/
+#include"std_bitset.cpp"
+/*
+
+
+
 
 ### **2. Bitwise OR (`|`)**
 - Performs a bit-by-bit OR operation.
