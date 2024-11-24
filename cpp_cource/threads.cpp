@@ -32,7 +32,7 @@ void printMessage() {
 
 int main() {
     // Create a thread that runs the printMessage function
-    std::thread t(printMessage);      we pass an function pointer in the parameter of the thread
+    std::thread t(printMessage);    we pass an function pointer in the parameter of the thread
     
     // Wait for the thread to finish
     t.join();
@@ -42,8 +42,8 @@ int main() {
 ```
 
 - `std::thread` constructor takes a function or callable object as an argument and starts a new thread running that function.
-- `t.join()` waits for the thread `t` to complete before continuing with the execution of the program. This ensures that the main thread waits 
-for the created thread to finish its task.
+- `t.join()` waits for the thread `t` to complete before continuing with the execution of the program. 
+This ensures that the main thread waits for the created thread to finish its task.
 
 #### 2. **Passing Arguments to Threads**
 
@@ -107,10 +107,17 @@ int main() {
 }
 ```
 
+
+
 - **`std::lock_guard`:** A RAII (Resource Acquisition Is Initialization) class that automatically acquires and releases the mutex. It locks the
  mutex upon construction and releases it upon destruction.
 
 - **Condition Variables (`std::condition_variable`):** Used to wait for or notify changes in the state.
+
+*/
+// if you wan to learn about mutex click here
+#include"mutex.cpp"
+/*
 
 #### 4. **Thread Management**
 
@@ -135,16 +142,17 @@ int main() {
 }
 ```
 
-- **Thread Lifetime:** Be cautious with detached threads as they continue running independently. Ensure that the main thread does not terminate
- before the detached thread completes its work.
+- **Thread Lifetime:** Be cautious with detached threads as they continue running independently. Ensure that the main thread does 
+not terminate before the detached thread completes its work.
 
 ### Summary
 
 - **Threads** in C++ are managed using the `std::thread` class from the C++ Standard Library.
 - Threads allow concurrent execution of tasks, improving performance and responsiveness.
-- Synchronization tools like `std::mutex` and `std::condition_variable` help manage access to shared resources and coordinate thread execution.
-- Threads can be created, managed, and synchronized using built-in classes and functions, making it possible to develop complex multi-threaded 
-applications.
+- Synchronization tools like `std::mutex` and `std::condition_variable` help manage access to shared resources and coordinate thread 
+execution.
+- Threads can be created, managed, and synchronized using built-in classes and functions, making it possible to develop complex
+ multi-threaded applications.
 
 Understanding and using threads effectively requires careful design to avoid common issues such as race conditions and deadlocks. Proper 
 synchronization and resource management are crucial for reliable multi-threaded applications.
