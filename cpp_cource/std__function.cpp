@@ -1,6 +1,6 @@
 // -----------------------------std::function----------------------
 /*
-Certainly! `std::function` is a powerful and versatile component of the C++ Standard Library that provides type erasure for callable 
+`std::function` is a powerful and versatile component of the C++ Standard Library that provides type erasure for callable 
 objects. It can encapsulate any callable entity—such as functions, function pointers, member functions, or lambdas—into a single type.
 This allows for flexibility in handling various types of functions and function objects in a uniform manner.
 

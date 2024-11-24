@@ -28,13 +28,13 @@ of classes, static member functions, or lambda functions.
 
 #### Pointers to Free Functions
 
-```cpp
-// Function prototype
-int add(int a, int b);
+int add(int a, int b) {
+    return a + b;
+}
 
 int main() {
     // Function pointer declaration and assignment
-    int (*ptr)(int, int) = add;       tecnically we need to use &add but there is an implicit conversion 
+    int (*ptr)(int, int) = add;       tecnically we need to use &add but there is an implicit conversion
 
     // Call function through pointer
     int sum = ptr(3, 4);
@@ -43,11 +43,7 @@ int main() {
     return 0;
 }
 
-// Function definition
-int add(int a, int b) {
-    return a + b;
-}
-```
+
 
 #### Pointers to Static Member Functions
 
@@ -106,7 +102,7 @@ int result = (*ptr)(arg1, arg2);
 Alternatively, parentheses around `*ptr` can be omitted:
 
 ```cpp
-int result = ptr(arg1, arg2);   
+int result = ptr(arg1, arg2);
 ```
 
 ### Usage Scenarios
@@ -116,7 +112,8 @@ Function pointers in C++ are used in various scenarios, including:
 - **Callback Mechanisms**: Passing function pointers as arguments to other functions for callback functionality.
 - **Event Handling**: Implementing event-driven architectures where different functions handle different events.
 - **Function Tables**: Using arrays of function pointers to implement function dispatching based on runtime conditions.
-- **Dynamic Dispatch**: Implementing polymorphic behavior without using virtual functions, by selecting functions at runtime based on conditions.
+- **Dynamic Dispatch**: Implementing polymorphic behavior without using virtual functions, by selecting functions at runtime based 
+on conditions.
 
 ### Function Pointers vs. std::function and std::bind
 
@@ -170,6 +167,8 @@ alternatives like `std::function` and `std::bind`, which are preferred in modern
 
 //if you want to learn about std::function click here 
 #include"std__function.cpp"
+// if you want to learn about std::bind click here
+#include"std_bind.cpp"
 
 
 

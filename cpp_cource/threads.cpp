@@ -144,6 +144,55 @@ int main() {
 
 - **Thread Lifetime:** Be cautious with detached threads as they continue running independently. Ensure that the main thread does 
 not terminate before the detached thread completes its work.
+To ensure that a detached thread finishes its work without knowing the exact time it will take, you can use a synchronization 
+mechanism such as std::future, std::promise, or std::condition_variable.
+
+*/
+#include"std_async.cpp"      //for std::future
+#include"std_promise.cpp"
+#include"std_condition_variable.cpp"
+/*
+
+thread is considered joinable if it has been started and is still running or hasn’t been joined or detached. You can check if
+a thread is joinable by calling the joinable() method. A thread becomes non-joinable after it has been joined 
+you can cheak it by using 
+
+std::thread t(func);
+if (t.joinable()) {
+    t.join();  // Wait for the thread to finish
+}
+
+
+
+In C++, std::thread::native_handle() provides access to the native thread handle, which is a platform-specific object used by the
+operating system to manage and control threads. This handle allows you to interact with lower-level thread management systems, 
+such as those in Windows (HANDLE) or POSIX systems (pthread_t).
+
+Windows: The native handle is a HANDLE that represents a thread object in the Windows API.
+POSIX (Linux, MacOS): It returns a pthread_t type, which represents a POSIX thread.
+
+std::thread t([](){ Thread function  });
+auto handle = t.native_handle();  // Access native handle
+
+
+
+you can also swap between two threads by using the swap function
+The swap() function in the context of std::thread allows you to swap the internal state of two std::thread objects. This means 
+that the associated threads and their resources (like thread IDs and handles) are exchanged between the two objects.
+
+std::thread t1(func1);
+std::thread t2(func2);
+t1.swap(t2);  // Swaps t1 and t2 threads
+
+
+you can also move an thread to another thread like 
+std::thread t3(f2, std::ref(n));
+std::thread t4(std::move(t3)); // t4 is now running f2(). t3 is no longer a thread
+
+
+
+
+
 
 ### Summary
 
@@ -157,6 +206,15 @@ execution.
 Understanding and using threads effectively requires careful design to avoid common issues such as race conditions and deadlocks. Proper 
 synchronization and resource management are crucial for reliable multi-threaded applications.
 */
+
+
+
+
+
+
+
+
+
 
 
 
@@ -182,9 +240,146 @@ to learn about timing in cpp click here
 if you want to pass an reffrence to an function in another thread you need to use std::ref()
 
 heres an example
-		std::thread t(modify_vector, std::ref(v));
-this will pass the refrence of the vector 
+std::vector<int> v;
+std::thread t(modify_vector, std::ref(v));
+this will pass the refrence of the vector
+if you want to learn about std::ref click here
+*/
+#include"std_ref.cpp"
+/*
 
 
 youu can just pass it like usual you need to use std::ref();
+
+
+also note that
+std::thread t1; // t1 is not a thread   
+this is just anuninitilized thread and does not represent a running thread.
+
+
+
 */
+
+
+
+
+
+
+// -------------------------------std::jthread------------------------------------------
+/*
+`std::jthread` is a new thread management class introduced in C++20. It is a more convenient and safer alternative to `std::thread`, 
+offering automatic joining and support for cancellation. Here's a detailed explanation of `std::jthread` and how it differs from 
+`std::thread`:
+
+### Key Features of `std::jthread`:
+
+1. **Automatic Joining:**
+   One of the key differences between `std::thread` and `std::jthread` is that `std::jthread` automatically joins itself when it goes
+   out of scope. This means you **do not need to explicitly call `join()`** like you do with `std::thread`. The thread is automatically
+   joined when the `std::jthread` object is destroyed, ensuring that the thread is completed properly.
+
+   ```cpp
+   #include <iostream>
+   #include <thread>
+
+   void print_hello() {
+       std::cout << "Hello from jthread!" << std::endl;
+   }
+
+   int main() {
+       std::jthread t(print_hello);  // t automatically joins when it goes out of scope
+       // No need to call t.join(), it's handled automatically
+   }
+   ```
+
+2. **Cancellation Support:**
+   `std::jthread` provides built-in support for thread cancellation using `std::stop_token`. This allows you to request that the
+    thread stops executing gracefully. This is a big advantage over `std::thread`, which does not have built-in cancellation support.
+
+   ```cpp
+   #include <iostream>
+   #include <thread>
+   #include <chrono>
+
+   void print_until_stop(std::stop_token stop) {
+       for (int i = 0; !stop.stop_requested(); ++i) {
+           std::cout << "Iteration: " << i << std::endl;
+           std::this_thread::sleep_for(std::chrono::seconds(1));
+       }
+       std::cout << "Thread stopped." << std::endl;
+   }
+
+   int main() {
+       std::jthread t(print_until_stop);
+       std::this_thread::sleep_for(std::chrono::seconds(3));
+       t.request_stop();  // Requests the thread to stop
+       // No need to join, as it will be joined automatically
+   }
+   ```
+
+   In this example, the thread will run until the stop request is triggered after 3 seconds, and it will exit cleanly when 
+   the stop is requested.
+
+3. **Passing Arguments:**
+   `std::jthread` can take a function or callable object just like `std::thread`, but it also allows for simpler passing of 
+   arguments because it automatically handles the threading arguments internally.
+
+   ```cpp
+   #include <iostream>
+   #include <thread>
+
+   void print_message(const std::string& msg) {
+       std::cout << msg << std::endl;
+   }
+
+   int main() {
+       std::jthread t(print_message, "Hello from jthread!");  // Arguments are passed like std::thread
+   }
+   ```
+
+4. **No Need for `join()` or `detach()`:**
+   Unlike `std::thread`, where you need to explicitly call `join()` or `detach()` to ensure proper thread termination, 
+   `std::jthread` handles joining automatically when the thread object goes out of scope.
+
+   - With `std::thread`, forgetting to call `join()` or `detach()` can lead to **undefined behavior** (e.g., program crash).
+   - With `std::jthread`, this is avoided because the destructor ensures the thread is joined before the object is destroyed.
+
+also note that jthread does not support detach()  function
+
+5. **Cleaner Resource Management:**
+   The automatic joining mechanism of `std::jthread` helps prevent resource leaks, making it more robust and less error-prone than 
+   `std::thread`.
+
+### Differences Between `std::thread` and `std::jthread`:
+
+| Feature                     | `std::thread`               | `std::jthread`                      |
+|-----------------------------|-----------------------------|-------------------------------------|
+| **Automatic Joining**       | No, must call `join()` or `detach()` explicitly | Yes, automatically joins on destruction |
+| **Cancellation Support**    | No                          | Yes, supports cooperative cancellation with `std::stop_token` |
+| **Detachment**              | Must explicitly call `detach()` | No need to call `detach()`, manages itself |
+| **Resource Management**     | Must manually manage joining or detachment | Automatically manages resource cleanup |
+| **Argument Passing**        | Pass arguments to the thread function explicitly | Easier to pass arguments; handles them internally |
+
+
+### Summary:
+`std::jthread` is a higher-level thread abstraction introduced in C++20, designed to simplify thread management. 
+It automatically joins the thread when it goes out of scope, supports thread cancellation, and makes working with threads safer 
+and more convenient. It is often preferred over `std::thread` when you want to avoid manual resource management and leverage 
+built-in cancellation mechanisms.
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
