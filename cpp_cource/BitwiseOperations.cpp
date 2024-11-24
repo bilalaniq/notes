@@ -6,7 +6,18 @@ performance optimization.
 
 Here’s a detailed explanation of the bitwise operators in C++:
 
----
+
+---------------------------------Bitwise NOT (`~`)-----------------------------
+- Inverts all the bits of the number.
+- Each `0` becomes `1` and each `1` becomes `0`.
+
+
+int a = 5; // Binary: 00000000 00000000 00000000 00000101
+int result = ~a; // Binary: 11111111 11111111 11111111 11111010
+// Output depends on the size of `int` and is often a negative value in 2's complement.
+
+
+
 
 -------------------------------- Bitwise Left Shift (`<<`)-------------------------------------
 - Shifts the bits of a number to the left by a specified number of positions.
@@ -274,6 +285,14 @@ int main() {
 }
 
 
+if you are an keen oserver you will relize that this is not addision but it may seem like addision lets have an example 
+00000101  (5 in binary)
+00000011  (3 in binary)
+-------------
+00000111  (7 in binary)
+
+so dont confuse your self it is just for combining not for addision
+
 >>>>>>>>>>Clearing or Modifying Specific Bits:
 You can use Bitwise OR to preserve certain bits and set others to 1. This can be useful in low-level programming when you need 
 to ensure that some bits remain unchanged while others are set.
@@ -438,13 +457,27 @@ int main() {
 You can use XOR to check if a number has even or odd parity. For example, if you need to check if the number of 1 bits in a number 
 is even or odd, you can repeatedly XOR the bits of the number.
 
+for example 
+in case of odd parity the parity will be 1 if the total no of 1's in the no are odd other wise will be 0
+
+for example 
+010101011 so the odd parity will be 1
+01010101 so the odd parity will be 0
+
+01010101 the even parity will be 1
+01010111 the even parity will be 0
+
+
+
 bool checkParity(int num) {
-    bool parity = false;
+    bool parity = 0;  // Start with 0 (even parity)
+    
     while (num) {
-        parity = !parity;   // Flip the parity each time a 1 bit is encountered
-        num = num & (num - 1);  // Remove the rightmost 1 bit from num
+        parity ^= (num & 1);  // XOR the least significant bit (LSB)
+        num >>= 1;  // Right shift the number to check the next bit
     }
-    return parity;
+
+    return parity;  // If parity is 1, odd; if 0, even
 }
 
 int main() {
@@ -492,29 +525,12 @@ int main() {
 }
 
 
+xor has most o its uses in hashing and cryptography
 
 
 
 
-
-
-
----------------------------------Bitwise NOT (`~`)-----------------------------
-- Inverts all the bits of the number.
-- Each `0` becomes `1` and each `1` becomes `0`.
-
-**Example**:
-```cpp
-int a = 5; // Binary: 00000000 00000000 00000000 00000101
-int result = ~a; // Binary: 11111111 11111111 11111111 11111010
-// Output depends on the size of `int` and is often a negative value in 2's complement.
-
-
-
-
-
-
-### **7. Compound Bitwise Assignment Operators**
+-----------------------------------------Compound Bitwise Assignment Operators------------------------------------
 These combine bitwise operations with assignment:
 - `&=`
 - `|=`
@@ -529,7 +545,10 @@ a &= 3; // Same as a = a & 3
 // Output: 1
 ```
 
----
+
+
+
+overal the summary of bitwise operators is 
 
 ### **Applications of Bitwise Operators**
 1. **Bit Masking**: Toggle, set, or clear specific bits.
@@ -541,12 +560,10 @@ a &= 3; // Same as a = a & 3
 ---
 
 ### **Precedence and Associativity**
+Precedence and associativity are rules that determine the order in which operators are evaluated in expressions.
 - **Precedence**: `~` > `<<`, `>>` > `&` > `^` > `|`
 - **Associativity**: Left to right, except `~`, which is right to left.
 
 Understanding these operators allows you to work at a lower level of abstraction, enabling efficient manipulation of binary data.
-
-
-
 
 */
