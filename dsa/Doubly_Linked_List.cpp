@@ -72,7 +72,7 @@ public:
 
     DoublyLinkedList &operator=(const DoublyLinkedList &obj)
     {
-        if (this == obj)
+        if (this == &obj)
         {
             return *this;
         }
@@ -105,7 +105,7 @@ public:
 
     DoublyLinkedList &operator=(DoublyLinkedList &&obj) noexcept
     {
-        if (this == obj)
+        if (this == &obj)
         {
             return *this;
         }

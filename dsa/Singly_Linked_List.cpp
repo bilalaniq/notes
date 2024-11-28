@@ -129,7 +129,7 @@ public:
 
     SinglyLinkedList &operator=(const SinglyLinkedList &obj)
     {
-        if (this == obj)
+        if (this == &obj)
         {
             return *this;
         }
@@ -158,7 +158,7 @@ public:
 
     SinglyLinkedList &operator=(SinglyLinkedList &&obj) noexcept
     {
-        if (this == obj)
+        if (this == &obj)
         {
             return *this;
         }
