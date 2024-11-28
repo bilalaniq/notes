@@ -237,7 +237,7 @@ public:
     void push(const T &value)
     {
         Node *newNode = new Node(value);
-        newNode->next = top; 
+        newNode->next = top;
         top = newNode;       
         count++;
     }
@@ -262,7 +262,7 @@ public:
         if (isEmpty())
         {
             std::cout << "Stack is empty" << std::endl;
-            return T(); 
+            return T();
         }
         return top->data; 
     }
