@@ -6,8 +6,8 @@ added to the queue will be the first one to be removed. You can think of it like
 person who arrives first is served first.
 
 Key Operations of a Queue
-Enqueue: Add an element to the end of the queue.
-Dequeue: Remove the element from the front of the queue.
+Enqueue: Add an element to the end of the queue.         or just use push ash std queue
+Dequeue: Remove the element from the front of the queue.  or just use pop ash std queue
 Front: Get the element at the front of the queue without removing it.
 IsEmpty: Check if the queue is empty.
 Size: Get the number of elements in the queue.

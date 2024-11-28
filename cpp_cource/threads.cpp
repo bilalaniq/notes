@@ -376,6 +376,10 @@ built-in cancellation mechanisms.
 
 
 
+// other topics realated to threads are 
+#include"std_condition_variable.cpp"
+#include"std_bind.cpp"
+
 
 
 

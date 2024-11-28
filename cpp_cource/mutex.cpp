@@ -115,12 +115,15 @@ void someFunction() {
     // Mutex is automatically unlocked when 'lock' goes out of scope
 }
 
+Correct, std::lock_guard does not allow manual unlocking. here come the std::unique_lock which can be unlocked manually
 
 ----------------------------std::unique_lock<std::mutex>-------------------------------------
 std::unique_lock is more flexible than std::lock_guard. It provides the same basic functionality (locking and unlocking a mutex),
 but it gives you more control over the lock. You can lock, unlock, and re-lock the mutex at any time during its lifetime.
 When to Use: Use std::unique_lock if you need more flexibility, such as manually unlocking and re-locking the mutex, or if you 
 need to work with condition variables (which require std::unique_lock).
+
+it is automatiically unlocked after its life scopes end
 
 std::mutex mtx;
 
