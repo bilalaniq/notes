@@ -167,7 +167,7 @@ public:
     {
         if (newcapacity > m_Capacity)
         {
-            Realloc(size);
+            Realloc(newcapacity);
         }
     }
 
