@@ -3,6 +3,11 @@
 Data Structures and Algorithms (DSA) is a fundamental concept in computer science that focuses on organizing and manipulating 
 data efficiently. Here’s a detailed breakdown:
 
+before learning the algorithams plz also go through time complexity
+*/
+#include"../Time_complexity/TIME_COMPLEXITY.cpp"
+/*
+
 ### Data Structures
 
 Data structures are specialized formats for organizing, processing, and storing data. They define a way to store data so that it 
