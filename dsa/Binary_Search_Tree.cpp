@@ -1,6 +1,6 @@
 // ---------------------------------Binary Search Tree----------------------------
 /*
-A Binary Search Tree (BST) is a special kind of binary tree that maintains a sorted order of its elements. In a BST, each
+A Binary Search Tree (BST) is a special kind of tree that maintains a sorted order of its elements. In a BST, each
 node has a key (or value) and satisfies the following properties:
 
 The left subtree of a node contains only nodes with keys less than the node's key.
@@ -11,8 +11,8 @@ Properties of BST
 Sorted Structure: In-order traversal of a BST will yield a sorted sequence of keys.
 Dynamic Size: The size of the BST can grow or shrink dynamically with insertions and deletions.
 Efficient Search: Average time complexity for search, insertion, and deletion operations is
-O(logn), where
-n is the number of nodes in the tree. However, in the worst case (e.g., when the tree becomes unbalanced), the time complexity can
+O(logn), which mean that the n will be halved
+where n is the number of nodes in the tree. However, in the worst case (e.g., when the tree becomes unbalanced), the time complexity can
 degrade to 𝑂(𝑛)
 
 

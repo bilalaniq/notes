@@ -32,7 +32,7 @@ leaf = D ,E ,F
 sibling = D , E
 Depth =  A = 0 , B = c = 1 , D = E = F = 2
 Height = A = 2 , B = C = 1 , D = E = F = 0
-subtree = A = B,C,D,E,F    B = D , F  C = F
+subtree = B and C are subtrees of A
 
 
 

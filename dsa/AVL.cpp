@@ -13,7 +13,7 @@ All values in the right subtree are greater than the node's value.
 
 Balance Factor: For any node, the balance factor is calculated as:
 
-Balance Factor = LEFT side Height − RIGHT side Height 
+Balance Factor = LEFT side Height(subtree height) − RIGHT side Height(subtree height)
 
 exemple:
 
@@ -51,7 +51,7 @@ Balance Factor = 0 - 1 = 0  which is valid
 but it is 10 which has an unbanlance factor
 Balance Factor = 0 - 2 = -2  whih is not valid for an AVL tree   (2 because the right side height is 2 and left side has 0 height )
 
-we can make it AVL valid by adding another node having smaller value then 10 
+we can make it AVL valid by adding another node having smaller value then 10
 
       10
      /  \
@@ -133,8 +133,30 @@ so with some set of keys we are geting a n! number of combinations but only one 
 so there should be an mechanisam to convert the big heighted BST into minimam height BST by applying rotasion operasions on the BST
 
 
+lets take an example of BST which is not banlanced 
 
-Rotations
+       10
+         \ 
+          20
+            \
+             30
+
+this BST is unbanlanced 
+so when i want to search for 30 what time complexity will it take it will take O(n) because it is the last no 
+but if i banlance it which will make it an AVL tree
+
+         20
+        /  \ 
+       10   30 
+
+now the time complexity to find 30 will be O(logn) because the search operation have been halved
+
+
+now lets see how to convert an BST to AVL Tree
+
+
+-----------------------------------------------Rotations--------------------------------------------
+
 When an AVL tree becomes unbalanced, rotations are used to restore balance. There are four cases:
 
 Right Rotation (LL Rotation): Used when a node is inserted into the left subtree of the left child.
