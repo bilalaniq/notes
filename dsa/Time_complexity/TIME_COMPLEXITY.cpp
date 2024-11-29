@@ -4,28 +4,53 @@
 of basic operations grows as the size of the input increases. It helps to evaluate the performance of an algorithm, especially 
 when dealing with large inputs.
 
+
+time complexity is used when deciding if to use an particular data structure/ algoritham or not
+because some algoritams in some snerios are more performant while in other cases they can be ill-performant so this is decided by the 
+time complexity
+
+
 ### Key Points About Time Complexity:
 1. **Focus on Input Size (n):** Time complexity describes how the runtime scales with the size of the input, typically denoted 
 as ( n ).
 
 
-there are many ways to express the time complexity of code
+
+Ways to Express Time Complexity
 
 1. Big-O Notation
+*/
+#include"Big-O.cpp"
+/*
+
 2. Big-Θ Notation
+*/
+#include"BigTheta.cpp"
+/*
 3. Big-Ω Notation
-4. Step Counting
-5. Empirical Analysis (Experimental Measurement)
-6. Master Theorem (For Recurrence Relations)
-7. Amortized Analysis
-8. Average-Case Analysis
-9. Best-Case Analysis
-10. Worst-Case Analysis
-11. Space-Time Tradeoff Analysis
-12. Comparative Analysis with Benchmarks
-13. Loop Analysis
-14. Recursive Tree Method
-15. Asymptotic Analysis
+*/
+#include"Big_Omega.cpp"
+/*
+
+
+
+Methods to Determine or Analyze Time Complexity
+
+1. Step Counting
+2. Empirical Analysis (Experimental Measurement)
+3. Master Theorem (For Recurrence Relations)
+4. Amortized Analysis
+5. Average-Case Analysis
+6. Best-Case Analysis
+7. Worst-Case Analysis
+8. Space-Time Tradeoff Analysis
+9. Comparative Analysis with Benchmarks
+10. Loop Analysis
+11. Recursive Tree Method
+12. Asymptotic Analysis
+
+
+
 
 
    
@@ -65,5 +90,3 @@ ________________________________________________________________________________
 
 
 */
-//if you want to learn about Big-O click here 
-#include"Big-O.cpp"
