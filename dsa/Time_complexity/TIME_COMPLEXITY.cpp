@@ -14,6 +14,8 @@ time complexity
 1. **Focus on Input Size (n):** Time complexity describes how the runtime scales with the size of the input, typically denoted 
 as ( n ).
 
+3. **Operations Count, Not Execution Time:** It’s about the number of basic operations (like comparisons, additions, etc.), not the 
+actual runtime on a specific machine.
 
 
 Ways to Express Time Complexity
@@ -53,34 +55,10 @@ Methods to Determine or Analyze Time Complexity
 
 
 
-   
-2. **Measured Using Big-O Notation:** Big-O notation is used to express the worst-case or upper bound of an algorithm’s growth rate.
 
-3. **Operations Count, Not Execution Time:** It’s about the number of basic operations (like comparisons, additions, etc.), not the 
-actual runtime on a specific machine.
 
----
 
-### Common Time Complexities:
-____________________________________________________________________________________________________________________________________
-| Complexity | Name         | Description                                               | Example                                   |
-|------------|--------------|-----------------------------------------------------------|-------------------------------------------|
-| O(1)       | Constant     | Runtime does not depend on input size.                    | Accessing an array element by index.      |
-|            |              |                                                           |                                           |
-| O(log n)   | Logarithmic  | Runtime grows logarithmically with input size.            | Binary search.                            |
-|            |              |                                                           |                                           |
-| O(n)       | Linear       | Runtime grows linearly with input size.                   | Looping through an array.                 |
-|            |              |                                                           |                                           |
-| O(nlog n)  | Log-linear   | Slightly worse than linear; often seen in                 | Merge sort, quicksort.                    |
-|            |              |                                                           |                                           |
-| O(n^2)     | Quadratic    | Runtime grows quadratically with input size.              | Nested loops over the input.              |
-|            |              |                                                           |                                           |
-| O(2^n)     | Exponential  | Runtime doubles with each increase in input size.         | Solving the Tower of Hanoi problem.       |
-|            |              |                                                           |                                           |
-| O(n!)      | Factorial    | Runtime grows factorially.                                | Generating all permutations of a list.    |
-|____________|______________|___________________________________________________________|___________________________________________|
 
----
 
 ### Why Time Complexity Matters:
 1. **Efficiency:** Helps to compare algorithms and choose the most efficient one for large inputs.
