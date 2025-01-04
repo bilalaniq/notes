@@ -164,6 +164,18 @@ divide-and-conquer strategies, like merge sort or quicksort.
 
 
 
+⁡
+nlogn
+n: This term suggests that the algorithm involves iterating over the input at least once, typically in a linear fashion.
+⁡
+logn: This term usually represents some form of divide and conquer. It's the result of repeatedly halving or dividing the problem 
+(often seen in algorithms like merge sort, quicksort, or binary search).
+When combined, 
+O(nlogn) suggests that the algorithm is performing a linear number of operations n, and for each operation, it is doing something
+that takes log time.
+
+
+
 void merge(int arr[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -207,8 +219,6 @@ int main() {
 ```
 In merge sort, the input array is divided into two halves repeatedly, and each element is sorted, leading to an **O(n log n)**
 time complexity.
-
-
 
 
 
@@ -351,15 +361,19 @@ ________________________________________________________________________________
 |____________|______________|___________________________________________________________|___________________________________________|
 
 
+
+Here is a list of time complexities in increasing order (from the fastest to the slowest):
+1. O(1) - Constant time
+2. O(log n) - Logarithmic time
+3. O(n) - Linear time
+4. O(n log n) - Linearithmic time
+5. O(n^2) - Quadratic time
+6. O(n^3) - Cubic time
+7. O(2^n) - Exponential time
+8. O(n!) - Factorial time
+
+
 ### Conclusion
 Big O notation is an essential tool for understanding the efficiency of algorithms. By classifying algorithms based on their time
 or space complexity, we can choose the most suitable algorithm for a given problem, especially when dealing with large datasets.
-
-
-
-
-
-
-
-
 */

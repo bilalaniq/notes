@@ -27,36 +27,53 @@ can be accessed and modified efficiently. Common data structures include:
    - Dynamic size, which allows for efficient insertion and deletion.
 
 */
-#include"linked_list.cpp"
+#include"./linked_list/linked_list.cpp"
 /*
-
-3. **Stacks**:
+3. **arrayslist**:
+   - A collection of elements that can grow or shrink dynamically.
+   - Supports operations like add, remove, and get.
+   
+the vector in c++ is an example of arraylist note that vector is not technically an arraylist 
+but it is an arraylist
+*/
+#include"./../cpp_cource/vectors(dynamic_arrays).cpp"
+/*
+4. **Ringsbuffer**:
+   - A collection of elements that can grow or shrink dynamically.
+   - Supports operations like add, remove, and get.
+*/
+#include"./Ringbuffer/Ringbuffer.cpp"
+/*
+5. **Stacks**:
    - A collection of elements that follows the Last In, First Out (LIFO) principle.
    - Supports operations like push (add) and pop (remove).
 */
-#include"stack.cpp"
-
+#include"./Stack/stack.cpp"
 /*
 
-4. **Queues**:
+6. **Queues**:
    - A collection that follows the First In, First Out (FIFO) principle.
    - Supports operations like enqueue (add) and dequeue (remove).
 */
-#include"Queues.cpp"
+#include"./Queues/Queues.cpp"
 /*
 
-5. **Trees**:
+7. **Trees**:
    - Hierarchical structures consisting of nodes, where each node has a value and references to child nodes.
    - Common types include binary trees, binary search trees, and AVL trees.
 */
-#include"Trees.cpp"
+#include"./Trees/Trees.cpp"
 /*
 
-6. **Graphs**:
+8. **Graphs**:
    - Collections of nodes (vertices) connected by edges.
    - Can be directed or undirected, weighted or unweighted, and used to represent networks.
 
-7. **Hash Tables**:
+*/
+#include"./Graphs/Graphs.cpp"/
+/*
+
+9. **Hash Tables**:
    - A structure that maps keys to values for efficient data retrieval.
    - Uses a hash function to compute an index into an array of buckets or slots.
 

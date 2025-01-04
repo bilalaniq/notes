@@ -289,6 +289,7 @@ public:
     {
         if (!head)
         {
+            std::cout << "List is empty\n";
             return;
         }
 

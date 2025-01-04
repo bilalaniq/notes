@@ -8,7 +8,7 @@ also note that the array store data in contigneous form meaning that all the dat
 for example :
 
 int a[2];
-here you have created array a having two index 
+here you have created array a having two index
 note that the array index always starts from 0 but when declaring an array you will start from 1 index
 
 we usally use for loop to initialize an array
@@ -20,7 +20,7 @@ now i have initilize each index of array to 2
 
 >>>>>>>>>>>>initilizing array
 >>> static array :
-for initilizing the static array you must have an a constant value to initilize it if not thaen the compiler will sho error
+for initilizing the static array you must have an a constant value to initilize it if not thaen the compiler will show error
 for example:
 int size;
 int array[size];
@@ -157,8 +157,6 @@ std::array<std::array<int, COLS>, ROWS> stdTwoDArray;
 // --------------------------------------------static array vs dynamic array which one is fast----------------------------
 /*
 
-
-
 class entity
 {
 	public:
@@ -197,4 +195,75 @@ but it could also be a choice of the style of the programmer
 
 //if you want to create an custom array that is similiar to the std::array or see how std::array works in the backend click here 
 #include"Array-makingdata_structure.cpp"
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------------how does compiler access specific elements of an array----------------------------
+/*
+lets take an example in which we have an array of int32_t and another array of int64_t 
+
+int32_t u32[2] = {1 , 2};
+memory view
+01 00 00 00 02 00 00 00
+
+int64_t u64[2] = {1 , 2};
+01 00 00 00 00 00 00 00 02 00 00 00 00 00 00 00
+
+as you know that array is simplly 1 and 0 at the lowest it is just an block of 1 and 0s 
+here you can see that array size increases when it is in 64 bit 
+
+01 00 00 00 this is 1 in 32 bit where  01 00 00 00 00 00 00 00 this is 1 in 64 bit
+but as we know that array is simply 1 and 0 so how does the compiler know from where to where in the memory is 1 
+this is done by using an offset
+offset in the context of arrays refers to the position or index within the array that is used to calculate the memory address of a 
+specific element in the array. 
+
+The offset is calculated by how many elements we need to move from the starting address of the array to reach the desired element.
+lets take an exaple of simple int array 
+int arr[5]
+
+In this case, the starting address of the array arr is the address of arr[0]. To access arr[2], we need an offset of 2 positions 
+from arr[0].
+
+The memory address of arr[2] can be calculated as:
+Address of 
+𝑎𝑟𝑟[2] = Base Address of arr + 2 × Size of each element
+Address of arr[2]= Base Address of arr + 2 × Size of each element
+Since arr is an array of int, and assuming sizeof(int) is 4 bytes, the memory address of arr[2] will be Base Address of 
+arr + 2 * 4.
+
+
+so lets move to the previous example of int32_t and int64_t
+lets say that i want to access the 2nd element of both arrays
+
+so what compiler will do is 
+u32 + 2 * 4   int32 is 4 bytes
+will return an address pointing to 02 00 00 00
+
+u64 + 2 * 8   int64 is 8 bytes
+will return an address pointing to 02 00 00 00 00 00 00 00
+
+*/
+
+
+// ----------------------------------how does compiler insert specific elements of an array----------------------------
+/*
+lets talk about how compiler sets or insert an element in an array 
+the reality is that compiler does not insert but rather overright the array(specific index)
+you donot get to grow your array what if you have some data after the array so if you grow your array the data will also be overwritten 
+so it works same as that of accessing the element in the above section 
+it just  
+arr + index * size of the element.
+
+*/
+
+
 

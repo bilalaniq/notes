@@ -238,7 +238,7 @@ public:
     {
         Node *newNode = new Node(value);
         newNode->next = top;
-        top = newNode;       
+        top = newNode;   
         count++;
     }
 

@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/kali/cpp/cpp_cource",
-      "program": "/home/kali/cpp/cpp_cource/build/Debug/outDebug",
+      "externalConsole": true,
+      "cwd": "c:/Users/bilal/Videos/cpp/chernocpp/dsa/algorithms/array_search/array_sort",
+      "program": "c:/Users/bilal/Videos/cpp/chernocpp/dsa/algorithms/array_search/array_sort/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
