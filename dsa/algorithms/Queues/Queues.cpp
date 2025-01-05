@@ -55,15 +55,17 @@ public:
         arr[++rear] = item;
     }
 
-    void dequeue()
-    {
+    void dequeue()    //note that we are not deleting the element from the array we are just moving the front pointer
+    {                 //we arenot doing unshiftinng here we are just moving the front pointer
+                          //that is why we prefer linked list over array when we are implementing a queue
         if (isEmpty())
         {
             cout << "Queue is empty!" << endl;
+            front = 0;
+            rear = -1;
             return;
         }
 
-        arr[front] = T();
         front++;
 
         if (isEmpty())
@@ -71,6 +73,7 @@ public:
             front = 0;
             rear = -1;
         }
+
     }
 
     T frontElement()

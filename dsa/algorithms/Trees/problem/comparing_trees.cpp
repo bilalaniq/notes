@@ -1,34 +1,72 @@
-// ---------------------------------Binary Search Tree----------------------------
+// --------------------------comparing two trees --------------------------
 /*
-A Binary Search Tree (BST) is a special kind of tree that maintains a sorted order of its elements. In a BST, each
-node has a key (or value) and satisfies the following properties:
+i have an problem for you to solve this require you to compare two trees and return true if they are structurally identical.
+Otherwise, return false.
 
-The left subtree of a node contains only nodes with keys less than the node's key.
-The right subtree of a node contains only nodes with keys greater than the node's key.
-Both the left and right subtrees are also binary search trees.
+lets take an example to understand the problem
 
-Properties of BST
-Sorted Structure: In-order traversal of a BST will yield a sorted sequence of keys.
-Dynamic Size: The size of the BST can grow or shrink dynamically with insertions and deletions.
-Efficient Search: Average time complexity for search, insertion, and deletion operations is
-O(logn), which mean that the n will be halved
-where n is the number of nodes in the tree. However, in the worst case (e.g., when the tree becomes unbalanced), the time complexity can
-degrade to 𝑂(𝑛)
+tree 1               tree 2
+    1                   1
+   / \                 / \
+  2   3               2   3
+
+as by looking at the trees we can say that they are identical so the output will be true
+1 == 1
+2 == 2
+3 == 3    so both trees are identicall
+
+now we can see that we have found a way to solve the problem but we are wrong what if we have an tree like this
+
+tree 1               tree 2
+    1                   1
+   / \                 /
+  2   3               2
+                     /
+                    3
+
+as by looking at the trees we can say that they are not identical but with our algorithm we will say that they are identical
+
+1 == 1
+2 == 2
+3 == 3    so both trees are identicall
+
+but that is wrong becasue the two trees are not structurally identical
 
 
-Common Operations
-Insertion: Adding a new node while maintaining the BST properties.
-Deletion: Removing a node and rearranging the tree to maintain its properties.
-Search: Finding a node with a specific key.
-Traversal: Accessing all nodes in a specific order:
-In-Order Traversal: Left, Root, Right (produces sorted order).
-Pre-Order Traversal: Root, Left, Right.
-Post-Order Traversal: Left, Right, Root.
-Level-Order Traversal: Nodes are visited level by level.
+our algoritham sucks so we need to come up with a new algorithm to solve this problem
+we have to do an change our tree traversal algorithm to solve this problem
+above we have used breadth first search to solve the problem but now we will use depth first search to solve the problem
+
+defpth first preservs the shape of the tree so we will use depth first search to solve the problem
 
 
+tree 1               tree 2
+    1                   1
+   / \                 /
+  2   3               2
+                     /
+                    3
+
+we can chose any defpth first search algorithm to solve the problem but we will use pre-order traversal to solve the problem
+
+
+root -> left -> right this is the order of pre-order traversal
+1 == 1
+2 == 2
+nullptr != 3 so the trees are not identical
+
+
+
+
+
+so conclusion is that breth first search does not preserve the shape of the tree where the depth first search does preserve the shape of
+the tree
+
+
+so lets see how this can be implemented in code
 
 */
+
 #include <iostream>
 
 template <typename T>
@@ -142,7 +180,30 @@ public:
         return searchNode(root, value);
     }
 
+    bool operator==(const BST &obj) const
+    {
+        return compareTrees(root, obj.root);
+    }
+
 private:
+    bool compareTrees(Node *node1, Node *node2) const  // this function is using depth first(pre-order) traversal to compare the trees
+    {
+        if (node1 == nullptr && node2 == nullptr)
+        {
+            return true;
+        }
+        if (node1 == nullptr || node2 == nullptr)
+        {
+            return false;
+        }
+        if (node1->data != node2->data)
+        {
+            return false;
+        }
+
+        return compareTrees(node1->LEFT, node2->LEFT) && compareTrees(node1->RIGHT, node2->RIGHT);
+    }
+
     Node *InsertNOde(Node *node, const T &childValue)
     {
         if (node == nullptr)
@@ -242,56 +303,32 @@ private:
 
 int main()
 {
-    BST<int> tree;
-    tree.Insert(10);
-    tree.Insert(2);
-    tree.Insert(3);
-    tree.Insert(4);
-    tree.Insert(100);
-    tree.Insert(4);
-    tree.Insert(11);
 
-    tree.print();
-    tree.preorder();
-    tree.postorder();
-    tree.inorder();
+    std::cout << "tree 1" << std::endl;
+    BST<int> tree1;
+    tree1.Insert(10);
+    tree1.Insert(2);
+    tree1.Insert(11);
 
-    int searchValue = 4;
-    if (tree.search(searchValue))
-    {
-        std::cout << "Value " << searchValue << " found in the tree." << std::endl;
-    }
-    else
-    {
-        std::cout << "Value " << searchValue << " not found in the tree." << std::endl;
-    }
+    tree1.print();
+
+    std::cout << "tree 2" << std::endl;
+    BST<int> tree2;
+    tree2.Insert(10);
+    tree2.Insert(2);
+    tree2.Insert(1);
+
+    tree2.print();
+
+    std::cout << (tree1 == tree2 ? "The Trees are identical" : "The Trees are not identical") << std::endl;
 
     return 0;
 }
 
-/*
-output :
-
-`-- 10
-    |-- 2
-    |   `-- 3
-    |       `-- 4
-    |           `-- 4
-    `-- 100
-        |-- 11
-
-preorder  :  10  2  3  4  4  100  11
-postorder  :  4  4  3  2  11  100  10
-inorder  :  2  3  4  4  10  11  100
-Value 4 found in the tree.      this searching is done in time complexity of O(logn)
 
 
-*/
+
 
 /*
-
-Conclusion
-Binary Search Trees are powerful data structures that enable efficient searching, insertion, and deletion. They are widely
-used in applications where sorted data needs to be maintained, such as databases, memory management, and more. Understanding
-how to implement and manipulate BSTs is essential for many computer science and programming tasks.
+so after solving the problem you will be able to understnd the difference between breadth first search and depth first search
 */
