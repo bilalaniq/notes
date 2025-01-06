@@ -343,7 +343,7 @@ that is why it is also called level order traversal
 */
 
 #include <iostream>
-#include <queue>      //i could have used my own queue but i am using the stl queue for simplicity
+#include <queue> //i could have used my own queue but i am using the stl queue for simplicity
 
 template <typename T>
 class AVL
@@ -465,7 +465,102 @@ public:
         std::cout << std::endl;
     }
 
+    void deletenode(const T &value)
+    {
+        if (root == nullptr)
+        {
+            std::cout << "Tree is empty." << std::endl;
+            return;
+        }
+        if (!Search(value))
+        {
+            std::cout << "Value " << value << " not found in the tree." << std::endl;
+            return;
+        }
+
+        root = deleteNode(root, value);
+        count--;
+    }
+
 private:
+    Node *deleteNode(Node *node, const T &value)
+    {
+        if (node == nullptr)
+        {
+            return nullptr;
+        }
+
+        if (value < node->data)
+        {
+            node->LEFT = deleteNode(node->LEFT, value);
+        }
+        else if (value > node->data)
+        {
+            node->RIGHT = deleteNode(node->RIGHT, value);
+        }
+        else
+        {
+
+            // Case 1: Node has no children (leaf node)
+            if (node->LEFT == nullptr && node->RIGHT == nullptr)
+            {
+                delete node;
+                return nullptr;
+            }
+
+            // Case 2: Node has only one child
+            if (node->LEFT == nullptr)
+            {
+                Node *temp = node->RIGHT;
+                delete node;
+                return temp;
+            }
+            else if (node->RIGHT == nullptr)
+            {
+                Node *temp = node->LEFT;
+                delete node;
+                return temp;
+            }
+
+            // Case 3: Node has two children
+            // i have used inorder successor here
+            // Node *temp = findMin(node->RIGHT);
+            // node->data = temp->data;
+            // node->RIGHT = deleteNode(node->RIGHT, temp->data);
+
+            // i could have used inorder predecessor here
+             Node *temp = findMax(node->LEFT);
+             node->data = temp->data;
+             node->LEFT = deleteNode(node->LEFT, temp->data);
+
+            // but because AVL tree are banlanced so it does not matter which one we use
+
+            // because this is an AVL tree we have to balance the tree after deletion
+        }
+        node->LEVELheight = 1 + std::max(LEVELheight(node->LEFT), LEVELheight(node->RIGHT));
+        return balance(node);
+    }
+
+    Node *findMin(Node *node) // for inorder successor
+    {
+        // Find the leftmost leaf node
+        while (node->LEFT != nullptr)
+        {
+            node = node->LEFT;
+        }
+        return node;
+    }
+
+    Node *findMax(Node *node) // for inorder predecessor
+    {
+        // Find the rightmost leaf node
+        while (node->RIGHT != nullptr)
+        {
+            node = node->RIGHT;
+        }
+        return node;
+    }
+
     Node *copyNode(Node *node)
     {
         if (!node)
@@ -650,7 +745,6 @@ int main()
     tree.Insert(10);
     tree.Insert(25);
     tree.Insert(21);
-    tree.Insert(50); // Duplicate, won't be inserted
 
     tree.print();
     tree.preorder();
@@ -659,6 +753,10 @@ int main()
 
     std::cout << "Search 10: " << (tree.Search(10) ? "Found" : "Not Found") << std::endl;
     std::cout << "Search 5: " << (tree.Search(5) ? "Found" : "Not Found") << std::endl;
+
+    tree.deletenode(50);
+    tree.print();
+
 
     return 0;
 }
