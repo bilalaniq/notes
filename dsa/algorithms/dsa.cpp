@@ -65,12 +65,20 @@ but it is an arraylist
 #include"./Trees/Trees.cpp"
 /*
 
-8. **Graphs**:
+8. Heaps:
+   - A specialized tree-based data structure that satisfies the heap property.
+   - Common types include min-heaps and max-heaps, used in priority queues and sorting algorithms.
+*/
+#include"Heap\Heap.cpp"
+/*
+
+
+9. **Graphs**:
    - Collections of nodes (vertices) connected by edges.
    - Can be directed or undirected, weighted or unweighted, and used to represent networks.
 
 */
-#include"./Graphs/Graphs.cpp"/
+#include"./Graphs/Graphs.cpp"
 /*
 
 9. **Hash Tables**:

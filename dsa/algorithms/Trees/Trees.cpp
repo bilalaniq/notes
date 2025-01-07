@@ -373,3 +373,8 @@ trees. Let me know if you'd like to dive into AVL, Red-Black, or specific traver
 
 */
 
+
+// --------------------------------------problems--------------------------------
+// here are some problems that you can solve to get a better understanding of trees
+#include"problem/array_tree.cpp"
+#include"problem/comparing_trees.cpp"
