@@ -92,27 +92,93 @@ This implementation in C++ provides a solid foundation for understanding and wor
 #include <iostream>
 
 template <typename T>
+class SinglyLinkedList;
+
+template <typename SinglyLinkedList, typename T = typename SinglyLinkedList::Node>
+class Single_LL_Iterator
+{
+public:
+    Single_LL_Iterator(T *ptr)
+        : m_ptr(ptr) {}
+
+    Single_LL_Iterator(const T *ptr)
+        : m_ptr(ptr) {}
+
+    Single_LL_Iterator(std::nullptr_t) : m_ptr(nullptr) {}
+
+    Single_LL_Iterator &operator++()
+    {
+        if (m_ptr)
+        {
+            m_ptr = m_ptr->next;
+        }
+        return *this;
+    }
+
+    Single_LL_Iterator operator++(int)
+    {
+        Single_LL_Iterator temp = *this;
+        ++(*this);
+        return temp;
+    }
+
+    typename T::data_type &operator*()
+    {
+        return m_ptr->data;
+    }
+
+    const typename T::data_type &operator*() const
+    {
+        return m_ptr->data;
+    }
+
+    T *operator->()
+    {
+        return m_ptr;
+    }
+
+    bool operator==(const Single_LL_Iterator &other) const
+    {
+        return m_ptr == other.m_ptr;
+    }
+
+    bool operator!=(const Single_LL_Iterator &other) const
+    {
+        return !(*this == other);
+    }
+
+private:
+    T *m_ptr;
+};
+
+template <typename T>
 class SinglyLinkedList
 {
+
 private:
     // Node structure
     struct Node
     {
-        T data;     // Data field
-        Node *next; // Pointer to the next node
+        T data;
+        Node *next;
 
         template <typename... Args>
         Node(Args &&...args) : data(std::forward<Args>(args)...), next(nullptr) {}
-        
+
+        using data_type = T;
     };
 
     Node *head; // Pointer to the head of the list
+    Node *tail;
     size_t count;
 
 public:
-    SinglyLinkedList() : head(nullptr), count(0) {} // Constructor initializes head to nullptr
+    using NODE = Node;
+    using Iterator = class Single_LL_Iterator<Node>;
+
+    SinglyLinkedList() : head(nullptr), tail(nullptr), count(0) {} // Constructor initializes head to nullptr
     SinglyLinkedList(const SinglyLinkedList &obj)
-        : head(nullptr), count(0)
+        : head(nullptr), tail(nullptr), count(0)
     {
         if (!obj.head)
         {
@@ -150,9 +216,10 @@ public:
     }
 
     SinglyLinkedList(SinglyLinkedList &&obj) noexcept
-        : head(obj.head), count(obj.count)
+        : head(obj.head), tail(obj.tail), count(obj.count)
     {
         obj.head = nullptr;
+        obj.tail = nullptr;
         obj.count = 0;
     }
 
@@ -163,8 +230,10 @@ public:
             return *this;
         }
         head = obj.head;
+        tail = obj.tail;
         count = obj.count;
         obj.head = nullptr;
+        obj.tail = nullptr;
         obj.count = 0;
 
         return *this;
@@ -176,6 +245,10 @@ public:
         Node *newNode = new Node(value);
         newNode->next = head; // New node points to current head
         head = newNode;       // Head now points to the new node
+        if (tail == nullptr)  // If the list was empty, update tail
+        {
+            tail = newNode;
+        }
         count++;
     }
 
@@ -183,105 +256,93 @@ public:
     void push_back(const T &value)
     {
         Node *newNode = new Node(value);
-        if (!head)
+        if (!head) // If the list is empty, set both head and tail
         {
-            head = newNode; // If the list is empty, set head to the new node
-            count++;
-            return;
+            head = tail = newNode;
         }
-        Node *current = head;
-        while (current->next)
-        {                            // cheaks if the next pointer is not nullptr if it is then current is the last node
-            current = current->next; // Traverse to the last node
+        else
+        {
+            tail->next = newNode; // Link the new node after the current tail
+            tail = newNode;       // Update tail to the new node
         }
-        current->next = newNode; // Link the new node
         count++;
     }
 
     template <typename... ARGS>
     void emplace_back(ARGS &&...args)
     {
-        Node *newnode = new Node(std::forward<ARGS>(args)...);
+        Node *newNode = new Node(std::forward<ARGS>(args)...);
+
         if (!head)
         {
-            head = newnode;
-            count++;
-            return;
-        }
-        Node *current = head;
-        while (current->next)
-        {
-            current = current->next;
-        }
-
-        current->next = newnode;
-        count++;
-    }
-
-    void insertAT(const T &value, size_t location)
-    {
-        if (location > count)
-        {
-            throw std::out_of_range("Position out of bounds");
-        }
-        if (location == 0)
-        {
-            push_front(value);
-        }
-        else if (location == count)
-        {
-            push_back(value);
+            head = tail = newNode;
         }
         else
         {
+            tail->next = newNode;
+            tail = newNode;
+        }
+        count++;
+    }
+
+    void insert_at(const T &value, size_t index)
+    {
+        if (index > count) // Index out of bounds
+        {
+            throw std::out_of_range("Index out of bounds");
+        }
+        if (index == 0)
+        {
+            push_front(value); // Insert at the beginning
+        }
+        else if (index == count)
+        {
+            push_back(value); // Insert at the end
+        }
+        else
+        {
+            Node *newNode = new Node(value);
             Node *current = head;
-            for (size_t i = 0; i < location - 1; i++)
+            for (size_t i = 0; i < index - 1; i++)
             {
                 current = current->next;
             }
-            Node *newnode = new Node(value);
-            newnode->next = current->next;
-            current->next = newnode;
+            newNode->next = current->next;
+            current->next = newNode;
             count++;
         }
     }
 
-    void deleteByValue(const T &value, bool deleteAll = false)
+    void deleteByValue(const T &value)
     {
-        // Remove head nodes if they match the value
         while (head && head->data == value)
         {
             Node *temp = head;
             head = head->next; // Move head to the next node
             delete temp;       // Free memory
             count--;
-            if(!deleteAll)
-            {
-                return;
-            }
         }
 
         Node *current = head;
-        while (current)
+        while (current && current->next)
         {
-            // Check if the next node needs to be deleted
-            if (current->next && current->next->data == value)
+            if (current->next->data == value)
             {
                 Node *temp = current->next;
-                current->next = temp->next; // Bypass the node to delete
-                delete temp;                // Free memory
+                current->next = temp->next;
+                delete temp;
                 count--;
-
-                // If we're deleting only one occurrence, exit the loop
-                if (!deleteAll)
-                {
-                    return;
-                }
             }
             else
             {
                 current = current->next; // Move to the next node
             }
+        }
+
+        // If the tail was deleted
+        if (tail && tail->data == value)
+        {
+            tail = current;
         }
     }
 
@@ -350,6 +411,12 @@ public:
         head = nullptr;
         count = 0;
     }
+
+    Iterator begin() { return Iterator(head); }
+    Iterator end() { return Iterator(nullptr); }
+
+    Iterator cbegin() const { return Iterator(head); }
+    Iterator cend() const { return Iterator(nullptr); }
 };
 
 class vector2
@@ -382,12 +449,20 @@ int main()
 {
     SinglyLinkedList<vector2> list; // Change from std::string to int
 
-    list.emplace_back(2, 3);
     list.emplace_back(1, 2);
-    list.push_back(vector2(1, 2));
+    list.emplace_back(3, 4);
+    list.push_back(vector2(1, 4));
+    list.push_back(vector2(1, 4));
+    list.push_back(vector2(1, 4));
+
     list.display();
 
-    // SinglyLinkedList<vector2> list2(list);
+    // because of the iterators i can use ranged based for loop
+
+    for (const auto &vec : list)
+    {
+        std::cout << vec << std::endl;
+    }
 
     return 0;
 }

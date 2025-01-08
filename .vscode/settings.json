@@ -118,6 +118,7 @@
     "xtr1common": "cpp",
     "xutility": "cpp",
     "deque": "cpp",
-    "queue": "cpp"
+    "queue": "cpp",
+    "list": "cpp"
   }
 }

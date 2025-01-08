@@ -24,7 +24,7 @@ Traversal: Accessing all nodes in a specific order:
 In-Order Traversal: Left, Root, Right (produces sorted order).
 Pre-Order Traversal: Root, Left, Right.
 Post-Order Traversal: Left, Right, Root.
-Level-Order Traversal: Nodes are visited level by level.
+Level-Order Traversal: Nodes are visited level by level.  (breath first search)
 
 
 

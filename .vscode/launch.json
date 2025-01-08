@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/bilal/Videos/cpp/chernocpp/dsa/algorithms/array_search/array_sort",
-      "program": "c:/Users/bilal/Videos/cpp/chernocpp/dsa/algorithms/array_search/array_sort/build/Debug/outDebug",
+      "cwd": "c:/Users/bilal/Videos/cpp/chernocpp/dsa/algorithms/Graphs",
+      "program": "c:/Users/bilal/Videos/cpp/chernocpp/dsa/algorithms/Graphs/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
