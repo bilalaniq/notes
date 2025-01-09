@@ -112,7 +112,7 @@ public:
     }
 
     // Function to add an edge to the graph (undirected)
-    void addEdge(int v, int w)
+    void addEdge_undirected(int v, int w)
     {
         // Check if the vertices are within the valid range
         if (v < 0 || v >= V || w < 0 || w >= V)
@@ -122,6 +122,18 @@ public:
 
         adjList[v].push_back(w);
         adjList[w].push_back(v);
+    }
+
+    // Function to add an edge to the graph (undirected)
+    void addEdge_directed(int v, int w)
+    {
+        // Check if the vertices are within the valid range
+        if (v < 0 || v >= V || w < 0 || w >= V)
+        {
+            throw out_of_range("Error: Vertex out of bounds!"); // Throw an exception if the vertices are invalid
+        }
+
+        adjList[v].push_back(w);
     }
 
     void printGraph()
@@ -138,7 +150,7 @@ public:
     }
 
     // Function for a Depth First Search (DFS) traversal starting from a vertex
-    void DFS(int start)
+    void DFS_traversal(int start)
     {
         VECTOR<bool> visited;
         visited.reserve(V);
@@ -148,9 +160,121 @@ public:
         }
 
         DFSUtil(start, visited);
+        std::cout << std::endl;
+    }
+
+    void BFS_traversal(int start)
+    {
+        VECTOR<bool> visited;
+        visited.reserve(V);
+        for (size_t i = 0; i < V; ++i)
+        {
+            visited.PushBack(false);
+        }
+        BFSUtil(start, visited);
+    }
+
+    bool BFS_search(int start, int needle)
+    {
+        VECTOR<bool> visited;
+        visited.reserve(V);
+        for (size_t i = 0; i < V; ++i)
+        {
+            visited.PushBack(false);
+        }
+
+        return BFS_searchUtil(start, needle, visited);
+    }
+
+    bool DFS_search(int start, int needle)
+    {
+        VECTOR<bool> visited;
+        visited.reserve(V);
+        for (size_t i = 0; i < V; ++i)
+        {
+            visited.PushBack(false);
+        }
+
+        return DFS_searchUtil(start, needle, visited);
     }
 
 private:
+    bool DFS_searchUtil(int v, int needle, VECTOR<bool> &visited)
+    {
+        visited[v] = true;
+        if (v == needle)
+        {
+            return true;
+        }
+
+        for (const auto &neighbor : adjList[v])
+        {
+            if (!visited[neighbor])
+            {
+                if (DFS_searchUtil(neighbor, needle, visited))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    bool BFS_searchUtil(int v, int needle, VECTOR<bool> &visited)
+    {
+        Queue<int> q;
+        visited[v] = true;
+        q.enqueue(v);
+
+        while (!q.isEmpty())
+        {
+            int current = q.frontElement();
+            q.dequeue();
+
+            // If we found the needle
+            if (current == needle)
+            {
+                return true;
+            }
+
+            for (const auto &neighbor : adjList[current])
+            {
+                if (!visited[neighbor])
+                {
+                    visited[neighbor] = true;
+                    q.enqueue(neighbor);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // Utility function for BFS that works using queue
+    void BFSUtil(int v, VECTOR<bool> &visited)
+    {
+        Queue<int> q;
+        visited[v] = true;
+        q.enqueue(v);
+
+        while (!q.isEmpty())
+        {
+            int current = q.frontElement();
+            std::cout << current << " ";
+            q.dequeue();
+
+            for (const auto &neighbor : adjList[current])
+            {
+                if (!visited[neighbor])
+                {
+                    visited[neighbor] = true;
+                    q.enqueue(neighbor);
+                }
+            }
+        }
+        std::cout << std::endl;
+    }
+
     // Utility function for DFS that works recursively
     void DFSUtil(int v, VECTOR<bool> &visited)
     {
@@ -170,13 +294,14 @@ private:
 
 int main()
 {
-    Graph g(4);
+    Graph g(6);
 
     // Add edges to the graph
-    g.addEdge(0, 1);
-    g.addEdge(0, 2);
-    g.addEdge(3, 2);
-    g.addEdge(1, 3);
+    g.addEdge_undirected(0, 1);
+    g.addEdge_undirected(0, 2);
+    g.addEdge_undirected(3, 2);
+    g.addEdge_undirected(1, 3);
+    g.addEdge_undirected(4, 5);
 
     // Print the adjacency list
     cout << "Adjacency List of the Graph:" << endl;
@@ -188,7 +313,7 @@ int main()
 
     0--------2
     |        |
-    |        |
+    |        |    5----4
     1--------3
 
     where it will look like
@@ -199,12 +324,25 @@ int main()
     Vertex 3: 2 1
     */
 
-  g.DFS(0);
+    g.DFS_traversal(0);
 
-  /*
-  we will get 
-  0 --> 1 --> 3 --> 2
-  */
+    /*
+    we will get
+    0 ,1 , 3 , 2
+
+
+    but if i start from 5 or 4 i will get
+    5 , 4
+    */
+
+    g.BFS_traversal(0);
+    /*
+    we will get
+    0 , 1 , 2 , 3
+    */
+
+    std::cout << (g.BFS_search(5, 3) ? "founded\n" : "not founded\n"); // if i start from 5 i will never reach 3
+    std::cout << (g.DFS_search(0, 3) ? "founded\n" : "not founded\n"); // if i start from 0 i will reach
 
     return 0;
 }
