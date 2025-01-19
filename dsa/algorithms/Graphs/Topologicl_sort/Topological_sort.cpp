@@ -5,7 +5,7 @@ vertex `u` to vertex `v`, vertex `u` comes before `v` in the ordering.
 
 for example 
 
-    u----->v------->w   
+    u----->v------->w
 
     this is an DAG 
            
