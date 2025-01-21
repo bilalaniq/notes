@@ -165,15 +165,37 @@ public:
 
     void reserve(size_t newcapacity)
     {
-        if (newcapacity > m_Capacity)
+        if (newcapacity > m_Capacity) // Only reallocate if newcapacity is greater than the current capacity
         {
-            Realloc(newcapacity);
+            Realloc(newcapacity); // Reallocate memory for newcapacity
         }
     }
 
-    void resize(size_t newcapacity)
+    void resize(size_t newsize)
     {
-        Realloc(newcapacity);
+        if (newsize == m_Size) // If the new size is equal to the current size, do nothing.
+            return;
+
+        if (newsize > m_Size) // If the new size is greater, we need to increase the size.
+        {
+            // Reallocate memory to accommodate the new size.
+            // Reallocating with `newsize` ensures there is enough capacity.
+            Realloc(newsize);
+        }
+        else if (newsize < m_Size) // If the new size is smaller, we need to decrease the size.
+        {
+            // Simply adjust the size and destroy the elements that are no longer needed.
+            for (size_t i = newsize; i < m_Size; ++i)
+            {
+                m_Data[i].~T(); // Manually call destructor for elements that will be removed.
+            }
+
+            // Reallocate memory to shrink the size to the new size.
+            Realloc(newsize);
+        }
+
+        // After handling the size change, update the vector's size member.
+        m_Size = newsize;
     }
 
     void assign(size_t newsize, const T &value)
@@ -240,42 +262,53 @@ public:
 private:
     void Realloc(size_t newcapacity)
     {
-        // T* newBlock = new T[newcapacity];    we could do the same but this is wrong as it calls the constructors
-        // class that vector has been storing so in future we will be deleting
-        // this block of memory in the future by using the clear function and if the
-        // code end it will then call the distructor of the vector class which will
-        // again call the distructor of the classes and will give us an error
-        // so we will use new operator instead
+        // We use operator new here instead of the regular `new` to allocate memory for the elements.
+        // This allows us to manually control the construction and destruction of the elements.
+        // Note: This is `operator new`, not placement new.
+        // Placement new is used when we need to call constructors on a pre-allocated memory space.
 
         T *newBlock = (T *)::operator new(newcapacity * sizeof(T));
 
-        // note that this is an operator new not placement new
-        // note that placemnet new uses new expression not new operator
-
+        // If the new capacity is smaller than the current size, we shrink the size of the vector.
+        // This ensures we don't attempt to move more elements than the new capacity.
         if (newcapacity < m_Size)
         {
             m_Size = newcapacity;
         }
 
+        // Move the existing elements from the old memory block (m_Data) to the new block (newBlock)
+        // using placement new. We use std::move to efficiently transfer the elements to the new memory.
+        // We don't need to call the constructor again for elements that were moved.
         for (size_t i = 0; i < m_Size; i++)
         {
             new (&newBlock[i]) T(std::move(m_Data[i]));
-
-            // newBlock[i] = std::move(m_Data[i]);
-
-            // this is wrong for std::string because the newblock is an place for std::string but is not object itself because we have
-            // used new operator not new expression it tries to tidy allocate the string which we have in the new block but the current
-            //  string never existed because we have allocated memory with out calling the constructor
+            // This code moves the existing element from `m_Data[i]` to the new memory at `newBlock[i]`.
+            // It ensures that the elements are moved (not copied), which is important for performance
+            // especially when the elements are large or non-trivial types like std::string or vectors.
         }
 
+        // After moving the elements, explicitly call the destructor for each element in the old memory block.
+        // This ensures proper cleanup of the moved objects.
         for (size_t i = 0; i < m_Size; i++)
         {
-            m_Data[i].~T();
+            m_Data[i].~T(); // Destructor is manually called for each element to clean up resources.
         }
 
+        // Deallocate the old memory block since it is no longer needed.
         ::operator delete(m_Data, m_Capacity * sizeof(T));
+
+        // Point m_Data to the new memory block that we've just allocated and populated with moved elements.
         m_Data = newBlock;
+
+        // Update m_Capacity to the new capacity value.
         m_Capacity = newcapacity;
+
+        // When increasing the size (expanding the vector), we might have uninitialized memory at the end of the new block.
+        // If we're expanding, we need to construct default elements in the newly allocated space (in the range [m_Size, newcapacity)).
+        for (size_t i = m_Size; i < newcapacity; i++)
+        {
+            new (&newBlock[i]) T(); // Default construct elements in the newly allocated memory
+        }
     }
 
 private:

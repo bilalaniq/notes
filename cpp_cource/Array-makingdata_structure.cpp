@@ -5,17 +5,104 @@ so heres the code
 */
 
 #include <iostream>
-#include<cstring>
-#include<initializer_list>
+#include <initializer_list>
 
+template <typename T, size_t N>
+class Array;
 
-using namespace std;
+template <typename Array, typename T = typename Array::valueType>
+class ArrayIterator
+{
+
+public:
+    ArrayIterator(T *ptr)
+        : m_ptr(ptr) {};
+
+    ArrayIterator(const T *ptr)
+        : m_ptr(ptr) {};
+
+    ArrayIterator &operator++()
+    {
+        m_ptr++;
+        return *this;
+    }
+
+    ArrayIterator &operator++(int)
+    {
+        ArrayIterator iterator = *this;
+        ++(*this);
+        return iterator;
+    }
+
+    ArrayIterator &operator--()
+    {
+        m_ptr--;
+        return *this;
+    }
+
+    ArrayIterator &operator--(int)
+    {
+        ArrayIterator iterator = *this;
+        --(*this);
+        return iterator;
+    }
+
+    T &operator[](size_t index)
+    {
+        return *(m_ptr + index);
+
+        // or i could also do
+        // return m_ptr[index];
+    }
+
+    const T &operator[](size_t index) const
+    {
+        return *(m_ptr + index);
+    }
+
+    T *operator->()
+    {
+        return m_ptr;
+    }
+
+    const T *operator->() const
+    {
+        return m_ptr;
+    }
+
+    T &operator*()
+    {
+        return *m_ptr;
+    }
+
+    const T &operator*() const
+    {
+        return *m_ptr;
+    }
+
+    bool operator==(const ArrayIterator &other) const
+    {
+        return m_ptr == other.m_ptr;
+    }
+
+    bool operator!=(const ArrayIterator &other) const
+    {
+        return !(*this == other);
+    }
+
+private:
+    T *m_ptr;
+};
 
 template <typename T, size_t N>
 class Array
 {
 private:
     T array[N];
+
+public:
+    using valueType = T;
+    using Iterator = ArrayIterator<Array<T, N>>;
 
 public:
     Array()
@@ -26,11 +113,12 @@ public:
         }
     }
 
-    Array(std::initializer_list<T> const& init_list)  //passing it by const refrence 
+    Array(std::initializer_list<T> const &init_list) // passing it by const refrence
     {
-        if (init_list.size() > N) {
-        throw std::out_of_range("Initializer list size exceeds array size");
-    }
+        if (init_list.size() > N)
+        {
+            throw std::out_of_range("Initializer list size exceeds array size");
+        }
         size_t i = 0;
         for (; i < init_list.size(); ++i)
         {
@@ -43,15 +131,14 @@ public:
         }
     }
 
-
-// or you cold also d it by using iterators as the std::inializer list works better with iterators not with subscripting
-//so this is preffered more then the above way
+    // or you cold also d it by using iterators as the std::inializer list works better with iterators not with subscripting
+    // so this is preffered more then the above way
     // Array(std::initializer_list<T> const& init_list)
     // {
     //     size_t i = 0;
     //     for (auto& value : init_list)
     //     {
-    //         array[i] = value; 
+    //         array[i] = value;
     //         i++;
     //     }
     //     for (; i < N; ++i)
@@ -60,10 +147,7 @@ public:
     //     }
     // }
 
-
-
-
-    T& operator[](size_t index)
+    T &operator[](size_t index)
     {
         if (index >= N) // No need to check for negative index
         {
@@ -72,7 +156,7 @@ public:
         return array[index];
     }
 
-    const T& operator[](size_t index) const
+    const T &operator[](size_t index) const
     {
         if (index >= N) // No need to check for negative index
         {
@@ -81,35 +165,48 @@ public:
         return array[index];
     }
 
-    T* data()
+    T *data()
     {
         return array; // Return the underlying array
     }
 
-    const T* data() const
+    const T *data() const
     {
         return array; // Return the underlying array
     }
 
     constexpr size_t size() const { return N; } // Marked as const
+
+    Iterator begin()
+    {
+        return Iterator(array);
+    }
+
+    Iterator end()
+    {
+        return Iterator(array + N);
+    }
 };
 
 int main()
 {
-    Array<int, 5> array = {1 ,2 ,3 ,4 ,5};
+    Array<int, 5> array = {1, 2, 3, 4, 5};
 
     // Array<int, 5> array;
     // Correct usage of memset
-    //memset(array.data(), 0, array.size() * sizeof(int));
+    // memset(array.data(), 0, array.size() * sizeof(int));
 
-    for (size_t i = 0; i < array.size(); ++i)
-        std::cout << array[i] << std::endl;
+    
 
     Array<int, array.size()> a2;
+
+    for (const auto &i : array)
+    {
+        std::cout << i << std::endl;
+    }
 
     return 0;
 }
 
-
-// if you want to learn about the inilization_list library click here 
-#include"initializer_list.cpp"
+// if you want to learn about the inilization_list library click here
+#include "initializer_list.cpp"

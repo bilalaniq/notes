@@ -15,7 +15,7 @@ the preferences of the programmer.
 
 
 It provides a human-readable representation of machine code instructions, which are the basic operations understood 
-by a computer's central processing unit (CPU).*/
+by a computer's central processing unit (CPU).*/ 
 
 // this mean that the  cpu of different companies have different types of assemblly language for example 
 
@@ -81,7 +81,7 @@ entirely.
 
 ### Summary
 
-The flow of data from RAM to the CPU and vice versa involves a combination of address and data buses, the memory controller, and 
+The flow of data from RAM to the CPU and vice versa involves a combination of address , data buses, the memory controller, and 
 potentially the use of CPU cache to optimize access speeds. This process is crucial for the overall performance of a computer system,
 as it dictates how efficiently the CPU can access the data it needs to perform tasks.
 
@@ -120,116 +120,13 @@ as it dictates how efficiently the CPU can access the data it needs to perform t
 #include"cache.cpp"
 
 // ----------------------------------registers-------------------------------
-/*
-Registers are small, high-speed storage locations within the CPU (Central Processing Unit) of a computer.
-They are used to store data temporarily during the execution of a program. Registers are the fastest type of 
-memory in a computer system because they are located directly within the CPU and can be accessed
-much more quickly than main memory (RAM).
-
-size also depend upon the architechture of the cpu 
-the 32 bit machines has 32 bit registers and 64 bit machines has 64 bit registers
-
-backword compatibility is maintained by allowing access to subset of registers so 32 bit code still runs 
-on 64 bit machines as because the processor can treat half of the 64 bit register though it was a 32 bit 
-register
-*/
+#include"registers.cpp"
 
 // -----------------------------stack---------------------------------------
-/* The stack is a region of memory in a computer's RAM that is used for temporary storage of data 
-during program execution.
-it operates on a Last-In-First-Out (LIFO) basis
-"Last-In-First-Out" (LIFO) is a principle that describes the behavior of a stack data structure
-In a LIFO system, the last item added to the stack is the first one to be removed
-
-there are few terms used for stack
-
->> Pushing: When you add an item to the stack 
-items are always pushed on the top 
->> Popping: When you remove an item from the stack 
-items are always poped from the top
-
->> stackpointer: 
-The stack pointer is a special register or memory location within a computer's CPU  that keeps 
-track of the top of the stack in memory. It stores the memory address of the most recently pushed 
-items onto the stack or the next available space for a new item to be pushed.
-
-*/
-#include"../chernocpp/cpp_cource/stack_vs_heap.cpp"
-
-
-
-// ---------------------------------some common registers and there uses --------------------------------
-/*
->>eax (Accumulator Register): Used for arithmetic operations, storing function 
-return values and passing arguments.Some instructions, like mul (multiply) and div (divide)
-implicitly use eax as one of their operands or to store the result.
-
->>ebx (Base Register): Often used as a pointer to data in memory, particularly 
-for accessing arrays or structures.
-
->>ecx (Count Register): Frequently used as a loop counter in iterative operations or 
-for storing temporary data.
-
->>edx (Data Register): Similar to eax, used for arithmetic and logical operations.
-
->>esi (Source Index Register): Commonly used for string and memory operations
-typically holding the source address.
-
->>edi (Destination Index Register): Commonly used for string and memory operations
-typically holding the destination address.
-
->>ebp (Base Pointer Register): Often used as a frame pointer for accessing 
-function parameters and local variables on the stack.
-
->>esp (Stack Pointer Register): Points to the top of the stack and is involved in managing 
-the stack, especially during function calls and returns.
-
->>eip (Instruction Pointer Register): Holds the memory address of the next instruction to be executed.
-
->>Flags Register (EFLAGS): Contains status flags indicating the outcome 
-of arithmetic, logical, and comparison operations.
-
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>some special regiters are
-eip (Instruction Pointer Register)
-eflags (Flags Register)
-cs, ds, es, fs, gs (Segment Registers)
-ss (Stack Segment Register)
-eflags (Flags Register)
-cr0, cr2, cr3, cr4 (Control Registers)
-dr0, dr1, dr2, dr3, dr6, dr7 (Debug Registers)
-tr (Task Register)
-ldtr (Local Descriptor Table Register)
-
-*/
+#include"stack.cpp"
 
 // --------------------------------------------flags--------------------------------------------
-// some common flags
-//these flags are set accordig to the jump condition provided
-/*
->>>>>>>>>Zero Flag (ZF):it is used for both arithmatic oprations and coparission and logical opratoins(AND ,OR ,XOR)
-Set if the result of the operation is zero. Cleared if the result is non-zero.(for add ,sub , mul,div)
-the Zero Flag is set if the operands are equal.
-
-
->>>>>>>>Sign Flag (SF): Set if the most significant bit (the sign bit) of the result is set (i.e., if the result is negative).
-Cleared if the result is positive.
-
->>>>>>>>Carry Flag (CF): Set if there is a carry-out from the most significant bit during addition or a borrow during subtraction.
-Used for unsigned arithmetic.
-
->>>>>>>Overflow Flag (OF): Set if the signed result is too large (positive overflow) or too small (negative overflow) to be represented in the destination.
-Used for signed arithmetic.
-
->>>>>>>Parity Flag (PF): Set if the least significant byte of the result contains an even number of 1 bits.
-Used for error checking.
-
->>>>>>>Auxiliary Carry Flag (AF): Used for binary-coded decimal (BCD) arithmetic.
-Set if there is a carry-out from or borrow into bit 3 to bit 4 during addition or subtraction operations.
-For example, if performing a BCD addition results in a carry from bit 3 to bit 4, AF is set.
-
-*/
-
-
+#include"Flags.cpp"
 
 
 // ---------------------------------common comands of assemblly language---------------------------
@@ -351,5 +248,3 @@ jl  [adress] ; Jump to given adress if EAX is less than EBX
 >>> dword = A quadword-sized data, typically 64 bits or 8 bytes.
 >>> tbyte = it is used to store float and has a size of 10 bytes or 80 bits
 */
-
-
