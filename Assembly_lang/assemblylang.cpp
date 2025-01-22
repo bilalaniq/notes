@@ -120,7 +120,7 @@ as it dictates how efficiently the CPU can access the data it needs to perform t
 #include"cache.cpp"
 
 // ----------------------------------registers-------------------------------
-#include"registers.cpp"
+// #include"registers.cpp"
 
 // -----------------------------stack---------------------------------------
 #include"stack.cpp"
