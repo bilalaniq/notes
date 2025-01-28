@@ -1,0 +1,472 @@
+C Stuff
+GT Recommended
+[CS50 - Reference](https://reference.cs50.net/)
+[CS50's Introduction to Computer Science | edX](https://www.edx.org/course/cs50s-introduction-computer-science-harvardx-cs50x)
+[CS50](https://cs50.harvard.edu/2018/fall/)
+[Practical Programming in C | MIT OpenCourseWare](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-087-practical-programming-in-c-january-iap-2010/lecture-notes/)
+[Learn C in Y Minutes](https://learnxinyminutes.com/docs/c/)
+[Home | Lynda | Georgia Institute of Technology | Atlanta, GA](http://lynda.gatech.edu/)
+[How Do I Declare A Function Pointer in C?](https://goshdarnfunctionpointers.com/)
+[C Tutorial - Learn C - Cprogramming.com](https://www.cprogramming.com/tutorial/c-tutorial.html)
+[Function Pointers in C and C++ - Cprogramming.com](https://www.cprogramming.com/tutorial/function-pointers.html)
+[C documentation â€” DevDocs](https://devdocs.io/c/)
+[Intro to OS - C Programming Q&A - YouTube](https://www.youtube.com/watch?v=UmLpG077DcU)
+[C Programming - Q&A.pptm - Google Slides](https://docs.google.com/presentation/d/1B7_q_FjpWau-1-A7NFKkDUHLHJMIDKSwCK4dM0nSlXg/edit#slide=id.p17)
+[Amazon.com: C Programming Language, 2nd Edition (8601410794231): Brian W. Kernighan, Dennis M. Ritchie: Books](https://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628)
+[The Linux Programming Interface [Book]](https://www.oreilly.com/library/view/the-linux-programming/9781593272203/)
+Useful Tutorials
+[How to use Time and Date in C | CodingUnit Programming Tutorials](https://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c)
+[A Little C Primer/C String Function Library - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/A_Little_C_Primer/C_String_Function_Library)
+[C Storage Classes](https://www.tutorialspoint.com/cprogramming/c_storage_classes.htm)
+
+
+
+
+
+Embedded Programming
+[Become an embedded programmer in 5 months : learnprogramming](https://www.reddit.com/r/learnprogramming/comments/a6hcbu/become_an_embedded_programmer_in_5_months/)
+
+
+Network Programming
+[System Calls or Bust](https://beej.us/guide/bgnet/html/multi/syscalls.html)
+[Networking and Socket Programming Tutorial in C - CodeProject](https://www.codeproject.com/Articles/586000/Networking-and-Socket-programming-tutorial-in-C)
+[Socket programming in C on Linux â€“ tutorial â€“ BinaryTides](https://www.binarytides.com/socket-programming-c-linux-tutorial/)
+[How to C (as of 2016)](https://matt.sh/howto-c)
+[C Book Answers](https://github.com/lekkas/c-algorithms)
+[Mastering Algorithms with C > Mastering Algorithms with C : Safari Books Online](http://techbus.safaribooksonline.com/1565924533/id732826#X2ludGVybmFsX0h0bWxWaWV3P3htbGlkPTEtNTY1OTItNDUzLTMlMkZpZDczMjgyNiZxdWVyeT0=)
+[Learn C The Hard Way](http://c.learncodethehardway.org/book/)
+[C/C++ for Hackers Â« Null Byte :: WonderHowTo](https://null-byte.wonderhowto.com/how-to/c-c-for-hackers/)
+[How Do I Declare A Function Pointer in C?](https://fuckingfunctionpointers.com/)
+[GitHub - fffaraz/awesome-cpp: A curated list of awesome C/C++ frameworks, libraries, resources, and shiny things. Inspired by awesome-... stuff.](https://github.com/fffaraz/awesome-cpp)
+[cdecl: C gibberish â†” English](https://cdecl.org/?q=int+%28*f%29%28int%2C+int%29)
+[Berkeley C Course](http://www-inst.eecs.berkeley.edu/~selfpace/c/)
+[C reference - cppreference.com](https://en.cppreference.com/w/c)
+[The Definitive C Book Guide and List â€“ seclab](https://seclab.skku.edu/the-definitive-c-book-guide-and-list/)
+[Learn C the Hard Way](https://learncodethehardway.org/c/)
+[Style Guide for C â€” CS50 Docs](https://cs50.readthedocs.io/style/c/)
+
+
+
+
+
+Python Issue Fixes
+[python - Permanently add a directory to PYTHONPATH - Stack Overflow](https://stackoverflow.com/questions/3402168/permanently-add-a-directory-to-pythonpath)
+[How do I find the location of Python module sources? - Stack Overflow](https://stackoverflow.com/questions/269795/how-do-i-find-the-location-of-python-module-sources)
+[installation - How do I find the location of my Python site-packages directory? - Stack Overflow](https://stackoverflow.com/questions/122327/how-do-i-find-the-location-of-my-python-site-packages-directory)
+[Python Training by Dan Bader â€“ dbader.org](https://dbader.org/)
+[10 Essential Python Tips And Tricks For Programmers - GeeksforGeeks](https://www.geeksforgeeks.org/10-essential-python-tips-tricks-programmers/)
+[Understanding the underscore( _ ) of Python â€“ Hacker Noon](https://hackernoon.com/understanding-the-underscore-of-python-309d1a029edc)
+[CMU - The Pythonic Way [PDF]](https://www.cs.cmu.edu/~srini/15-441/F11/lectures/r04-python.pdf)
+[Python Argparse Cookbook â€“ mkaz.blog](https://mkaz.blog/code/python-argparse-cookbook/)
+[PyPI tutorial](https://packaging.python.org/)
+
+
+
+
+
+Operating Systems and Systems Programming
+Books and Videos
+Carnegie Mellon University OS Course
+Other OS Book used by CMU
+
+Processes and Threads
+User Level thread Vs Kernel Level thread - LeetCode Discuss
+
+Intro to Processes & Threads - YouTube
+
+Difference Between Process and Thread - Georgia Tech - Advanced Operating Systems - YouTube
+
+Difference between forking and multithreading - LeetCode Discuss
+
+
+Good Books for Operating Systems
+The Linux Programming Interface: A Linux and UNIX System Programming Handbook: Michael Kerrisk: 9781593272203: Amazon.com: Books
+
+Advanced Programming in the UNIX Environment, 3rd Edition: W. Richard Stevens, Stephen A. Rago: 9780321637734: Amazon.com: Books
+
+Computer Systems: An Integrated Approach to Architecture and Operating Systems: Umakishore Ramachandran, William D. Leahy Jr.: 9780321486134: Amazon.com: Books
+
+Good Videos for Operating Systems
+Bitwise, Day 0: Overview and Q&A - YouTube
+
+Write your own Operating System - YouTube
+
+The little book about OS development
+
+
+
+Windows Stuff
+[Windows API Index (Windows)](https://msdn.microsoft.com/en-us/library/windows/desktop/ff818516(v=vs.85).aspx)
+[.NET Reverse Enginering - Part 1 â€“ CodePool â€“ Programming and a bit more](http://codepool.me/NET-Reverse-Enginering-Part-1/)
+[Getting Started with Windows Debugging - Windows 10 hardware dev](https://msdn.microsoft.com/en-us/library/mt219729.aspx)
+[WinDbg](http://www.windbg.org/)
+[Debug Universal Drivers - Step by Step Lab (Echo Kernel-Mode) - Windows 10 hardware dev](https://msdn.microsoft.com/en-us/library/mt269367.aspx)
+[Exploring Windows virtual memory management](http://www.triplefault.io/2017/08/exploring-windows-virtual-memory.html)
+[An In-Depth Look into the Win32 Portable Executable File Format - Part 1 - DelphiBasics](http://www.delphibasics.info/home/delphibasicsarticles/anin-depthlookintothewin32portableexecutablefileformat-part1)
+[An In-Depth Look into the Win32 Portable Executable File Format - Part 2 - DelphiBasics](http://www.delphibasics.info/home/delphibasicsarticles/anin-depthlookintothewin32portableexecutablefileformat-part2)
+[Visual Studio Documentation | Microsoft Docs](https://docs.microsoft.com/en-us/visualstudio/)
+[An Introduction to Windows Kernel Debugging | Endgame](https://www.endgame.com/blog/technical-blog/introduction-windows-kernel-debugging)
+[ReactOS (open source Windows remake)](https://doxygen.reactos.org/)
+[Vergilius Project | Home](https://www.vergiliusproject.com/)
+[Terminus Project](http://terminus.rewolf.pl/terminus/
+
+
+
+
+Unix Stuff (Shell Stuff)
+Courses
+[Berkeley UNIX Course](http://www-inst.eecs.berkeley.edu/~selfpace/unix/)
+[CSci 493.66 UNIX System Programming](http://compsci.hunter.cuny.edu/~sweiss/course_materials/csci493.66/csci493.66_spr12.php)
+[Learn Shell Programming - Free Interactive Shell Programming Tutorial](http://www.learnshell.org/)
+[The Bash Guide](https://guide.bash.academy/)
+[BashGuide - Greg's Wiki](http://mywiki.wooledge.org/BashGuide)
+[The Linux Documentation Project: Guides](http://tldp.org/guides.html)
+[#!/bin/bash](https://www.reddit.com/r/bash/)
+[Linux Command Line Tutorial](https://learnpythonthehardway.org/book/appendixa.html)
+[LinuxCommand.org: Learning the shell.](http://linuxcommand.org/lc3_learning_the_shell.php)
+[Bash Guide for Beginners](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/)
+[The Bash Academy](http://www.bash.academy/)
+[A curated list of Shell Stuff](https://github.com/alebcay/awesome-shell)
+[OverTheWire: Bandit - Wargame For Learning UNIX Shell Stuff](http://overthewire.org/wargames/bandit/)
+[OverTheWire: Leviathan - Unix Wargame](http://overthewire.org/wargames/leviathan/)
+[Bash tips & tricks: good and not-so-good bash practices | Pragmatic Coders](https://pragmaticcoders.com/blog/bash-tips-and-tricks/)
+
+
+
+Assembly Language Stuff
+Intel x86/64
+Open Security Training
+[Open Security Training - Intro to X86](http://www.opensecuritytraining.info/IntroX86.html)
+[Open Security Training - Intro to X86-64](http://opensecuritytraining.info/IntroX86-64.html)
+[Open Security Training - Intermediate X86](http://opensecuritytraining.info/IntermediateX86.html)
+[x86 Assembly - YouTube - YouTube](https://www.youtube.com/playlist?list=PLan2CeTAw3pFOq5qc9urw8w7R-kvAT8Yb)
+[Breaking the x86 Instruction Set - YouTube](https://www.youtube.com/watch?v=KrksBdWcZgQ)
+[A Crash Course in x86 Assembly for Reverse Engineers](https://sensepost.com/blogstatic/2014/01/SensePost_crash_course_in_x86_assembly-.pdf)
+[PC Assembly Language Book](http://pacman128.github.io/static/pcasm-book.pdf)
+[gcc x86 Assembly](https://www.cs.uaf.edu/2005/fall/cs301/support/x86/index.html)
+[x86 Assembly - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/X86_Assembly)
+[x86 Disassembly - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/X86_Disassembly)
+ARM
+[Writing ARM Assembly (Part 1) | Azeria Labs](https://azeria-labs.com/writing-arm-assembly-part-1/)
+MIPS
+[Ring Ã˜ Labs: The Wonderful World of MIPS](https://www.ringzerolabs.com/2018/03/the-wonderful-world-of-mips.html)
+[When and how to use an assembler. Assembly programming basics.](https://www.pelock.com/articles/when-and-how-to-use-an-assembler-assembly-programming-basics)
+[Assembly Programming Exercises](https://github.com/blankwall/asm_prog_ex)
+Calling Conventions
+[Calling Conventions](https://msdn.microsoft.com/en-us/library/k2b2ssfy.aspx)
+[x86 In-Depth: CDECL Calling Convention Complete Tutorial - BONUS video - YouTube](https://www.youtube.com/watch?v=im09tdVnYwQ)
+[What are the calling conventions for UNIX & Linux system calls on i386 and x86-64 - Stack Overflow](https://stackoverflow.com/questions/2535989/what-are-the-calling-conventions-for-unix-linux-system-calls-on-i386-and-x86-6/2538212#2538212)
+[How Functions Work](https://www.slideshare.net/saumilshah/how-functions-work-7776073)
+
+
+
+
+
+
+
+Software Reverse Engineering
+Courses/Learning/Challenges
+Books
+[Practical Reverse Engineering: x86, x64, ARM, Windows Kernel, Reversing Tools, and Obfuscation](https://www.amazon.com/Practical-Reverse-Engineering-Reversing-Obfuscation/dp/1118787315)
+[Reversing: Secrets of Reverse Engineering: Eldad Eilam](https://www.amazon.com/Reversing-Secrets-Engineering-Eldad-Eilam/dp/0764574817)
+[The IDA Pro Book: The Unofficial Guide to the World's Most Popular Disassembler: Chris Eagle](https://www.amazon.com/IDA-Pro-Book-Unofficial-Disassembler/dp/1593272898)
+[The Art of Memory Forensics: Detecting Malware and Threats in Windows, Linux, and Mac Memory](https://www.amazon.com/gp/product/1118825098/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=s4comecom20-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=1118825098&linkId=9e9e956f54ee586491e2a9230b989df5)
+[Gray Hat Hacking: The Ethical Hacker's Handbook, Fifth Edition](https://www.amazon.com/Gray-Hat-Hacking-Ethical-Handbook/dp/1260108414/ref=dp_ob_title_bk)
+[The Antivirus Hacker's Handbook](https://www.amazon.com/gp/product/1119028752/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=s4comecom20-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=1119028752&linkId=5a831d9a67b3252aad91432dded4bb57)
+[Reverse Engineering for Beginners Book (REALLY LONG)](http://beginners.re/RE4B-EN.pdf)
+
+
+
+
+
+
+Good Hands On Intro to Cracking and Basic RE
+[Lenas Reversing for Newbies](https://tuts4you.com/e107_plugins/download/download.php?view.2876)
+[Tutorials « The Legend Of Random](http://octopuslabs.io/legend/blog/sample-page.html)
+[Cracking Sublime Text 3](http://blog.fernandodominguez.me/cracking-sublime-text-3/)
+[zerosum0x0: Removing Sublime Text Nag Window](https://zerosum0x0.blogspot.com/2016/09/removing-sublime-text-nag-window.html)
+[Tutorials « The Legend Of Random](https://legend.octopuslabs.io/sample-page.html)
+Video Presentations
+[Reverse Engineering 101 - NYU Poly - 2009](https://vimeo.com/6764570)
+[Reverse Engineering 101 - NYU:Poly 2010](https://prezi.com/a5tm-lf0879-/reverse-engineering-101-nyupoly-2010/)
+[Reverse Engineering 102 - NYU:Poly 2010](https://prezi.com/e5a2tumdqocj/reverse-engineering-102-nyupoly-2010/)
+[Reverse Engineering 1 - NYU Poly 2011](https://vimeo.com/30076325)
+[Reverse Engineering 2 - NYU Poly 2011](https://vimeo.com/30594548)
+Open Security Training
+[Open Security Training - Introduction To Reverse Engineering](http://opensecuritytraining.info/IntroductionToReverseEngineering.html)
+[Open Security Training - Life Of Binaries](http://opensecuritytraining.info/LifeOfBinaries.html)
+[Microcorruption - Interactive Intro to RE](https://microcorruption.com/login)
+[RE for Beginners | Reverse Engineering](https://www.begin.re/)
+[RPI - CSCI 4971 - Secure Software Principles (RE stuff)](http://www.cs.rpi.edu/academics/courses/spring10/csci4971/)
+[RE guide for beginners: Methodology and tools - Reverse Engineering - 0x00sec](https://0x00sec.org/t/re-guide-for-beginners-methodology-and-tools/2242)
+[Reverse Engineering 101 - Reverse Engineering - 0x00sec](https://0x00sec.org/t/reverse-engineering-101/1233)
+[[Tutorial] Reversing a multi stage binary step-by-step - Reverse Engineering - 0x00sec - The Home of the Hacker](https://0x00sec.org/t/tutorial-reversing-a-multi-stage-binary-step-by-step/2692)
+[RPISEC INTROSEC](https://introsec.backdrifting.net/lectures/2017fall/06_reverse_engineering.html#1)
+
+
+
+
+
+
+
+
+Programming/Assembly Concepts for RE
+[BOLO: Reverse Engineering — Part 1 (Basic Programming Concepts)](https://medium.com/@danielabloom/bolo-reverse-engineering-part-1-basic-programming-concepts-f88b233c63b7)
+[BOLO: Reverse Engineering — Part 2 (Advanced Programming Concepts)](https://medium.com/@danielabloom/bolo-reverse-engineering-part-2-advanced-programming-concepts-b4e292b2f3e)
+[Assembly Basics](https://platform.avatao.com/paths/a0dc20fc-f1b5-43c9-89fc-3a5fccfb5f0b/challenges/e63cb4dd-4777-4d2d-b81d-a822277983bc)
+[Getting ready for Assembly Programming – Anatomy of Intel Processor - Part 2](https://scriptdotsh.com/index.php/2018/05/13/anatomy-of-intel-processor/)
+[Getting ready for Assembly Language Programming – Part 1](https://scriptdotsh.com/index.php/2018/05/05/linux-asm-32bit-part-1/)
+[Getting started with Assembly language programming - End of theory - Part 3](https://scriptdotsh.com/index.php/2018/07/14/end-of-theory/)
+[Assembly Language Programming and Shellcoding - Lab setup and some important things - Part 4](https://scriptdotsh.com/index.php/2018/07/21/labsetup/)
+[Assembly Language Programming and Shellcoding - Hello World - Part 5](https://scriptdotsh.com/index.php/2018/07/29/hello-world/)
+[Assembly Language Programming and Shellcoding - Important Functions - Part 6](https://scriptdotsh.com/index.php/2018/10/12/rot1/)
+[Assembly Language Programming and Shellcoding – Important Functions – Part 7](https://scriptdotsh.com/index.php/2018/10/26/rot2/)
+[A crash course in x86 Assembly](https://x89k.tk/reverse%20engineering%20basics/2018/06/14/reb3.html)
+
+
+
+
+
+
+
+
+
+Linux RE - 64bit
+[Part 1 - Reverse Engineering Basics - Linux x64](https://scriptdotsh.com/index.php/2018/04/09/ground-zero-part-1-reverse-engineering-basics/)
+[Part 1-2 – Reverse Engineering Password Protected Reverse Shells – Linux x64](https://scriptdotsh.com/index.php/2018/07/26/ground-zero-part-1-2-reverse-engineering-password-protected-reverse-shells-linux-x64/)
+[Part 3 - Reverse Engineering Basics - Linux on ARM64](https://scriptdotsh.com/index.php/2018/04/26/ground-zero-part-3-reverse-engineering-basics-linux-on-arm64/)
+[Part 3-2 - Reverse Engineering - Patching Binaries with Radare2 - ARM64 - ScriptDotSh](https://scriptdotsh.com/index.php/2018/08/13/reverse-engineering-patching-binaries-with-radare2-arm-aarch64/)
+Windows RE - 64bit
+[Part 2-2 – Reverse Engineering – XOR encryption – Windows x64 - ScriptDotSh](https://scriptdotsh.com/index.php/2018/05/09/ground-zero-part-2-2-reverse-engineering-xor-encryption-windows-x64/)
+[Part 2 - Reverse Engineering Basics - Windows x64 - ScriptDotSh](https://scriptdotsh.com/index.php/2018/04/16/ground-zero-part-2-reverse-engineering-basics/)
+[Part 2-3 – Reverse Engineering – Building Cracked Binaries – Windows x64 - ScriptDotSh](https://scriptdotsh.com/index.php/2018/06/09/ground-zero-part-2-3-reverse-engineering-building-cracked-binaries-windows-x64/)
+
+
+
+
+
+
+
+
+Tools (Debugger/Disassembler/Decompilers/Hex Editors)
+IDA Pro/HexRays - Static Analysis - Disassembler/Decompiler
+[The Basics of IDA Pro - InfoSec Resources](http://resources.infosecinstitute.com/basics-of-ida-pro-2/)
+[Reversing Basics - A Practical Approach Using IDA Pro | www.SecurityXploded.com](http://securityxploded.com/reversing-basics-ida-pro.php)
+[ida pro tutorial for beginners - Google Search](https://www.google.com/webhp?sourceid=chrome-instant&rlz=1C1AVNE_enUS658US663&ion=1&espv=2&ie=UTF-8#q=ida%20pro%20tutorial%20for%20beginners)
+[Basic Dynamic Analysis with IDA Pro and WinDBG - YouTube](https://www.youtube.com/watch?v=_ACDiW2I4ns)
+[GitHub - patois/IDACyber: Data Visualization Plugin for IDA Pro](https://github.com/patois/IDACyber)
+[Real-world Decompilation with IDA Pro - Part 1: Introduction - YouTube](https://www.youtube.com/watch?v=vb18UVF4a_o)
+[Real-world Decompilation with IDA Pro - Part 2: String Handling - YouTube](https://www.youtube.com/watch?v=tVvYsFStPTc)
+[IDA series, part 2: debugging a .NET executable](https://qmemcpy.github.io/post/ida-series-2-debugging-net)
+[IDA series, part 1: the Hex-Rays decompiler](https://qmemcpy.github.io/post/ida-series-1-hex-rays)
+[Marco Ramilli's Blog: How to Patch Binary with IDA Pro](http://marcoramilli.blogspot.com/2011/01/how-to-patch-binary-with-ida-pro.html)
+[daniel_plohmann / simpliFiRE.IDAscope — Bitbucket](https://bitbucket.org/daniel_plohmann/simplifire.idascope)
+[GitHub - onethawt/idaplugins-list: A list of IDA Plugins](https://github.com/onethawt/idaplugins-list)
+[GitHub - Maktm/FLIRTDB: A community driven collection of IDA FLIRT signature files](https://github.com/Maktm/FLIRTDB)
+[FLARE IDA Pro Script Series: Simplifying Graphs in IDA « FLARE IDA Pro Script Series: Simplifying Graphs in IDA | FireEye Inc](https://www.fireeye.com/blog/threat-research/2018/01/simplifying-graphs-in-ida.html)
+[Binary Cracking & Byte Patching with IDA Pro - CodeProject](https://www.codeproject.com/Articles/833955/Binary-Cracking-Byte-Patching-with-IDA-Pro)
+[Free IDA Pro Reverse Code Engineering and Binary Auditing Training Material for University Lectures](http://www.binary-auditing.com/)
+[Using Z3 with IDA to simplify arithmetic operations in functions | Shortjump!](http://0xeb.net/2018/03/using-z3-with-ida-to-simplify-arithmetic-operations-in-functions/)
+[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and ... - James Forshaw - Google Books](https://books.google.com/books?id=kLgrDwAAQBAJ&pg=PT215&lpg=PT215&dq=how+to+find+debug+symbol+file+when+reverse+engineering&source=bl&ots=PWvn1aBqJi&sig=sgBk9yoWfZOqDaScAXEBnv16IXI&hl=en&sa=X&ved=0ahUKEwiXmKm3lpfcAhVyg-AKHTRsA64Q6AEIVTAE#v=onepage&q=how%20to%20find%20debug%20symbol%20file%20when%20reverse%20engineering&f=false)
+[TiGa's Video Tutorial Site](http://www.woodmann.com/TiGa/idaseries.html)
+[RE for Beginners | Short Intro to IDA](https://www.begin.re/short-intro-to-ida)
+[IDA Shortcuts [PDF]](file:///home/emtuls/Downloads/IDA_Pro_Shortcuts.pdf)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Binary Ninja - Static Analysis - Disassembler/Decompiler
+[Reverse Engineering with Binary Ninja and gdb a key checking algorithm - TUMCTF 2016 Zwiebel part 1 - YouTube](https://www.youtube.com/watch?v=LOrSbtNXBtg)
+[GitHub - ColdHeat/liil: Linear IL view for Binary Ninja](https://github.com/ColdHeat/liil)
+[Binary Ninja](https://www.trailofbits.com/research-and-development/binja/)
+[2000 cuts with Binary Ninja | Trail of Bits Blog](https://blog.trailofbits.com/2016/06/03/2000-cuts-with-binary-ninja/)
+[binary ninja Defcon 2017](https://blog.trailofbits.com/2017/07/30/an-extra-bit-of-analysis-for-clemency/)
+[De-obfuscating Jump Chains with Binary Ninja - This is Security :: by Stormshield](https://thisissecurity.stormshield.com/2018/03/20/de-obfuscating-jump-chains-with-binary-ninja/)
+Radare2 - Static Analysis - Disassembler/Decompiler
+[dukebarman/awesome-radare2: A curated list of awesome projects, articles and the other materials powered by Radare2](https://github.com/dukebarman/awesome-radare2)
+[GitHub - radare/radare2: unix-like reverse engineering framework and commandline tools](https://github.com/radare/radare2)
+[A journey into Radare 2 – Part 2: Exploitation – Megabeets](https://www.megabeets.net/a-journey-into-radare-2-part-2/)
+[Scripting radare2 with python for dynamic analysis - TUMCTF 2016 Zwiebel part 2 - YouTube](https://www.youtube.com/watch?v=y69uIxU0eI8)
+[Radare2: An Introduction to Visual Mode - MOVEAX.ME](https://moveax.me/radare2-visual-mode/)
+[Reverse Engineering Using Radare2 – Jacob Pimental – Medium](https://medium.com/@jacob16682/reverse-engineering-using-radare2-588775ea38d5)
+[Reverse Engineering With Radare2 — Part 2 – Jacob Pimental – Medium](https://medium.com/@jacob16682/reverse-engineering-with-radare2-part-2-83b71df7ffe4)
+[Crackme0x04 Dissected with Radare2 - MOVEAX.ME](https://moveax.me/crackme0x04/)
+[Crackme0x03 Dissected with Radare2 - MOVEAX.ME](https://moveax.me/crackme0x03/)
+[Crackme0x05 Dissected with Radare2 - MOVEAX.ME](https://moveax.me/crackme0x05/)
+[Crackme0x06 Dissected with Radare2 - MOVEAX.ME](https://moveax.me/crackme0x06/)
+[Crackme0x07 Dissected with Radare2 - MOVEAX.ME](https://moveax.me/crackme0x07/)
+[Crackme0x08 Dissected with Radare2 - MOVEAX.ME](https://moveax.me/crackme0x08/)
+[Debugging Using Radare2… and Windows! – Jacob Pimental – Medium](https://medium.com/@jacob16682/debugging-using-radare2-and-windows-5e58677bf943)
+[Crackme0x09 Dissected with Radare2 - MOVEAX.ME](https://moveax.me/crackme0x09/)
+[Reversing a Self-Modifying Binary with radare2 – Megabeets](https://www.megabeets.net/reversing-a-self-modifying-binary-with-radare2/)
+[Reverse engineering a Gameboy ROM with radare2 – Megabeets](https://www.megabeets.net/reverse-engineering-a-gameboy-rom-with-radare2/)
+[BombLab Dissected with Radare2 - MOVEAX.ME](https://moveax.me/bomblab/)
+[Dr Von Noizeman's Nuclear Bomb defused with Radare2 - MOVEAX.ME](https://moveax.me/dr-von-noizemans-binary-bomb/)
+[Crackme0x01 Dissected with Radare2 - MOVEAX.ME](https://moveax.me/crackme0x01/)
+[Conditions and loops – Max Kersten](https://maxkersten.nl/binary-analysis-course/assembly-basics/conditions-and-loops/)
+[radare2 python scripting - r2wiki](https://r2wiki.readthedocs.io/en/latest/home/radare2-python-scripting/)
+[radare2-extras/r2snowman at master · radare/radare2-extras](https://github.com/radare/radare2-extras/tree/master/r2snowman)
+[radareorg/radeco: radare decompiler tool based on radeco-lib](https://github.com/radareorg/radeco)
+[radareorg/cutter: A Qt and C++ GUI for radare2 reverse engineering framework](https://github.com/radareorg/cutter)
+[A journey into Radare 2 – Part 1: Simple crackme – Megabeets](https://www.megabeets.net/a-journey-into-radare-2-part-1/)
+
+
+
+
+
+
+
+
+Hopper - Linux and MacOS Disassembler/Decompiler
+[Hopper - Linux and MacOS Disassembler](https://www.hopperapp.com/)
+x64dbg - Debugger
+[x64dbg](https://x64dbg.com/#start)
+[Plugins · x64dbg/x64dbg Wiki · GitHub](https://github.com/x64dbg/x64dbg/wiki/Plugins)
+[GitHub - x64dbg/x64dbg: An open-source x64/x32 debugger for windows.](https://github.com/x64dbg/x64dbg)
+[x64dbg - Tuts 4 You](https://forum.tuts4you.com/forum/139-x64dbg/)
+GDB - Debugger
+[GDB and Pwntools training](https://ocw.cs.pub.ro/courses/cns/labs/lab-01)
+[Debugging with GDB Introduction | Azeria Labs](https://azeria-labs.com/debugging-with-gdb-introduction/)
+[longld/peda: PEDA - Python Exploit Development Assistance for GDB](https://github.com/longld/peda)
+[Using GDB to Develop Exploits - A Basic Run Through](https://www.exploit-db.com/papers/13205/)
+[GDB Command Reference - x command](http://visualgdb.com/gdbreference/commands/x)
+[GDB Basics](https://platform.avatao.com/paths/a0dc20fc-f1b5-43c9-89fc-3a5fccfb5f0b/challenges/166366b3-2e89-49ee-86a3-023663d197b7)
+[Quick Gdb Guide](http://condor.depaul.edu/glancast/373class/docs/gdb.html)
+[Debugging with GDB: Memory](https://sourceware.org/gdb/onlinedocs/gdb/Memory.html)
+[GDB Tutorial - A Walkthrough with Examples](https://www.cs.umd.edu/~srhuang/teaching/cmsc212/gdb-tutorial-handout.pdf)
+Windbg - Windows Debugger
+[New WinDbg available in preview! – Debugging Tools for Windows](https://blogs.msdn.microsoft.com/windbg/2017/08/28/new-windbg-available-in-preview/)
+[Introduction to Windbg and debugging windows - YouTube](https://www.youtube.com/playlist?list=PLhx7-txsG6t6n_E2LgDGqgvJtCHPL7UFu)
+Immunity Debugger
+[Immunity Debugger Downloads / Downloads - Tuts 4 You](https://tuts4you.com/download.php?list.72)
+OllyDbg - Debugger
+[OllyDbg 2.0](http://www.ollydbg.de/version2.html)
+[OllyDbg v1.10](http://www.ollydbg.de/)
+[danh3707/OllyDbgV1.10-plugins-and-Hlpfile: OllyDbg v1.10 with plugins and help32 file along with windows 10 help32 fix. With a dark color scheme.](https://github.com/danh3707/OllyDbgV1.10-plugins-and-Hlpfile)
+
+
+
+
+
+
+Operating Systems and OS programming
+Georgia Tech Operating Systems
+[An Introduction to programming with threads](http://www.hpl.hp.com/techreports/Compaq-DEC/SRC-RR-35.pdf)
+[hessmjr/operating-systems: Georgia Tech OMSCS - Operating Systems](https://github.com/hessmjr/operating-systems)
+[drharris/pretty-bonnie: Helps with Bonnie test output on Udacity.](https://github.com/drharris/pretty-bonnie)
+[Interactive map of Linux kernel](http://www.makelinux.net/kernel_map/)
+[Linux source code: (v4.20) - Bootlin](https://elixir.bootlin.com/linux/latest/source)
+[GOOD - SystemProgramming Wiki Â· GitHub](https://github.com/angrave/SystemProgramming/wiki)
+Lecture Notes
+[P1L1 - Course Overview - Google Docs](https://docs.google.com/document/d/15cdiV87GTM2UNHeOxp-eJ9yuug-GMvfgpW3qtD9ZDcE/edit)
+[Spring19-schedule.xlsx - Google Sheets](https://docs.google.com/spreadsheets/d/1dxPjroHZguFSTPW46atYX1t8QB1wqqi7tRRvI5V923k/edit#gid=1868198252)
+Recommended Research Papers
+[ud923-birrell-paper.pdf](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-birrell-paper.pdf)
+[eykholt.pdf](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-eykholt-paper.pdf)
+[ud923-stein-shah-paper.pdf](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-stein-shah-paper.pdf)
+[paper.dvi](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-pai-paper.pdf)
+[The Case For Architecture-Aware OS Kernel](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-fedorova-paper.pdf)
+[The performance of spin lock alternatives for shared-money multiprocessors - Parallel and Distributed Systems, IEEE Transactions on](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-anderson-paper.pdf)
+[Formal Requirements for Virtualizable Third Gen Architectures](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-popek-goldberg-paper.pdf)
+[Virtual Machine Monitors: Current Tech and Future Trends](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-rosenblum-garfinkel-paper.pdf)
+[Implementing Remote Procedure Calls](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-birrell-nelson-paper.pdf)
+[Caching in the Sprite Network File System](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-nelson-paper.pdf)
+[Distributed Shared Memory: Concepts and Systems - IEEE Parallel & Distributed Technology: Systems & Applications](https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/references/ud923-protic-paper.pdf)
+[.net - What's the purpose of Thread.SpinWait method? - Stack Overflow](https://stackoverflow.com/questions/1091135/whats-the-purpose-of-thread-spinwait-method)
+[CppCon 2018: Greg Law â€œDebugging Linux C++â€ - YouTube](https://www.youtube.com/watch?v=V1t6faOKjuQ)
+[P1L2 - Introduction to Operating Systems - Google Docs](https://docs.google.com/document/d/1DgYiNnnZiBIXcY_LGPZQTsk_PXEy9Fzx6RX11a6mnU0/edit)
+[The Linux Programming Interface: A Linux and UNIX System Programming Handbook: Michael Kerrisk: 9781593272203: Amazon.com: Books](https://www.amazon.com/The-Linux-Programming-Interface-Handbook/dp/1593272200)
+[PRIMER - Unix and Internet Fundamentals](http://en.tldp.org/HOWTO/Unix-and-Internet-Fundamentals-HOWTO/index.html)
+[Operating System Concepts: Abraham Silberschatz, Peter B. Galvin, Greg Gagne: 9781118063330: Amazon.com: Books](https://www.amazon.com/Operating-System-Concepts-Abraham-Silberschatz/dp/1118063333/ref=dp_ob_title_bk)
+[Operating System Concepts Essentials: Abraham Silberschatz, Peter B. Galvin, Greg Gagne: 9781118804926: Amazon.com: Books](https://www.amazon.com/Operating-Concepts-Essentials-Abraham-Silberschatz/dp/1118804929/ref=sr_1_1?s=books&ie=UTF8&qid=1415311059&sr=1-1&keywords=operating+system+concepts+essentials)
+[Modern Operating Systems (4th Edition): Andrew S. Tanenbaum, Herbert Bos: 9780133591620: Amazon.com: Books](https://www.amazon.com/Modern-Operating-Systems-4th-Edition/dp/013359162X/ref=dp_ob_title_bk)
+[Operating Systems: Thzee Easy Pieces](http://pageq.cs.wisã.edu/~bem:i/OSTEX¯)
+[AOSPrereq-andConcepts-List.pdf](https://www.omscs.gatech.udu/sites/default/files/images/COSX2ereq-and-Concept{-List.Pdf)M
+[Qdvanced Ope2a4ing Systems Readings - Udacity]*https://www.udacity>com?wyky/ud156-readiîgs)[Computer Sqstems: An Integrated0Apprkach to Architmcturm and Opdraténg Systems: Umakishore Ra}ashandran, _illiim D. Leahy Jr.:"9780321486934: Amazon.com: Bokks](`ttps://wwv.amezon.com/Computer-Systems)Integrated-Architecture-O0erating/dp/032148613·ref=sr_!!ke=QTf8&s5boks&qid=1278731624&sr=8-1:)	
+[KS 2200 An Introdu#tion to komputer Systems and Networks](httxs://wsw.cc.gatmch.edu/~òama/CS2200Extepnal/)
+{CS 220p - Pòof. Kishore(Ramcchajdran - Y.uTube(https:/.www.y/utubu.com/playlist?liqtTLl2dezBNo_Bkd8QmSkCX0M7AORHJXe5uG)
+_Berkemey CS 162: Operatang Systems and ProoramMifg](http://www-inst.mEcs.berkgley.edu/~cs162¯fa17/)
+[MikeOS - s)mple x86 assembly language o`erating system](http://mikeïs.sourceforg%.net/)
+[The Art of Unix Programming](http://catb.org/~esr/writings/taoup/html/)
+[Operating systems development for Dummies â€“ Leo Whitehead â€“ Medium](https://medium.com/@lduck11007/operating-systems-development-for-dummies-3d4d786e8ac)
+[Writing a Tiny x86 Bootloader - Joe Bergeron](http://joebergeron.io/posts/post_two.html)
+[Bitwise, Day 0: Overview and Q&A - YouTube](https://www.youtube.com/watch?v=ZjwvMcP3Nf0&list=PLU94OURih-CiP4WxKSMt3UcwMSDM3aTtX)
+[os01 | Bootstrap yourself to write an OS from scratch. A book for self-learner.](https://tuhdo.github.io/os01/)
+[The little book about OS development](https://littleosbook.github.io/)
+[Kernels 101 â€“ Letâ€™s write a Kernel - Arjun Sreedharan](https://arjunsreedharan.org/post/82710718100/kernels-101-lets-write-a-kernel)
+[Kernels 201 - Letâ€™s write a Kernel with keyboard and screen support - Arjun Sreedharan](https://arjunsreedharan.org/post/99370248137/kernels-201-lets-write-a-kernel-with-keyboard)
+[Malloc tutorial](https://danluu.com/malloc-tutorial/)
+[raspberry-pi-os: Learning operating system development using Linux kernel and Raspberry Pi](https://github.com/s-matyukevich/raspberry-pi-os)
+[Write your own Operating System - YouTube](https://www.youtube.com/playlist?list=PLHh55M_Kq4OApWScZyPl5HhgsTJS9MZ6M)
+[Writing a Bootloader Part 1 | Alex Parker's Website](http://3zanders.co.uk/2017/10/13/writing-a-bootloader/)
+
+
+
+
+
+Linux OS Stuff
+[Searchable Linux Syscall Table for x86 and x86_64 | PyTux](https://filippo.io/linux-syscall-table/)
+
+
+
+Compilers
+[UMD - CMSC430: Introduction to Compilers](http://www.cs.umd.edu/class/spring2015/cmsc430/)
+[Stanford - CS143: Compilers](https://web.stanford.edu/class/cs143/)
+Software Engineering
+[Berkeley Foundations of Software Engineering](https://www.mooc-list.com/university-entity/university-california-berkeley?title=software+engineer&field_start_date_value_op=between&field_start_date_value%5Bvalue%5D%5Bdate%5D=&field_start_date_value%5Bmin%5D%5Bdate%5D=&field_start_date_value%5Bmax%5D%5Bdate%5D=&sort_by=field_start_date_value&sort_order=DESC)
+[]C Barkeley CS 169 Software Engineeòing](http://cs149.saar-class*org+)
+[Allen Holub:!Training/Consulting/Programming: Agile, Crchitecture, Swidt, Javc](https2/+w7.holub*com/goodies/bumes.html)
+
+
+Secure Programming
+[AddressSanitizer · google/sanitizers Wiki](https://github.com/google/sanitizers/wiki/AddressSanitizer)
+[Electric Fence - eLinux.org](https://elinux.org/Electric_Fence)
+[GFlags and PageHeap - Windows drivers | Microsoft Docs](https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/gflags-and-pageheap)
+
+
+
+
+
+
+
+
+
+
+
+
+Malware Analysis
+VM's and Environments for Malware Analysis
+Apple (MacOS)
+[How to Install macOS High Sierra 10.13.6 on VirtualBox on Windows - Techsviewer](https://techsviewer.com/install-macos-high-sierra-virtualbox-windows/)
+[Malware Unicorn Environment VM's](https://securedorg.github.io/RE101/section1/)
+[SIFT Workstation Download](https://digital-forensics.sans.org/community/downloads)
+[Creating a Simple Free Malware Analysis Environment - MalwareTech](https://www.malwaretech.com/2017/11/creating-a-simple-free-malware-analysis-environment.html)
+[Creating the Ultimate Tor Virtual Network - MalwareTech](https://www.malwaretech.com/2015/08/creating-ultimate-tor-virtual-network.html)
+Intro Courses for Malware Analysis
+[RPISEC - Malware Analysis 2013](http://security.cs.rpi.edu/courses/malware-spring2013/)
+[RPISEC - Malware Analysis 2015](https://github.com/RPISEC/Malware)
+[Malware Unicorn 101](https://securedorg.github.io/RE101/)
+[Malware Unicorn 102](https://securedorg.github.io/RE102/)
+[Intro to RE/Malware Analysis](https://www.youtube.com/watch?feature=youtu.be&v=-Ml04jPMH3U&app=desktop)
+[RPISEC INTROSEC](https://introsec.backdrifting.net/lectures/2017fall/08_creepy_crawlies.html#1)
+[Open Security Training - Reverse Engineering Malware](http://opensecuritytraining.info/ReverseEngineeringMalware.html)
+[How to start RE/malware analysis? | hasherezade's 1001 nights](https://hshrzd.wordpress.com/how-to-start/)
+[Intro to Malware Analysis](http://www.thefengs.com/wuchang/courses/cs492/)
+Tools for Malware Analysis
+[Free Automated Malware Analysis Service - powered by Falcon Sandbox](https://www.hybrid-analysis.com/)
+[REMnux: A free Linux Toolkit for Reverse-Engineering and Analyzing Malware](https://remnux.org/)
+[ProcDump - Windows Sysinternals | Microsoft Docs](https://docs.microsoft.com/en-us/sysinternals/downloads/procdump)
+[Overview - Process Hacker](https://processhacker.sourceforge.io/)
+[PE Tools](http://wiki.yobi.be/wiki/Reverse-Engineering#PE)
+[Dependency Walker (depends.exe) Home Page](http://www.dependencywalker.com/)
+[PEview](http://wjradburn.com/software/)
+[Resource Hacker](http://www.angusj.com/resourcehacker

@@ -1,0 +1,15 @@
+python crash course 
+Eloquent js
+Pragmatic Programmer
+Clean Code
+Designing data-intensive Applications
+Hands on Hacking
+Grey Hat hacking
+Network/Linux Basics for hackers
+Black Hat hacking
+Getting started to become a master hacker
+Black Hat python
+hacking connected cars
+Hacking APIs
+Black Hat GO
+
