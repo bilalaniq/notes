@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "/usr/bin/g++",  // Use the correct path to g++ in WSL
+      "args": [
+        "-g",  // Generate debug symbols
+        "-o", "${workspaceFolder}/build/Debug/outDebug",  // Path for the output executable
+        "${workspaceFolder}/src/main.cpp"  // Path to your main source file (adjust if necessary)
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],  // Match error format for GCC
+      "detail": "Build the C++ project"
+    }
+  ]
+}
