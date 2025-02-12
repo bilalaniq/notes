@@ -5,8 +5,8 @@ section .data
 ; or i could also do it by using labels it doesthe same work 
     ; array: dd 10, 20, 30, 40, 50
 
-    ; With :: array: is a label followed by the data definition.
-    ; Without :: array is still a label, but the colon is omitted for convenience.
+    ; With array: is a label followed by the data definition.
+    ; Without array is still a label, but the colon is omitted for convenience.
 
 ;in short both are labels
 
@@ -21,7 +21,7 @@ section .text
 _start:
 
     ; Load the base address of the array into ESI
-    mov esi, array
+    mov esi, array ;Extended Source Index
 
     ; esi: This is a register in the x86 architecture. Specifically, ESI stands for Extended Source Index. 
     ; It's commonly used to hold addresses for string or array operations and is often used as a pointer to an
@@ -36,6 +36,10 @@ _start:
     ; Modify the third element (array[2] = 100)
     mov dword [esi + 8], 100  ; array[2] = 100
 
+    ; dd vs DWORD:
+    ;dd is the assembler directive used to define a 32-bit value.
+    ;DWORD is simply a term that describes a 32-bit (4-byte) data type, typically used to explain the size of data being handled, 
+    ;but it’s not a directive in NASM itself.
 
     ; Exit the program
     mov eax, 1       ; syscall: exit
