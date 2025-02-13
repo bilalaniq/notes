@@ -249,5 +249,3 @@ This program checks the first byte of the integer `1`. In Little Endian systems,
 - **Little Endian** stores the **least significant byte** first, whereas **Big Endian** stores the **most significant byte** first.
 - Little Endian is more common in modern desktop processors (e.g., Intel, AMD), while Big Endian is used in certain older or specialized architectures (e.g., PowerPC) and in networking protocols.
 - Endianness is important for **interoperability**, especially when transferring data between different systems or over networks, and requires converting the data to the correct format when necessary.
-
-Let me know if you'd like further clarification or examples on endianness!

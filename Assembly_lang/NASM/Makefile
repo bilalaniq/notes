@@ -21,23 +21,21 @@ OBJECTDEBUG = $(target).o.debug
 %.o: %.asm
 	$(NASM) $(NASMFLAGS) $< -o $@
 
-# Link the regular executable
-$(target).exe: $(OBJECT)
-	$(LD) $(LDFLAGS) -o $(target).exe $(OBJECT)
+# Link the regular executable (without .exe extension for Linux)
+$(target): $(OBJECT)
+	$(LD) $(LDFLAGS) -o $(target) $(OBJECT)
 
 # Link the debug executable (with debug information)
 debug: $(OBJECTDEBUG)
-	$(LD) $(LDFLAGSDEBUG) -o $(target).exe $(OBJECTDEBUG)
+	$(LD) $(LDFLAGSDEBUG) -o $(target) $(OBJECTDEBUG)
 
 # Explicit rule for debug object file (using NASMFLAGSDEBUG)
 $(OBJECTDEBUG): $(target).asm
 	$(NASM) $(NASMFLAGSDEBUG) $< -o $(OBJECTDEBUG)
 
 # The default goal is to build the regular executable
-all: $(target).exe
-
-
+all: $(target)
 
 # Clean up generated files
 clean:
-	rm -f $(OBJECT) $(target).exe $(OBJECTDEBUG) $(target)
+	rm -f $(OBJECT) $(target) $(OBJECTDEBUG) $(target)
