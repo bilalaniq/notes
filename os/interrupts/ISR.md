@@ -55,3 +55,21 @@ The purpose of an **Interrupt Service Routine (ISR)** is to manage events that o
 - Limited Execution Time: ISRs should be short and efficient; more execution time may result in the system getting failed in its normal operation and giving a chance for other interrupts.
 
 - Context Switching Overhead: ISRs introduce some overhead since the currently running processor state needs to be saved and restored upon an interrupt.
+
+### Example 1:
+
+I/O transfer by interrupt driven I/O
+If an I/O device which wants to perform a data transfer with the processor, must give an interrupt to the processor.
+An interrupt is a condition that makes the processor execute an ISR (Interrupt Service Routine).
+In the ISR, the processor will perform data transfer with the I/O device.
+Whenever a device wants to transfer data, it will interrupt the processor.
+
+![ISR](https://media.geeksforgeeks.org/wp-content/uploads/20210615182535/CopyofTimingDiagramcontrolled9-660x299.png)
+
+---
+
+<br>
+<br>
+
+
+if you want to learn about context switching click [here](./Context_Switching.md)

@@ -55,7 +55,7 @@ In summary, the OS includes the always-running kernel, middleware for app develo
 <br>
 <br>
 
-## Computer-System Organization
+# Computer-System Organization
 
 A modern general-purpose computer system consists of one or more CPUs and
 a number of device controllers connected through a common bus that provides
@@ -84,6 +84,12 @@ access to the memory.
 
 ## Interrupts
 
-if you want to learn about Interrupts click [here](Interrupts.md)
+if you want to learn about Interrupts click [here](./interrupts/Interrupts.md)
+
+---
+
+## Storage Structure
+
+if you want to learn about Storage Structure click [here](./Storage_Structure/Storage_Structure.md)
 
 ---
