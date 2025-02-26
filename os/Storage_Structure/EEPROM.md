@@ -10,7 +10,7 @@ It is a memory chip that is non-volatile in nature that is it can hold the data 
 
 ---
 
-![EEPROM](https://upload.wikimedia.org/wikipedia/commons/7/71/AT24C02_EEPROM_1480355_6_7_HDR_Enhancer.jpg)
+![EEPROM](https://media.rs-online.com/image/upload/w_620,h_413,c_crop,c_pad,b_white,f_auto,q_auto/dpr_auto/v1482272565/F8696173-01.jpg)
 
 ---
 
@@ -22,4 +22,11 @@ There are mainly two types of EPROM technology exist
 
 - One-Time Programmable (OTP) EPROM: EPROM that can be programmed once (OTP). With one significant exception an OTP EPROM is comparable to a UV-EPROM: it lacks a UV light window and is hence difficult to erase. OTP EPROMs can occasionally be completely deleted using X-rays in their starting point.
 
+## Example
 
+The iPhone uses EEPROM to store serial numbers and hardware
+information about the device.
+
+## Conclusion
+
+EPROM contributed significantly to the advancement of computer hardware by striking a balance between adaptability and durability. It has becoming a more popular option for [firmware](./firmware.md) storage in a wider range of devices due to its long term data preservation and ability to be programmed again. EPROM is less used in modern applications because of the introduction of [Flash memory](./Flash_memory.md) and other technologies. Despite this its impact on the history of computers has been enormous.
