@@ -289,4 +289,80 @@ ps -e -o pid
 
 this will only print the process ids of the programs running you could also change the -o type
 
+## example
 
+```bash
+section .data
+
+a dd 4
+b dd 4.4
+c times 10 dd 0
+d dw 1 ,2
+e db 0xfb
+f db "helo world" , 0
+
+section .bss
+
+g       resd 1
+h       resd 10
+i       resb 100
+
+section .text
+
+global  _start
+
+_start:
+
+push    rbp
+mov     rbp, rsp
+sub     rsp, 16
+
+
+xor     eax, eax
+leave
+ret
+
+```
+
+now if we look at the `.lst` file by this command
+
+```bash
+nasm -f elf64 -l memory.lst -o memory.o memory.asm
+```
+
+we will get this
+
+```text
+
+     1                                  section .data
+     2
+     3 00000000 04000000                a dd 4
+     4 00000004 CDCC8C40                b dd 4.4
+     5 00000008 00000000<rep Ah>        c times 10 dd 0
+     6 00000030 01000200                d dw 1 ,2
+     7 00000034 FB                      e db 0xfb
+     8 00000035 68656C6F20776F726C-     f db "helo world" , 0
+     8 0000003E 6400
+     9
+    10                                  section .bss
+    11
+    12 00000000 ????????                g       resd 1
+    13 00000004 <res 28h>               h       resd 10
+    14 0000002C <res 64h>               i       resb 100
+    15
+    16                                  section .text
+    17
+    18                                  global  main
+    19
+    20                                  main:
+    21
+    22 00000000 55                      push    rbp
+    23 00000001 4889E5                  mov     rbp, rsp
+    24 00000004 4883EC10                sub     rsp, 16
+    25
+    26
+    27 00000008 31C0                    xor     eax, eax
+    28 0000000A C9                      leave
+    29 0000000B C3                      ret
+
+```
