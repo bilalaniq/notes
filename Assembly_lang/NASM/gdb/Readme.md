@@ -1,207 +1,169 @@
-# gdb
+# Examining memory with gdb
 
-Using **GDB** to debug **assembly programs** is an incredibly useful skill, as it allows you to examine the execution of your program, check the state of registers, and inspect memory to track down errors.
+In this section we will focus on using the gdb print (p) and examine (x)
+commands. Print is a simple command which can print some data values
+and is versatile enough to print various forms of C expressions. Examine
+is strictly for printing data from memory and is quite useful for printing
+arrays of various types.
 
-Below is a detailed guide on using **GDB** to debug **assembly programs**.
+# Printing with gdb
 
----
+The format for the p command is either p expression or p/FMT expression
+where FMT is a single letter defining the format of data to print. The format choices are
 
-### 1. **Preparing the Assembly Program for Debugging**
+| Format | Description       |
+| ------ | ----------------- |
+| `d`    | Decimal (default) |
+| `X`    | Hexadecimal       |
+| `t`    | Binary            |
+| `u`    | Unsigned          |
+| `f`    | Floating point    |
+| `1`    | Instruction       |
+| `c`    | Character         |
+| `s`    | String            |
+| `a`    | Address           |
 
-To debug assembly programs with GDB, you need to compile your program with debugging symbols using the `-g` flag.
-
-For example, if you have an assembly program `program.asm`, you can assemble and link it using `nasm` and `gcc`:
-
-### Assemble and Link the Program:
-
-```bash
-nasm -f elf64 -g -o program.o program.asm  # Assemble with debugging info
-gcc -nostartfiles -g -o program program.o  # Link the object file with debugging info when using main
-
-# and when using _start use
-
-ld -o program program.o
-
-```
-
-- `-g`: Generates debugging symbols for the program.
-- `-nostartfiles`: Tells the linker not to link against the standard C library or startup files, which is commonly used in assembly programs.
-
-### 2. **Starting GDB for Assembly Programs**
-
-Once you have the program compiled and linked, you can start GDB with the executable:
+`note` : i have used gef(GDB Enhanced Features) so donot be confussed by it
 
 ```bash
-gdb ./program
+(gdb) p a
+$32 = 4
+(gdb) p/a &a
+$33 = Ox601018 <a>
+(gdb) p b
+$34 = 1082969293
+(gdb) p/f b
+$35 = 4 . 400000 1
+(gdb) p/a &b
+$36 = Ox60101c <b>
+(gdb) p/x &b
+$37 = Ox60101c
+(gdb) p/a &c
+$39 = Ox601020 <c>
+(gdb) p/a &d
+$40 = Ox601048 <d>
+(gdb) p/a &e
+$41 = Ox60104c <e>
+(gdb) p/a &f
+$42 = Ox60104d <f>
+
+# .bss
+
+(gdb) p/a &g
+$43 = Ox601070 <g>
+(gdb) p/a &h
+$45 = Ox601074 <h>
+(gdb) p/a &i
+$46 = Ox60109c <i>
 ```
 
-GDB will open the program and allow you to start debugging.
+We see that gdb handles a perfectly. It gets the type right and the
+length. It needs the If option to print b correctly. Notice that a is
+located at address `Ox601018` which is `24` bytes after the start of a page
+in memory. gdb will prohibit accessing memory before a, though there is
+no hardware restriction to the previous 24 bytes. We see that the data
+segment variables are placed in memory one after another until f which
+starts at `Ox60104d` and extends to `Oc601058`. There is a gap until the bss
+segment which starts with g at address Ox60 1070. The bss data items
+are placed back to back in memory with no gaps.
 
----
+- From a to f: These variables are in the data segment (initialized variables), placed sequentially in memory.
+- From g to i: These variables are in the BSS segment (uninitialized variables), placed one after another without any gaps.
 
-### 3. **Setting Breakpoints in GDB**
+To understand why `0x601018` is **24 bytes after the start of a page**, let's break it down step by step:
 
-You can set breakpoints at specific labels or addresses in your assembly program to stop the program's execution at that point.
+1. **Memory Pages**:
 
-- **Set a breakpoint at a label**:
+   - Memory is often divided into chunks called **pages**. A typical page size is **4 KB** (4,096 bytes).
+   - This means the starting address of each page is a multiple of 4,096 (like `0x0`, `0x1000`, `0x2000`, and so on).
 
-  ```bash
-  (gdb) break _start  # Set breakpoint at the program's entry point (e.g., _start label)
-  ```
+2. **Finding the Page Boundary**:
 
-- **Set a breakpoint at a specific address** (useful in assembly):
+   - The memory address `0x601018` is where a variable (`a`) is located.
+   - To check how far this address is from the start of the page, we need to find the **page boundary** (the nearest multiple of 4,096 before `0x601018`).
 
-  ```bash
-  (gdb) break *0x400080  # Set breakpoint at address 0x400080
-  ```
+3. **Calculate the Start of the Page**:
 
-- **Set a breakpoint at a function** (e.g., `main`):
-  ```bash
-  (gdb) break main  # If you have a main label or function
-  ```
+   - To find the start of the page that contains `0x601018`, we simply **clear the lower 12 bits** (since 4 KB = 4096 bytes, and `0x1000` is 4096 in hexadecimal).
+   - `0x601018` in binary is `0110 0000 0001 0000 0001 1000`. The lower 12 bits are `001 000 0001 1000`, and when cleared, you get `0x601000`.
 
----
+   Therefore, the **start of the page** for `0x601018` is `0x601000`.
 
-### 4. **Running the Program in GDB**
+4. **Calculate the Offset**:
+   - Now, to find how far `0x601018` is from `0x601000`, subtract:
+     ```
+     0x601018 - 0x601000 = 0x18 (24 bytes)
+     ```
+   - So, `0x601018` is **24 bytes** after `0x601000`, the start of the page.
 
-To run the program inside GDB, use the `run` command:
+The address `0x601018` is **24 bytes** after the start of a page (`0x601000`), meaning it's 24 bytes into the page that starts at `0x601000`.
 
+# Examining memory
+
+Notice that there are no length specifiers with p. If you want to print
+doubles in memory it could be done with some mental gymnastics with
+p. The examine command handles this job readily.
+
+The format for examine is `x/NFS address`
+
+- N is the number of items to print (default is 1 if not specified).
+- F is a single letter format specifier that tells GDB how to display the data (e.g., hexadecimal, decimal, character, etc.).
+- S is the size of each memory location you want to examine (e.g., byte, word, etc.).
+- address is the memory address you want to examine.
+
+GDB uses certain letters for size
+
+| Size Type    | Memory Representation |
+| ------------ | --------------------- |
+| b (byte)     | 1 byte                |
+| h (halfword) | 2 bytes               |
+| w (word)     | 4 bytes               |
+| g (giant)    | 8 bytes               |
+
+
+Here are the examples based on the `x/NFS address` command format in GDB:
+
+### Example 1: Examine 2 bytes in hexadecimal
 ```bash
-(gdb) run
+x/2xb 0x601000
 ```
+- **2**: Number of items (2 bytes).
+- **x**: Format (hexadecimal).
+- **b**: Size (byte, 1 byte per item).
+- **0x601000**: Memory address.
 
-The program will execute until it hits the first breakpoint.
-
----
-
-### 5. **Stepping Through Assembly Code**
-
-Once the breakpoint is hit, you can step through your program one instruction at a time using GDB commands.
-
-- **Step through the program one instruction**:
-
-  ```bash
-  (gdb) stepi  # Step one instruction at a time
-  ```
-
-- **Step through the program one line** (if source code is available):
-  ```bash
-  (gdb) next  # Step to the next line in the assembly code
-  ```
-
----
-
-### 6. **Inspecting Registers**
-
-When debugging assembly programs, you often want to check the state of the **CPU registers**, as they store the current execution context of the program.
-
-- **Show all registers**:
-
-  ```bash
-  (gdb) info registers  # Display all the CPU registers and their values
-  ```
-
-- **Show the value of a specific register**:
-  ```bash
-  (gdb) print $rax  # Show the value of the RAX register
-  ```
-
-Registers like **RAX**, **RBX**, **RCX**, etc., store data and control information during the program's execution.
-
----
-
-### 7. **Inspecting Memory**
-
-You can inspect the contents of memory to understand how data is being manipulated.
-
-- **Examine memory at a specific address**:
-
-  ```bash
-  (gdb) x/10gx 0x601000  # Examine 10 quadwords (8 bytes) starting at address 0x601000
-  ```
-
-- **Examine a specific variable in memory**:
-  ```bash
-  (gdb) x/4b &var  # Examine 4 bytes of the variable `var` in memory
-  ```
-
----
-
-### 8. **Modifying Registers and Memory**
-
-While debugging, you can modify registers and memory to experiment with different behaviors.
-
-- **Set a register value**:
-
-  ```bash
-  (gdb) set $rax = 42  # Set the value of the RAX register to 42
-  ```
-
-- **Modify memory at a specific address**:
-
-  ```bash
-  (gdb) set {int}0x601000 = 42  # Set the value at address 0x601000 to 42
-  ```
-
-- **Set a value at a specific address**:
-  ```bash
-  (gdb) set {char}0x601000 = 0x41  # Set the value at address 0x601000 to 0x41 (ASCII 'A')
-  ```
-
----
-
-### 9. **Viewing the Stack**
-
-In assembly, the stack is particularly important for function calls and local variables. You can inspect the stack to understand the current execution context.
-
-- **View the call stack**:
-
-  ```bash
-  (gdb) backtrace  # Show the current call stack
-  ```
-
-- **View the stack from a specific address**:
-
-  ```bash
-  (gdb) x/20x $rsp  # Examine 20 words (4 bytes each) from the current stack pointer (RSP)
-  ```
-
-- **View the contents of the stack**:
-  ```bash
-  (gdb) info stack  # Show the stack contents
-  ```
-
----
-
-### 10. **Listing Source Code in GDB**
-
-If you have the source code available (from the `-g` flag), you can list the assembly code in GDB.
-
-- **List source code around the current execution point**:
-
-  ```bash
-  (gdb) list
-  ```
-
-- **List source code at a specific line or function**:
-  ```bash
-  (gdb) list 20  # List 20 lines of assembly code around the current line
-  ```
-
----
-
-### 11. **Exiting GDB**
-
-Once you’re done with debugging, you can exit GDB:
-
+### Example 2: Examine 3 words in decimal
 ```bash
-(gdb) quit
+x/3wd 0x601000
 ```
+- **3**: Number of items (3 words).
+- **w**: Size (word, 4 bytes per item).
+- **d**: Format (decimal).
+- **0x601000**: Memory address.
 
----
+### Example 3: Examine 4 halfwords in hexadecimal
+```bash
+x/4xh 0x601000
+```
+- **4**: Number of items (4 halfwords).
+- **x**: Format (hexadecimal).
+- **h**: Size (halfword, 2 bytes per item).
+- **0x601000**: Memory address.
 
+### Example 4: Examine 2 giant values in hexadecimal
+```bash
+x/2xg 0x601000
+```
+- **2**: Number of items (2 giants).
+- **x**: Format (hexadecimal).
+- **g**: Size (giant, 8 bytes per item).
+- **0x601000**: Memory address.
 
-
-# Examining memory with gdb 
-
-
+### Example 5: Examine 5 bytes in decimal
+```bash
+x/5bd 0x601000
+```
+- **5**: Number of items (5 bytes).
+- **b**: Size (byte, 1 byte per item).
+- **d**: Format (decimal).
+- **0x601000**: Memory address.

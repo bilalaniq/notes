@@ -366,3 +366,5 @@ we will get this
     29 0000000B C3                      ret
 
 ```
+
+to examine memory using gdb click [here](./../gdb/Readme.md)
