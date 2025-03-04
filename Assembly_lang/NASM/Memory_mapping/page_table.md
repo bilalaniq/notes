@@ -13,6 +13,10 @@ It maps the page number to its frame number where that particular page is stored
 
 The greater the number of entries in the page table of a process, the higher the size of the page table. If the page table size is greater than the frame size of the main memory, then Multi-level paging comes into the picture.
 
+The size of a page depends on the processor mode (protected, compatibility or long mode)
+
+if you want to learn about modes click [here](./mode.md)
+
 ![page table](https://sf.ezoiccdn.com/ezoimgfmt/cstaleem.com/wp-content/uploads/2020/05/Page-table-in-operating-system.jpg?ezimgfmt=rs:730x345/rscb1/ng:webp/ngcb1)
 
 ---
@@ -127,3 +131,7 @@ The physical address is now generated, as shown in the diagram below.
 
 Note: If the number of page faults increases, then the effective access time of the system will also increase.
 Effective Access Time (EAT) is the average time it takes for a system to retrieve data from memory, considering both hits (when the data is already in RAM) and misses (when the data is not in RAM and a page fault occurs, requiring loading from disk).
+
+---
+
+if you want to learn about `memory mapping register` click [here](./memory_mapping_register.md)

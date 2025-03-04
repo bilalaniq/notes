@@ -1,14 +1,16 @@
 # x86 Registers (32-bit and 64-bit)
 
 ## Table of Contents
+
 - [32-bit Registers (x86)](#32-bit-registers-x86)
+
   - [General Purpose Registers](#general-purpose-registers)
-   
+
   - [Segment Registers](#segment-registers)
   - [Flags Register](#flags-register)
+
 - [64-bit Registers (x86-64)](#64-bit-registers-x86-64)
   - [General Purpose Registers](#general-purpose-registers-1)
-    
   - [Extended Versions of 32-bit Registers](#extended-versions-of-32-bit-registers-lower-32-bits)
   - [Segment Registers](#segment-registers-1)
   - [Flags Register](#flags-register-1)
@@ -20,17 +22,19 @@
 ## 32-bit Registers (x86)
 
 ### [General Purpose Registers](#general-purpose-registers)
-- [**EAX**](#eax)  
-- [**EBX**](#ebx)  
-- [**ECX**](#ecx)  
-- [**EDX**](#edx)  
-- [**ESI**](#esi)  
-- [**EDI**](#edi)  
-- [**EBP**](#ebp)  
-- [**ESP**](#esp)  
-- [**EIP**](#eip)  
+
+- [**EAX**](#eax)
+- [**EBX**](#ebx)
+- [**ECX**](#ecx)
+- [**EDX**](#edx)
+- [**ESI**](#esi)
+- [**EDI**](#edi)
+- [**EBP**](#ebp)
+- [**ESP**](#esp)
+- [**EIP**](#eip)
 
 ### [Segment Registers]
+
 - [**CS** (Code Segment)](#cs-code-segment)
 - [**DS** (Data Segment)](#ds-data-segment)
 - [**SS** (Stack Segment)](#ss-stack-segment)
@@ -40,10 +44,8 @@
 
 ---
 
-
-
-
 ### [Flags Register](#flags-register)
+
 - **FLAGS** (Contains the status flags for the processor)
 
 ---
@@ -51,36 +53,39 @@
 ## 64-bit Registers (x86-64)
 
 ### [General Purpose Registers](#general-purpose-registers-1)
-- [**RAX**](#rax)  
-- [**RBX**](#rbx)  
-- [**RCX**](#rcx)  
-- [**RDX**](#rdx)  
-- [**RSI**](#rsi)  
-- [**RDI**](#rdi)  
-- [**RBP**](#rbp)  
-- [**RSP**](#rsp)  
-- [**RIP**](#rip)  
-- [**R8**](#r8)  
-- [**R9**](#r9)  
-- [**R10**](#r10)  
-- [**R11**](#r11)  
-- [**R12**](#r12)  
-- [**R13**](#r13)  
-- [**R14**](#r14)  
+
+- [**RAX**](#rax)
+- [**RBX**](#rbx)
+- [**RCX**](#rcx)
+- [**RDX**](#rdx)
+- [**RSI**](#rsi)
+- [**RDI**](#rdi)
+- [**RBP**](#rbp)
+- [**RSP**](#rsp)
+- [**RIP**](#rip)
+- [**R8**](#r8)
+- [**R9**](#r9)
+- [**R10**](#r10)
+- [**R11**](#r11)
+- [**R12**](#r12)
+- [**R13**](#r13)
+- [**R14**](#r14)
 - [**R15**](#r15)
 
 ### [Extended Versions of 32-bit Registers](#extended-versions-of-32-bit-registers-lower-32-bits)
-- **EAX** → **RAX**  
-- **EBX** → **RBX**  
-- **ECX** → **RCX**  
-- **EDX** → **RDX**  
-- **ESI** → **RSI**  
-- **EDI** → **RDI**  
-- **EBP** → **RBP**  
-- **ESP** → **RSP**  
-- **EIP** → **RIP**  
+
+- **EAX** → **RAX**
+- **EBX** → **RBX**
+- **ECX** → **RCX**
+- **EDX** → **RDX**
+- **ESI** → **RSI**
+- **EDI** → **RDI**
+- **EBP** → **RBP**
+- **ESP** → **RSP**
+- **EIP** → **RIP**
 
 ### [Segment Registers]
+
 - [**CS** (Code Segment)](#cs-code-segment)
 - [**DS** (Data Segment)](#ds-data-segment)
 - [**SS** (Stack Segment)](#ss-stack-segment)
@@ -88,26 +93,28 @@
 - [**FS** (Additional Segment)](#fs-additional-segment)
 - [**GS** (Additional Segment)](#gs-additional-segment)
 
-
 ### [Flags Register](#flags-register-1)
+
 - **RFLAGS** (64-bit equivalent of FLAGS)
 
 ---
 
-## [Special Purpose Registers](#special-purpose-registers)
-- **CR0** - Control Register 0  
-- **CR1** - Control Register 1  
-- **CR2** - Control Register 2  
-- **CR3** - Control Register 3  
-- **CR4** - Control Register 4  
-- **GDTR** - Global Descriptor Table Register  
-- **IDTR** - Interrupt Descriptor Table Register  
-- **LDTR** - Local Descriptor Table Register  
-- **TR** - Task Register  
+## [Special Purpose Registers](#special-purpose-register)
+
+- **CR0** - Control Register 0
+- **CR1** - Control Register 1
+- **CR2** - Control Register 2
+- **CR3** - Control Register 3
+- **CR4** - Control Register 4
+- **GDTR** - Global Descriptor Table Register
+- **IDTR** - Interrupt Descriptor Table Register
+- **LDTR** - Local Descriptor Table Register
+- **TR** - Task Register
 
 ---
 
 ## [Notes](#notes)
+
 - **R8** to **R15** are only available in the 64-bit architecture (x86-64).
 - **EAX, EBX, ECX, etc.** are still present in the 64-bit architecture but refer to the lower 32 bits of the corresponding 64-bit registers.
 
@@ -120,6 +127,7 @@
 In the x86 architecture, **`EAX`** stands for **"Extended Accumulator Register"**. It is one of the 32-bit **general-purpose registers** and plays a critical role in many operations, including arithmetic, logic, data transfer, and function calls.
 
 ### Key Facts About `EAX`:
+
 - **Name**: **`EAX`** stands for **Extended Accumulator Register**.
   - It’s an extension of the 16-bit **`AX`** register (Accumulator Register).
   - The **`EAX`** register is a **32-bit** register (4 bytes) in the extended register set.
@@ -128,17 +136,19 @@ In the x86 architecture, **`EAX`** stands for **"Extended Accumulator Register"*
   - The 8-bit versions are **`AL`** (lower byte) and **`AH`** (higher byte).
 
 ### Breakdown of the `EAX` Register:
+
 - **32-bit (Full Register)**: `EAX`
 - **16-bit**: `AX` (lower 16 bits of `EAX`)
 - **8-bit**: `AL` (lower 8 bits of `EAX`), `AH` (higher 8 bits of `EAX`)
 
 Here’s how `EAX` is split:
+
 - **`EAX`** – 32-bit register, used for 32-bit operations.
 - **`AX`** – 16-bit portion, used when dealing with 16-bit operations or as the lower 16 bits of `EAX`.
 - **`AL`** – 8-bit lower byte, used for byte operations (8-bit).
 - **`AH`** – 8-bit upper byte, used for byte operations (8-bit).
 
-The EAX register is a 32-bit register, and it is essentially a combination of its smaller components: AX, AH, and AL. 
+The EAX register is a 32-bit register, and it is essentially a combination of its smaller components: AX, AH, and AL.
 
 ### Common Uses of `EAX`:
 
@@ -146,6 +156,7 @@ The EAX register is a 32-bit register, and it is essentially a combination of it
    The `EAX` register is commonly used as an **accumulator** in arithmetic operations. This means it typically holds the result of arithmetic instructions such as addition, multiplication, and division.
 
    Example:
+
    ```nasm
    mov eax, 5      ; Load 5 into EAX
    add eax, 10     ; Add 10 to EAX (EAX = EAX + 10, EAX = 15)
@@ -155,6 +166,7 @@ The EAX register is a 32-bit register, and it is essentially a combination of it
    In many calling conventions, such as **cdecl** and **stdcall**, the **return value of functions** is stored in `EAX`. When a function returns a result, the value is placed in `EAX`.
 
    Example:
+
    ```nasm
    ; Example of function returning an integer
    call some_function
@@ -162,10 +174,12 @@ The EAX register is a 32-bit register, and it is essentially a combination of it
    ```
 
 3. **Multiplication and Division**:
+
    - **Multiplication**: For multiplication, `EAX` is often involved in the result. In unsigned multiplication, `EAX` holds the lower 32 bits of the result, and the upper 32 bits are stored in the `EDX` register.
    - **Division**: For division, `EAX` holds the **numerator**, and the result is placed in `EAX`, with the remainder in `EDX`.
 
    Example (Multiplication):
+
    ```nasm
    mov eax, 3    ; Load 3 into EAX
    mov ebx, 4    ; Load 4 into EBX
@@ -173,6 +187,7 @@ The EAX register is a 32-bit register, and it is essentially a combination of it
    ```
 
    Example (Division):
+
    ```nasm
    mov eax, 10   ; Load 10 into EAX (numerator)
    mov ebx, 3    ; Load 3 into EBX (denominator)
@@ -186,6 +201,7 @@ The EAX register is a 32-bit register, and it is essentially a combination of it
    When making system calls, particularly on Linux (using the `int 0x80` system call interface), `EAX` is used to store the system call number, and sometimes the return value from the system call is placed in `EAX`.
 
    Example (Linux system call):
+
    ```nasm
    mov eax, 1      ; System call number for sys_exit (1)
    xor ebx, ebx    ; Exit status 0
@@ -196,6 +212,7 @@ The EAX register is a 32-bit register, and it is essentially a combination of it
    `EAX` can be used in general **data transfer operations**, such as moving data into or out of memory.
 
    Example:
+
    ```nasm
    mov eax, [esi]   ; Load the value at the memory address pointed by ESI into EAX
    mov [edi], eax   ; Store the value in EAX into the memory address pointed by EDI
@@ -205,6 +222,7 @@ The EAX register is a 32-bit register, and it is essentially a combination of it
    `EAX` can be used with logical instructions such as `AND`, `OR`, `XOR`, and `NOT`.
 
    Example:
+
    ```nasm
    mov eax, 0x0F   ; Load a value into EAX
    and eax, 0x0F   ; Perform bitwise AND, EAX = EAX & 0x0F
@@ -214,6 +232,7 @@ The EAX register is a 32-bit register, and it is essentially a combination of it
    `EAX` is used in comparison operations, where it typically holds a value that will be compared with another value using instructions like `CMP` or `TEST`.
 
    Example:
+
    ```nasm
    mov eax, 5     ; Load 5 into EAX
    cmp eax, 5     ; Compare EAX with 5 (sets flags based on the result)
@@ -222,24 +241,26 @@ The EAX register is a 32-bit register, and it is essentially a combination of it
 
 ### Common Instructions with `EAX`:
 
-- **Arithmetic**: 
-   - `ADD eax, <value>`: Add to `EAX`.
-   - `SUB eax, <value>`: Subtract from `EAX`.
-   - `MUL <register/memory>`: Unsigned multiply, result in `EAX`.
-   - `IMUL <register/memory>`: Signed multiply, result in `EAX`.
-   - `DIV <register/memory>`: Unsigned divide, result in `EAX`, remainder in `EDX`.
+- **Arithmetic**:
+
+  - `ADD eax, <value>`: Add to `EAX`.
+  - `SUB eax, <value>`: Subtract from `EAX`.
+  - `MUL <register/memory>`: Unsigned multiply, result in `EAX`.
+  - `IMUL <register/memory>`: Signed multiply, result in `EAX`.
+  - `DIV <register/memory>`: Unsigned divide, result in `EAX`, remainder in `EDX`.
 
 - **Bitwise**:
-   - `AND eax, <value>`: Bitwise AND with `EAX`.
-   - `OR eax, <value>`: Bitwise OR with `EAX`.
-   - `XOR eax, <value>`: Bitwise XOR with `EAX`.
-   - `NOT eax`: Bitwise NOT of `EAX`.
+
+  - `AND eax, <value>`: Bitwise AND with `EAX`.
+  - `OR eax, <value>`: Bitwise OR with `EAX`.
+  - `XOR eax, <value>`: Bitwise XOR with `EAX`.
+  - `NOT eax`: Bitwise NOT of `EAX`.
 
 - **Shift**:
-   - `SHL eax, <count>`: Shift `EAX` left by `<count>` bits.
-   - `SHR eax, <count>`: Shift `EAX` right by `<count>` bits.
-   - `ROL eax, <count>`: Rotate `EAX` left by `<count>` bits.
-   - `ROR eax, <count>`: Rotate `EAX` right by `<count>` bits.
+  - `SHL eax, <count>`: Shift `EAX` left by `<count>` bits.
+  - `SHR eax, <count>`: Shift `EAX` right by `<count>` bits.
+  - `ROL eax, <count>`: Rotate `EAX` left by `<count>` bits.
+  - `ROR eax, <count>`: Rotate `EAX` right by `<count>` bits.
 
 ### Example of `EAX` Usage in a Program:
 
@@ -271,6 +292,7 @@ _start:
 The **`EBX`** register is one of the **general-purpose registers** in the x86 architecture. It is a 32-bit register that is commonly used for various tasks in assembly programming, including data storage, address calculation, and operations with strings.
 
 ### Key Facts About **`EBX`**:
+
 - **Name**: **`EBX`** stands for **Extended Base Register**.
   - It is an extension of the 16-bit **`BX`** register in x86 architecture.
   - **`EBX`** is 32 bits in size, and it is used in **32-bit operations**.
@@ -279,6 +301,7 @@ The **`EBX`** register is one of the **general-purpose registers** in the x86 ar
   - The **8-bit** versions are **`BL`** (lower byte) and **`BH`** (higher byte).
 
 ### Breakdown of the `EBX` Register:
+
 - **32-bit**: `EBX`
 - **16-bit**: `BX` (lower 16 bits of `EBX`)
 - **8-bit**: `BL` (lower byte), `BH` (higher byte)
@@ -286,19 +309,23 @@ The **`EBX`** register is one of the **general-purpose registers** in the x86 ar
 ### Common Uses of **`EBX`**:
 
 1. **Base Register for Addressing**:
+
    - **`EBX`** is often used as a **base pointer** when calculating addresses. It can be used in conjunction with **`ESI`**, **`EDI`**, and other registers to access data structures or arrays.
    - In some instructions, **`EBX`** is used as a base register, especially when performing operations on memory or when working with **pointer arithmetic**.
 
    Example:
+
    ```nasm
    lea ebx, [array] ; Load the address of the array into EBX
    mov eax, [ebx]   ; Load the first element of the array into EAX
    ```
 
 2. **Looping and Counters**:
+
    - **`EBX`** can be used as a loop counter or in arithmetic operations, particularly for counting or holding intermediate values.
 
    Example:
+
    ```nasm
    mov ebx, 5         ; Set loop counter to 5
    loop_start:
@@ -308,21 +335,27 @@ The **`EBX`** register is one of the **general-purpose registers** in the x86 ar
    ```
 
 3. **String Operations**:
+
    - **`EBX`** is sometimes used in string manipulation operations, particularly in operations like **`REP MOVSB`**, **`REP STOSB`**, **`REP LODSB`**, where registers like **`ESI`** and **`EDI`** are commonly involved, but **`EBX`** can also store or operate on the data.
 
 4. **General-Purpose Data Storage**:
+
    - As a **general-purpose register**, **`EBX`** can be used to store temporary data, perform arithmetic, and hold intermediate values during calculations or logic operations.
 
 5. **Function Argument Passing**:
+
    - In certain calling conventions (like **`fastcall`**), **`EBX`** might be used to pass function arguments or return values, although this is less common than using registers like **`EAX`** and **`ECX`**.
 
 6. **Multiplication**:
+
    - **`EBX`** can be used to hold operands in multiplication instructions, but in general, the **`EAX`** register is often more common in arithmetic, especially for results. However, **`EBX`** can participate in multiplication indirectly or hold values that are multiplied.
 
 7. **Dividing (in some cases)**:
+
    - For **division** operations, **`EBX`** can be used as the **denominator**, especially when combined with **`EAX`** and **`EDX`** for the division operation.
-   
+
    Example (using `EDX:EAX` for division):
+
    ```nasm
    mov eax, 100     ; Dividend
    mov ebx, 4       ; Divisor
@@ -330,9 +363,11 @@ The **`EBX`** register is one of the **general-purpose registers** in the x86 ar
    ```
 
 8. **System Calls**:
+
    - In some system call conventions, **`EBX`** is used to hold arguments for system calls, especially in Linux when invoking system calls via **`int 0x80`**.
 
    Example (Linux system call):
+
    ```nasm
    mov eax, 1       ; sys_exit system call number
    mov ebx, 0       ; Exit code
@@ -340,6 +375,7 @@ The **`EBX`** register is one of the **general-purpose registers** in the x86 ar
    ```
 
 ### Register Breakdown:
+
 - **32-bit Register**: `EBX`
   - This is used for general data storage, counters, pointers, and arithmetic.
 - **16-bit Register**: `BX`
@@ -350,6 +386,7 @@ The **`EBX`** register is one of the **general-purpose registers** in the x86 ar
 ### Example of **`EBX`** Usage:
 
 #### Example 1: Using **`EBX`** as a Base Register
+
 ```nasm
 section .data
 array db 10, 20, 30, 40, 50  ; Define an array of bytes
@@ -369,6 +406,7 @@ _start:
 ```
 
 #### Example 2: Using **`EBX`** as a Loop Counter
+
 ```nasm
 mov ebx, 10        ; Set EBX to 10 (loop counter)
 loop_start:
@@ -378,6 +416,7 @@ loop_start:
 ```
 
 #### Example 3: Using **`EBX`** in Division
+
 ```nasm
 mov eax, 50        ; Dividend
 mov ebx, 4         ; Divisor
@@ -386,13 +425,13 @@ div ebx            ; EAX / EBX, quotient in EAX, remainder in EDX
 
 ---
 
-
 ### [ECX](#ecx)
+
 In the x86 architecture, the **`ECX`** register is a **general-purpose register** that is part of the **32-bit** register set, and it's often used for various purposes in assembly programming. Specifically, **`ECX`** is the **extended version** of the 16-bit **`CX`** register, and its use is quite flexible. Here’s an overview of `ECX` and its main uses:
 
 ### Key Facts About `ECX`:
+
 - **Size**: `ECX` is a 32-bit register (4 bytes). The 16-bit version is `CX`, and the 8-bit versions are `CL` (lower byte) and `CH` (higher byte).
-  
 - **Purpose**: It is primarily used for:
   - **Loop counter**: `ECX` is commonly used as a counter in **loops**, especially in string operations or iteration.
   - **Shift and rotate operations**: The `ECX` register is used to specify the number of positions for bit shifts and rotations.
@@ -420,6 +459,7 @@ In the x86 architecture, the **`ECX`** register is a **general-purpose register*
    - **`ROR`**: Rotate right
 
    Example:
+
    ```nasm
    mov ecx, 3    ; Set shift count to 3
    shl eax, cl    ; Shift the value in EAX left by 3 positions
@@ -442,19 +482,20 @@ In the x86 architecture, the **`ECX`** register is a **general-purpose register*
    When performing operations like `CMP` (compare), `TEST`, or `AND` on values in `ECX`, the register is used just like any other general-purpose register.
 
 ### Breakdown of `ECX` Components:
+
 - **Full 32-bit**: `ECX`
 - **16-bit**: `CX`
 - **8-bit**: `CL` (lower byte), `CH` (higher byte)
 
 For example:
+
 - `mov ecx, 0x12345678` moves the value `0x12345678` into the full 32-bit register `ECX`.
 - `mov ch, 0x12` moves the byte `0x12` into the upper byte (`CH`) of `ECX`.
 
 ---
 
-
-
 ### [EDX](#edx)
+
 In NASM (Netwide Assembler), **registers** are special locations in the CPU used to store data temporarily during computation. These registers serve various purposes and are essential for performing operations like arithmetic, logic, and control flow in assembly language programs.
 
 Here is a detailed breakdown of **edx** in NASM:
@@ -466,11 +507,13 @@ Here is a detailed breakdown of **edx** in NASM:
 - The `edx` register is part of a set of general-purpose registers, along with `eax`, `ebx`, `ecx`, `esi`, `edi`, `ebp`, and `esp`.
 
 ### 2. **Register Size**
+
 - **32-bit**: In modern 32-bit x86 processors, `edx` is a 32-bit register.
 - **16-bit**: You can access a portion of `edx` as a 16-bit register called `dx`.
 - **8-bit**: You can access even smaller parts, `dl` (lower byte) and `dh` (upper byte).
 
 #### Breakdown of `edx`:
+
 - `edx` (32-bit)
   - `dx` (16-bit)
     - `dl` (8-bit lower byte)
@@ -479,8 +522,9 @@ Here is a detailed breakdown of **edx** in NASM:
 ### 3. **Common Uses of `edx`**
 
 - **Multiplication**: When multiplying large numbers (larger than what can fit in a 32-bit register), the result is split between `eax` (lower 32 bits) and `edx` (upper 32 bits).
-  
+
   For example:
+
   ```nasm
   mov eax, 12345678    ; Load value into eax
   mov ebx, 98765432    ; Load second value into ebx
@@ -488,12 +532,14 @@ Here is a detailed breakdown of **edx** in NASM:
   ```
 
   In this case, the result of the multiplication is a 64-bit value, where:
+
   - The lower 32 bits are stored in `eax`
   - The upper 32 bits are stored in `edx`
 
 - **Division**: For division, `edx:eax` (a 64-bit number) is divided by the divisor. The quotient is stored in `eax`, and the remainder is stored in `edx`.
 
   For example:
+
   ```nasm
   mov eax, 100000000   ; Dividend
   xor edx, edx         ; Clear edx (important to avoid division errors)
@@ -502,12 +548,14 @@ Here is a detailed breakdown of **edx** in NASM:
   ```
 
   After the `div` instruction:
+
   - `eax` contains the quotient
   - `edx` contains the remainder
 
 - **Shifting Operations**: `edx` can be used in shift operations. Shifting registers is a way to multiply or divide by powers of 2.
 
   Example:
+
   ```nasm
   shl edx, 1  ; Shift left (multiply by 2)
   shr edx, 1  ; Shift right (divide by 2)
@@ -530,7 +578,7 @@ _start:
     xor edx, edx       ; Clear edx
     mov ebx, 3         ; Divisor
     div ebx            ; Divide edx:eax by ebx, result in eax, remainder in edx
-    
+
     ; Print result (Just an example of output logic)
     mov eax, 4         ; sys_write system call
     mov ebx, 1         ; File descriptor (stdout)
@@ -545,7 +593,9 @@ _start:
 ```
 
 ### 5. **Flags and `edx`**
+
 When using `edx` in operations like division and multiplication, you should be aware of the **Flags** (status flags in the EFLAGS register), which are often affected by the results:
+
 - **Carry Flag (CF)**: Set when the result of an operation (like a multiplication or division) overflows.
 - **Zero Flag (ZF)**: Set if the result is zero.
 - **Sign Flag (SF)**: Set if the result is negative.
@@ -555,23 +605,28 @@ For instance, after a `mul` or `div` instruction, you can check the `edx` regist
 ### 6. **Accessing `edx` in 64-bit Mode**
 
 If you are programming in **64-bit mode** (x86-64 architecture), the `edx` register still exists but has an expanded set of 64-bit registers like `rax`, `rbx`, and others. In 64-bit mode:
+
 - `edx` is still a 32-bit register in the `rdx` 64-bit register.
 - Operations like division still use `rdx` alongside `rax` for 64-bit values.
 
 ---
 
 ### [ESI](#esi)
+
 The **`ESI`** register in NASM (and x86 assembly in general) is a **32-bit general-purpose register** that has several important roles, particularly in string and array processing. It is one of the **extended registers** (the 32-bit version of the 16-bit **`SI`** register), and its use can vary depending on the operation or the calling convention in use.
 
 ### Key Details of the `ESI` Register:
 
 1. **Name**: `ESI`
+
    - Stands for **"Extended Source Index"**. This name reflects its primary use in string and memory operations, where it often serves as the **source index** for operations like `MOVS`, `CMPS`, `LODS`, and `STOS`.
 
 2. **Size**: 32 bits (4 bytes)
+
    - The 16-bit version of `ESI` is `SI`, and the 8-bit versions are `SIL` (lower byte) and `SIH` (higher byte).
 
 3. **Default Role**:
+
    - **Source Index in String Operations**: `ESI` is used as the source pointer or index in string operations like `MOVSB`, `MOVSD`, `CMPSB`, `CMPSD`, `LODSB`, and `LODSD`. These instructions manipulate data from memory and usually work with the `ESI` register for the source location and `EDI` for the destination.
    - **Pointer to Data**: It can be used to point to the source of an array or memory block during operations.
 
@@ -607,6 +662,7 @@ The **`ESI`** register in NASM (and x86 assembly in general) is a **32-bit gener
    ```
 
 3. **In Function Calls (as a register in some calling conventions)**:
+
    - In some calling conventions, such as the **cdecl** calling convention, the `ESI` register can be used to pass arguments to functions, though this varies based on the platform or the convention used.
 
 4. **Used for Address Calculations**:
@@ -623,15 +679,18 @@ The **`ESI`** register in NASM (and x86 assembly in general) is a **32-bit gener
    In some cases, `ESI` is used to point to data on the stack or in other memory areas that need to be processed or moved.
 
 ### Breakdown of `ESI` Components:
+
 - **Full 32-bit**: `ESI`
 - **16-bit**: `SI`
 - **8-bit**: `SIL` (lower byte) and `SIH` (higher byte)
 
 For example:
+
 - `mov esi, 0x12345678` will load the 32-bit value `0x12345678` into the full `ESI` register.
 - `mov sil, 0x12` will load the byte `0x12` into the lower byte (`SIL`) of `ESI`.
 
 ### Example of `ESI` in Action:
+
 Here’s a simple example using `ESI` for string manipulation:
 
 ```nasm
@@ -671,6 +730,7 @@ done:
 ```
 
 ### Summary:
+
 - **`ESI`** is a 32-bit general-purpose register primarily used as the **source index** for string operations, but it can also be used in **pointer arithmetic**, **array processing**, and other memory-related tasks.
 - It is often used alongside **`EDI`** (the destination index) in string operations.
 - The **direction flag (DF)** controls whether `ESI` will be incremented or decremented during string operations.
@@ -684,6 +744,7 @@ Overall, `ESI` is a very versatile register in assembly, especially for tasks in
 The **`EDI`** register is one of the **general-purpose registers** in the **x86 architecture**. It is a **32-bit register** and is commonly used for tasks such as addressing, string operations, and holding data during program execution.
 
 ### Key Facts About **`EDI`**:
+
 - **Name**: **`EDI`** stands for **Extended Destination Index**.
   - It is an **extended version of the 16-bit `DI` register**.
   - **`EDI`** is used in many operations where an index to memory or data structures is required.
@@ -692,6 +753,7 @@ The **`EDI`** register is one of the **general-purpose registers** in the **x86 
   - The **8-bit** versions are **`DL`** (lower byte) and **`DH`** (higher byte).
 
 ### Breakdown of the **`EDI`** Register:
+
 - **32-bit**: `EDI`
 - **16-bit**: `DI` (lower 16 bits of `EDI`)
 - **8-bit**: `DL` (lower byte), `DH` (higher byte)
@@ -699,10 +761,12 @@ The **`EDI`** register is one of the **general-purpose registers** in the **x86 
 ### Common Uses of **`EDI`**:
 
 1. **String Operations**:
+
    - **`EDI`** is often used as a **destination pointer** in **string operations**, such as `REP MOVSB`, `REP LODSB`, and other instructions that manipulate or compare strings. It is commonly paired with the **`ESI`** register, which often serves as the source index.
    - In **string instructions**, the **`EDI`** register is used to hold the address where the destination data will be stored, and it is automatically incremented or decremented based on the **direction flag** (`DF`).
 
    Example of using **`EDI`** with string operations:
+
    ```nasm
    lea edi, [dest]    ; Load the address of the destination into EDI
    lea esi, [source]  ; Load the address of the source into ESI
@@ -711,10 +775,12 @@ The **`EDI`** register is one of the **general-purpose registers** in the **x86 
    ```
 
 2. **Data Transfer**:
+
    - **`EDI`** can be used in **memory-to-memory data transfers**, where it serves as the **destination** address for a move operation.
    - You can use **`EDI`** to point to a location in memory where you want to copy data, and then transfer data from another register or memory location into the destination pointed to by **`EDI`**.
 
    Example:
+
    ```nasm
    mov edi, array     ; Load the address of the array into EDI
    mov eax, [esi]     ; Load a value from the address in ESI into EAX
@@ -722,9 +788,11 @@ The **`EDI`** register is one of the **general-purpose registers** in the **x86 
    ```
 
 3. **Pointer Arithmetic**:
+
    - **`EDI`** is frequently used for pointer arithmetic when accessing elements of an array or navigating through data structures. It acts as a **pointer** that can be incremented or decremented to move through memory locations.
 
    Example:
+
    ```nasm
    lea edi, [array]   ; Load the address of the array into EDI
    mov eax, [edi]     ; Load the first element of the array
@@ -732,12 +800,15 @@ The **`EDI`** register is one of the **general-purpose registers** in the **x86 
    ```
 
 4. **Function Arguments and Return Values**:
+
    - In certain calling conventions, such as **`fastcall`**, **`EDI`** may be used to pass function arguments or hold return values. While **`EAX`** is generally used to return values, **`EDI`** might be used for other data passed to functions.
 
 5. **Looping**:
+
    - **`EDI`** can be used as a loop counter, especially when iterating over data or performing operations over an array or buffer. You can use **`EDI`** as the index, modifying it on each iteration.
 
    Example:
+
    ```nasm
    mov edi, 10        ; Set loop counter to 10
    loop_start:
@@ -747,12 +818,15 @@ The **`EDI`** register is one of the **general-purpose registers** in the **x86 
    ```
 
 6. **Arithmetic Operations**:
+
    - Although **`EDI`** is not as frequently used as **`EAX`** or **`EBX`** in arithmetic operations, it can still be involved in such tasks when necessary. **`EDI`** can hold operands or intermediate results in calculations.
 
 7. **System Calls**:
+
    - In certain system call conventions, **`EDI`** may hold data passed to system calls. For instance, in some Linux system calls, the **`EDI`** register may be used to pass arguments to system functions.
 
    Example (Linux system call):
+
    ```nasm
    mov eax, 1         ; sys_exit system call number
    mov edi, 0         ; Exit status
@@ -760,6 +834,7 @@ The **`EDI`** register is one of the **general-purpose registers** in the **x86 
    ```
 
 ### Register Breakdown:
+
 - **32-bit Register**: `EDI`
   - The full 32-bit register used in general-purpose tasks.
 - **16-bit Register**: `DI`
@@ -770,6 +845,7 @@ The **`EDI`** register is one of the **general-purpose registers** in the **x86 
 ### Example of **`EDI`** Usage:
 
 #### Example 1: String Copy Using **`EDI`** as Destination
+
 ```nasm
 section .data
 source db 'Hello, World!', 0
@@ -791,6 +867,7 @@ _start:
 ```
 
 #### Example 2: Using **`EDI`** as a Pointer to Data
+
 ```nasm
 section .data
 array dd 1, 2, 3, 4, 5    ; Array of integers
@@ -811,6 +888,7 @@ _start:
 ```
 
 #### Example 3: Using **`EDI`** in a Loop to Process Data
+
 ```nasm
 section .data
 array db 1, 2, 3, 4, 5   ; Array of bytes
@@ -851,16 +929,18 @@ Let’s break down the `EBP` register in full detail:
 - The **`EBP` register** usually holds the **base address** of the current stack frame during function execution. It is instrumental in accessing local variables and function parameters, which are stored on the stack.
 
 #### Key Characteristics:
+
 - **Size**: 32 bits (on 32-bit systems)
 - **Primary Usage**: **Stack frame management**, **local variables**, **function parameters**, **return addresses**.
 
 ---
 
 ### 2. **Register Breakdown**
+
 - **`EBP`** is a full 32-bit register.
   - It is used to point to the base of the stack frame during function execution.
   - Within the stack frame, **local variables** and **function parameters** are often accessed using `EBP`.
-  
+
 ---
 
 ### 3. **Role of `EBP` in Function Calls**
@@ -870,6 +950,7 @@ In assembly programming, especially in the context of function calls, the `EBP` 
 #### **The Stack Frame**
 
 Each function call in an assembly program generally creates a **stack frame**. This stack frame typically contains:
+
 1. The **return address** (where the program should continue after the function finishes).
 2. The **saved value of the `EBP` register** (to restore the previous stack frame).
 3. **Function parameters** (passed on the stack, especially in the calling convention).
@@ -886,26 +967,30 @@ When a function is called, the following steps occur:
 1. **Function Call**:
    - The caller **pushes the return address** onto the stack.
    - The caller **pushes the value of `EBP`** onto the stack to save the base pointer of the previous function.
-   
 2. **Function Prologue**:
+
    - The function's prologue **moves the value of `ESP` (stack pointer)** into `EBP`. This sets up the current base pointer for the function's stack frame.
    - The function may then **push local variables** onto the stack or **reserve space for local variables**.
 
    Example of the prologue:
+
    ```nasm
    push ebp          ; Save the old base pointer
    mov ebp, esp      ; Set the new base pointer (start of this function's stack frame)
    ```
 
 3. **Function Body**:
+
    - Local variables are accessed relative to `EBP`. For example, the first local variable can be accessed with `[EBP-4]`, the second with `[EBP-8]`, and so on.
    - Function arguments can also be accessed relative to `EBP`. For example, the first argument passed to the function can be accessed with `[EBP+8]`, the second argument with `[EBP+12]`, etc. (this depends on the calling convention).
 
 4. **Function Epilogue**:
+
    - When the function completes, the **`EBP` register** is restored to the value it held before the function was called.
    - The **return address** is popped from the stack to continue execution after the function call.
 
    Example of the epilogue:
+
    ```nasm
    mov esp, ebp      ; Restore the stack pointer to where it was at the function start
    pop ebp           ; Restore the old base pointer
@@ -917,6 +1002,7 @@ When a function is called, the following steps occur:
 ### 5. **Accessing Local Variables and Parameters with `EBP`**
 
 In the context of a function call, the **stack frame** created by `EBP` allows you to access:
+
 - **Function arguments**: These are located above the `EBP` (increasing memory addresses).
 - **Local variables**: These are located below the `EBP` (decreasing memory addresses).
 
@@ -949,6 +1035,7 @@ ret                 ; Return from the function
 ```
 
 In this example:
+
 - The **first argument** is located at `[EBP + 8]` (remember that the return address is also pushed onto the stack first).
 - The **second argument** is at `[EBP + 12]`.
 - The **first local variable** is at `[EBP - 4]`, and the **second local variable** is at `[EBP - 8]`.
@@ -958,6 +1045,7 @@ In this example:
 ### 6. **`EBP` in 64-bit Architecture**
 
 In **x86-64 architecture**, the `EBP` register is extended to **`RBP`**, a 64-bit register. In the 64-bit mode, `RBP` still plays a similar role as in 32-bit mode:
+
 - It points to the base of the stack frame during function execution.
 - Local variables and function arguments are accessed relative to `RBP`.
 
@@ -1013,12 +1101,14 @@ add_numbers:
 ```
 
 In this program:
+
 - The `add_numbers` function is called with two arguments (`5` and `10`).
 - The **stack frame** is set up using `EBP` to access the parameters and store the result.
 
 ---
 
 ### [ESP](#esp)
+
 ### `ESP` Register in Detail (NASM Assembly)
 
 The **`ESP`** (Extended Stack Pointer) register is a **32-bit** general-purpose register in the **x86** architecture. It is primarily used for managing the **stack**, a critical part of memory where function call information (such as parameters, return addresses, and local variables) is stored.
@@ -1039,6 +1129,7 @@ The **`ESP` register** is critical for **push**, **pop**, and **call**/**return*
 ### 2. **Role of `ESP` in Function Calls**
 
 In a typical function call, the `ESP` register is used to manage the stack and the data stored there. This includes:
+
 1. **Pushing data** onto the stack (arguments, return addresses, saved registers, etc.).
 2. **Popping data** off the stack (restoring values, retrieving return addresses, etc.).
 3. **Managing stack frames** for function calls.
@@ -1046,12 +1137,14 @@ In a typical function call, the `ESP` register is used to manage the stack and t
 #### Function Call Sequence (Prologue and Epilogue):
 
 1. **Function Call (Prologue)**:
+
    - When a function is called, certain data is pushed onto the stack:
      - The **return address** (where the function should return after completion).
      - The **previous value of `EBP`** (used for stack frame management).
    - The `ESP` register points to the current top of the stack, and as data is pushed onto the stack, it decreases.
 
    Example of a function prologue:
+
    ```nasm
    push ebp        ; Save the previous base pointer (EBP) onto the stack
    mov ebp, esp    ; Set up the new base pointer for the current stack frame
@@ -1059,10 +1152,12 @@ In a typical function call, the `ESP` register is used to manage the stack and t
    ```
 
 2. **Function Epilogue**:
+
    - When the function finishes, the `ESP` register is restored to the value it had before the function call. This "pops" the function's data off the stack, including local variables and saved registers.
    - The function’s **return address** is popped off the stack to continue execution after the function.
 
    Example of a function epilogue:
+
    ```nasm
    mov esp, ebp    ; Restore the original stack pointer
    pop ebp         ; Restore the previous base pointer (EBP)
@@ -1079,6 +1174,7 @@ In a typical function call, the `ESP` register is used to manage the stack and t
   - For example, when popping a 4-byte value, `ESP` increases by 4.
 
 Example:
+
 ```nasm
 push eax       ; Push the value in EAX onto the stack (ESP decreases)
 pop ebx        ; Pop the value from the stack into EBX (ESP increases)
@@ -1091,6 +1187,7 @@ pop ebx        ; Pop the value from the stack into EBX (ESP increases)
 The `ESP` register can be used to access data on the stack. The stack grows downward, so you can reference stack values relative to `ESP`.
 
 - **Accessing values pushed onto the stack**: You can access stack data by adding or subtracting from `ESP`.
+
   - **Example**: To access the first item pushed onto the stack (e.g., `PUSH EAX`), you can use `[ESP]`.
 
 - **Local variables** and function **parameters** can be accessed relative to `ESP`:
@@ -1098,6 +1195,7 @@ The `ESP` register can be used to access data on the stack. The stack grows down
   - **Function parameters** are accessed with positive offsets from `ESP` (above `ESP`).
 
 ### Example:
+
 ```nasm
 push eax            ; Push EAX onto the stack (ESP decreases)
 push ebx            ; Push EBX onto the stack (ESP decreases again)
@@ -1112,6 +1210,7 @@ mov ecx, [esp + 4]  ; Get the next value on the stack (EAX)
 ### 5. **`ESP` and the Stack Frame**
 
 When a function is called, the stack frame is used to organize the stack. The stack frame includes:
+
 - The **return address** (where to return after the function finishes).
 - The **previous value of `EBP`** (for restoring the previous stack frame).
 - **Local variables** (space allocated within the function).
@@ -1120,6 +1219,7 @@ When a function is called, the stack frame is used to organize the stack. The st
 The **`ESP`** register is responsible for managing this stack frame by pointing to the **top of the stack**.
 
 #### Example (Function Prologue and Epilogue):
+
 ```nasm
 ; Function Prologue
 push ebp            ; Save the old EBP value onto the stack
@@ -1138,6 +1238,7 @@ ret                 ; Return to the caller
 ```
 
 In the example above:
+
 - The **`ESP`** register is used to manage the stack frame and to access local variables.
 - The function prologue sets up the **stack frame** by saving the previous value of `EBP`, moving `EBP` to the current `ESP`, and reserving space for local variables.
 - The function epilogue restores `ESP` and `EBP` to their previous values before returning.
@@ -1149,6 +1250,7 @@ In the example above:
 In the calling convention (typically **cdecl** in x86), the function arguments are pushed onto the stack in reverse order. You can access these arguments using `ESP` as a reference.
 
 #### Example:
+
 ```nasm
 ; Calling a function with parameters:
 push 5        ; Push the second parameter (5) onto the stack
@@ -1165,6 +1267,7 @@ my_function:
 ```
 
 In the example above:
+
 - The parameters are pushed onto the stack in reverse order, with `ESP` pointing to the first parameter when the function is called.
 - The callee accesses the parameters by using positive offsets from `ESP`.
 
@@ -1173,6 +1276,7 @@ In the example above:
 ### 7. **`ESP` in 64-bit Mode (`RSP`)**
 
 In **x86-64 (64-bit mode)**, the `ESP` register is extended to `RSP`. The general idea is the same:
+
 - **`RSP`** (64-bit) manages the stack and points to the top of the stack.
 - The stack still grows downward, and the calling conventions are similar to 32-bit mode, but in 64-bit, function arguments are passed in registers (e.g., `RDI`, `RSI`, `RDX`) for the first few arguments, with additional arguments passed on the stack.
 
@@ -1211,11 +1315,11 @@ _start:
 ```
 
 In this example:
+
 - Two integers are pushed onto the stack.
 - The values are accessed from the stack using `ESP` (the first integer is at `[ESP]`, and the second is at `[ESP + 4]`).
 
 ---
-
 
 ### [EIP](#eip)
 
@@ -1227,12 +1331,13 @@ The **`EIP`** (Extended Instruction Pointer) register is a crucial 32-bit regist
 - It is a **32-bit** register in the **x86 architecture** (used in 32-bit mode).
 - The **`EIP` register** holds the address of the **next instruction** that will be executed.
 - The **`EIP`** is automatically updated as the CPU executes instructions, moving to the next instruction in memory.
-  
+
 The `EIP` register is critical for the **execution flow** of a program. When the CPU fetches an instruction, it looks at the address stored in `EIP`, executes the instruction, and then increments or modifies `EIP` based on the nature of the instruction.
 
 ### 2. **Role of `EIP` in Program Execution**
 
 The **`EIP` register** is central to the flow of a program:
+
 - It **points to the next instruction** to execute.
 - After executing an instruction, the CPU **updates `EIP`**:
   - For **sequential instructions**, `EIP` simply increments to the next instruction (typically the next 4-byte instruction).
@@ -1244,17 +1349,20 @@ The **`EIP` register** is central to the flow of a program:
 
 Here’s how the `EIP` register is involved in the execution cycle:
 
-1. **Instruction Fetch**: 
+1. **Instruction Fetch**:
+
    - The CPU uses the value of `EIP` to fetch the next instruction from memory.
    - The instruction is fetched from the address stored in `EIP`.
 
-2. **Instruction Decode**: 
+2. **Instruction Decode**:
+
    - Once the instruction is fetched, the CPU decodes it to determine what operation it will perform.
 
-3. **Execute**: 
+3. **Execute**:
+
    - The CPU executes the decoded instruction (e.g., addition, subtraction, etc.).
 
-4. **Update `EIP`**: 
+4. **Update `EIP`**:
    - For most instructions, `EIP` simply increments by the length of the instruction.
    - For jump or branch instructions, `EIP` is modified to point to the target address of the jump.
 
@@ -1266,11 +1374,12 @@ In programs, control flow instructions like jumps, calls, and returns cause chan
 
 - **`JMP`** (Unconditional jump):
   - The `EIP` register is set to the target address of the jump.
-  
 - **`CALL`** (Function call):
+
   - The current `EIP` (the address of the next instruction) is pushed onto the stack, and `EIP` is updated to the address of the function being called.
 
 - **`RET`** (Function return):
+
   - The value at the top of the stack (which holds the address of the instruction to return to) is popped into `EIP`, effectively resuming execution at that point.
 
 - **Conditional jumps** (e.g., `JE`, `JNE`, `JZ`):
@@ -1287,9 +1396,11 @@ JMP target_address
 ```
 
 In this case:
+
 - The `EIP` register is updated to `target_address`, meaning the CPU will jump to the instruction located at `target_address` and continue execution from there.
 
 For a **`CALL`** instruction:
+
 ```nasm
 CALL function_label
 ```
@@ -1326,6 +1437,7 @@ msg db "Hello, World!", 0
 ```
 
 In this program:
+
 - The program starts executing at the `_start` label.
 - The `EIP` register initially points to the address of `_start`.
 - As instructions are executed, the `EIP` register increments to point to the next instruction.
@@ -1337,6 +1449,7 @@ In this program:
 ### 7. **Interrupts and `EIP`**
 
 When an interrupt (such as `int 0x80`) occurs:
+
 - The current value of `EIP` is **pushed onto the stack** so that the program can continue from where it left off after the interrupt is handled.
 - The processor then sets `EIP` to the address of the interrupt handler (the target address for the interrupt).
 
@@ -1347,6 +1460,7 @@ For example, after a system call is made using `int 0x80`, the CPU saves the cur
 ### 8. **EIP in 64-bit Mode (RIP)**
 
 In **x86-64** (64-bit mode), the `EIP` register is extended to **`RIP`** (Return Instruction Pointer). The role of `RIP` is the same as `EIP` but in 64-bit mode:
+
 - **`RIP`** holds the address of the next instruction to execute.
 - Just like `EIP`, `RIP` is automatically updated as instructions are executed.
 
@@ -1389,6 +1503,7 @@ skip_message:
 ```
 
 In this example:
+
 - The program begins execution at `_start`, and `EIP` initially points to the first instruction in the `_start` section.
 - After printing the first message (`msg1`), a **`JMP`** instruction is encountered. This modifies `EIP` to point to the `skip_message` label, effectively skipping the second print operation and jumping directly to print the second message (`msg2`).
 
@@ -1403,9 +1518,6 @@ The **`EIP`** (Extended Instruction Pointer) register is a critical component of
 
 In **64-bit mode**, the `EIP` register becomes `RIP`, but its functionality remains the same.
 
-
-
-
 ### [RAX](#rax)
 
 The **`RAX`** register is a **64-bit** general-purpose register in the **x86-64 architecture** (also known as **x64** or **AMD64**). It plays a crucial role in arithmetic operations, function calls, and return values in modern 64-bit systems.
@@ -1418,7 +1530,7 @@ The **`RAX`** register is a **64-bit** general-purpose register in the **x86-64 
   - **Return values** from functions.
   - **Arithmetic operations** (e.g., multiplication, division).
   - **System calls** (specifically, the system call number is placed in `RAX`).
-  
+
 It is a very important register in modern 64-bit assembly programming.
 
 ---
@@ -1426,12 +1538,14 @@ It is a very important register in modern 64-bit assembly programming.
 ### 2. **Structure of `RAX`**
 
 The `RAX` register is a 64-bit register, but it can be accessed in different sizes:
+
 - **64-bit**: Full register `RAX`.
 - **32-bit**: The lower 32 bits of `RAX`, accessed via `EAX`.
 - **16-bit**: The lower 16 bits of `RAX`, accessed via `AX`.
 - **8-bit**: The lower 8 bits of `RAX`, accessed via `AL` (low byte) and `AH` (high byte of `AX`).
 
 Here's the structure of `RAX`:
+
 ```
 +----------------------------------+
 |    RAX (64-bit)                  |
@@ -1445,11 +1559,14 @@ Here's the structure of `RAX`:
 ### 3. **Usage of `RAX` in Function Calls**
 
 In **x86-64 calling conventions**, `RAX` is typically used to:
+
 - Store the **return value** of a function.
 - Hold **system call numbers** in certain operating systems (like Linux).
 
 #### Return Values
+
 When a function is called, the result of the function (if any) is returned in the `RAX` register. For example:
+
 ```nasm
 section .text
     global _start
@@ -1471,6 +1588,7 @@ my_function:
 ```
 
 In this example:
+
 - The function `my_function` returns a value in `RAX` (which is 42 in this case).
 - When the function returns, the caller (`_start`) retrieves the value from `RAX` and uses it (e.g., setting it as the exit code).
 
@@ -1481,28 +1599,36 @@ In this example:
 The `RAX` register is commonly used in arithmetic operations, especially for **multiplication** and **division**.
 
 #### Multiplication:
+
 In 64-bit multiplication, the `RAX` register holds one of the operands, and the result can be stored in the `RDX:RAX` register pair (with `RDX` holding the high 64 bits of the result).
 
 For example, for 64-bit multiplication:
+
 ```nasm
 mov rax, 5      ; Set RAX to 5
 mov rbx, 10     ; Set RBX to 10
 mul rbx         ; RAX = RAX * RBX (result in RDX:RAX)
 ```
+
 In this example:
+
 - The `mul` instruction multiplies `RAX` by `RBX` and stores the 128-bit result in the `RDX:RAX` register pair (where `RDX` contains the high part of the result, and `RAX` contains the low part).
 
 #### Division:
+
 For division, the `RAX` register holds the dividend (the number to be divided), and the result is stored in `RAX` (quotient) and `RDX` (remainder).
 
 Example of 64-bit division:
+
 ```nasm
 mov rax, 100    ; Dividend = 100
 mov rbx, 3      ; Divisor = 3
 xor rdx, rdx    ; Clear RDX (the high part of the dividend)
 div rbx         ; RAX = RAX / RBX (quotient), RDX = RAX % RBX (remainder)
 ```
+
 In this example:
+
 - `RAX` contains the dividend (100), and `RBX` contains the divisor (3).
 - After executing `div`, `RAX` will hold the quotient (33), and `RDX` will hold the remainder (1).
 
@@ -1513,12 +1639,15 @@ In this example:
 In **Linux** on the **x86-64** architecture, the `RAX` register is used to store the **system call number**. When making a system call, the system call number is placed in `RAX`, and the arguments are placed in other registers (`RDI`, `RSI`, `RDX`, etc.).
 
 For example, to make a system call to `exit` (syscall number 60), you would do:
+
 ```nasm
 mov rax, 60     ; Syscall number for 'exit' is 60
 mov rdi, 0      ; Exit status (0)
 syscall         ; Make the system call
 ```
+
 In this example:
+
 - `RAX` holds the syscall number (`60` for `exit`).
 - `RDI` holds the first argument (`0` for the exit status).
 - The `syscall` instruction is used to invoke the system call.
@@ -1528,11 +1657,13 @@ In this example:
 ### 6. **Accessing `RAX` as Smaller Registers**
 
 As a 64-bit register, `RAX` can be accessed in smaller sizes:
+
 - **32-bit**: `EAX` (lower 32 bits of `RAX`).
 - **16-bit**: `AX` (lower 16 bits of `RAX`).
 - **8-bit**: `AL` (lowest byte of `AX`) and `AH` (high byte of `AX`).
 
 For example:
+
 ```nasm
 mov eax, 100         ; 32-bit access (EAX)
 mov ax, 0x1234       ; 16-bit access (AX)
@@ -1541,6 +1672,7 @@ mov ah, 0x78         ; 8-bit access (AH)
 ```
 
 In this example:
+
 - `EAX` accesses the lower 32 bits of `RAX`.
 - `AX` accesses the lower 16 bits of `RAX`.
 - `AL` and `AH` access the lowest and highest 8 bits of `AX`, respectively.
@@ -1571,6 +1703,7 @@ my_function:
 ```
 
 In this program:
+
 - The `my_function` function returns `42` in `RAX`.
 - The calling function retrieves the value from `RAX` and exits the program with that value as the exit status.
 
@@ -1579,6 +1712,7 @@ In this program:
 ### 8. **Conclusion**
 
 The **`RAX`** register is a central part of **x86-64** architecture, serving various purposes such as:
+
 - **Function return values**: It holds the return value of a function.
 - **Arithmetic operations**: It participates in multiplication, division, and other arithmetic operations.
 - **System calls**: It holds the system call number for Linux-based systems.
@@ -1603,12 +1737,14 @@ The **`RBX`** register is a **64-bit general-purpose register** in the **x86-64 
 ### 2. **Structure of `RBX`**
 
 Just like other 64-bit registers, `RBX` can be accessed in different sizes:
+
 - **64-bit**: The full `RBX` register.
 - **32-bit**: The lower 32 bits of `RBX`, accessed via `EBX`.
 - **16-bit**: The lower 16 bits of `RBX`, accessed via `BX`.
 - **8-bit**: The lower 8 bits of `RBX`, accessed via `BL` (low byte) and `BH` (high byte of `BX`).
 
 The structure of `RBX` looks like this:
+
 ```
 +----------------------------------+
 |    RBX (64-bit)                  |
@@ -1647,6 +1783,7 @@ my_function:
 ```
 
 In this example:
+
 - The `my_function` modifies `RBX`, but before it does so, it saves the original value by pushing `RBX` onto the stack.
 - At the end of the function, `RBX` is restored by popping it from the stack, ensuring that the caller can rely on its value remaining unchanged.
 
@@ -1657,6 +1794,7 @@ In this example:
 Like other general-purpose registers, **`RBX`** can be used in arithmetic and logical operations. It is commonly used as an operand or for temporary storage during calculations.
 
 For example:
+
 ```nasm
 mov rbx, 10      ; Store 10 in RBX
 add rbx, 5       ; Add 5 to RBX, now RBX = 15
@@ -1665,6 +1803,7 @@ mul rbx          ; Multiply RAX by RBX (RAX = RAX * RBX)
 ```
 
 In this example:
+
 - `RBX` is used as an operand in arithmetic operations.
 - `RBX` is also involved in multiplication, where `RAX` is multiplied by `RBX`.
 
@@ -1693,17 +1832,20 @@ loop_start:
 ```
 
 In this example:
+
 - `RBX` is used as a loop counter, starting at 5.
 - The program loops and decrements `RBX` until it reaches zero, at which point it exits.
 
 ### 6. **Accessing `RBX` as Smaller Registers**
 
 Just like other 64-bit registers, you can access the lower 32, 16, or 8 bits of `RBX`:
+
 - **32-bit**: `EBX` (lower 32 bits of `RBX`).
 - **16-bit**: `BX` (lower 16 bits of `RBX`).
 - **8-bit**: `BL` (low byte of `BX`) and `BH` (high byte of `BX`).
 
 For example:
+
 ```nasm
 mov ebx, 100     ; Access the lower 32 bits of RBX (EBX)
 mov bx, 0x1234   ; Access the lower 16 bits of RBX (BX)
@@ -1712,6 +1854,7 @@ mov bh, 0x78     ; Access the upper 8 bits of RBX (BH)
 ```
 
 In this example:
+
 - `EBX` accesses the lower 32 bits of `RBX`.
 - `BX` accesses the lower 16 bits.
 - `BL` and `BH` are used to access the 8-bit portions of `BX` (the low and high byte).
@@ -1747,12 +1890,14 @@ _start:
 ```
 
 In this example:
+
 - `RAX` holds the syscall number (`1` for `write` and `60` for `exit`).
 - `RDI`, `RSI`, and `RDX` hold the arguments for the system call, and `RBX` isn't used in this specific case. However, in some system calls, `RBX` could hold data or other arguments.
 
 ### 8. **Conclusion**
 
 The **`RBX`** register is an essential **64-bit general-purpose register** in the **x86-64 architecture**. It serves various roles:
+
 - It is often used for **temporary values** during calculations.
 - It is a **callee-saved register**, meaning that if a function modifies it, the function must restore its original value before returning.
 - It can be involved in **arithmetic operations**, **system calls**, and **loops**.
@@ -1777,12 +1922,14 @@ The **`RCX`** register is one of the **64-bit general-purpose registers** in the
 ### 2. **Structure of `RCX`**
 
 Just like other 64-bit registers, `RCX` can be accessed in different sizes:
+
 - **64-bit**: The full `RCX` register.
 - **32-bit**: The lower 32 bits of `RCX`, accessed via `ECX`.
 - **16-bit**: The lower 16 bits of `RCX`, accessed via `CX`.
 - **8-bit**: The lower 8 bits of `RCX`, accessed via `CL` (low byte) and `CH` (high byte of `CX`).
 
 Here's the structure of `RCX`:
+
 ```
 +----------------------------------+
 |    RCX (64-bit)                  |
@@ -1800,7 +1947,9 @@ In **x86-64 calling conventions**, the **`RCX`** register is commonly used for *
 Additionally, `RCX` has special importance in the **Windows x64 calling convention**, where it is used for the **first argument** to functions.
 
 #### Example of Passing Arguments in Linux:
+
 In **Linux** (System V AMD64 calling convention):
+
 - The first six arguments to a function are passed in the following registers:
   - **`RDI`**: First argument.
   - **`RSI`**: Second argument.
@@ -1808,8 +1957,9 @@ In **Linux** (System V AMD64 calling convention):
   - **`RCX`**: Fourth argument.
   - **`R8`**: Fifth argument.
   - **`R9`**: Sixth argument.
-  
+
 Example function call:
+
 ```nasm
 section .text
     global _start
@@ -1835,6 +1985,7 @@ my_function:
 ```
 
 In this example:
+
 - The function `my_function` receives its arguments in the registers `RDI`, `RSI`, `RDX`, and `RCX`.
 
 ---
@@ -1844,6 +1995,7 @@ In this example:
 One of the most common uses of the `RCX` register is as a **counter** in loops. The **`RCX`** register is frequently used to keep track of the number of iterations in a loop.
 
 #### Example of Loop Using `RCX`:
+
 ```nasm
 section .text
     global _start
@@ -1865,6 +2017,7 @@ loop_start:
 ```
 
 In this example:
+
 - `RCX` is used as the loop counter.
 - The program runs a loop 5 times, decrementing `RCX` each time. The loop ends when `RCX` becomes zero.
 
@@ -1873,6 +2026,7 @@ In this example:
 `RCX` can also be involved in **multiplication** operations. Specifically, when performing a signed multiplication of 64-bit values, `RCX` may be used as one of the operands, depending on the instruction.
 
 #### Example of Multiplying with `RCX`:
+
 ```nasm
 mov rax, 10      ; Set RAX to 10
 mov rcx, 5       ; Set RCX to 5
@@ -1880,6 +2034,7 @@ imul rax, rcx    ; Multiply RAX by RCX, store result in RAX
 ```
 
 In this example:
+
 - `RAX` is multiplied by `RCX`, and the result is stored in `RAX`.
 
 ---
@@ -1889,6 +2044,7 @@ In this example:
 The `RCX` register is often used for **shift** and **rotate** operations. This is particularly common in assembly code for bitwise manipulation.
 
 #### Example of Shifting with `RCX`:
+
 ```nasm
 mov rax, 8      ; Set RAX to 8
 mov rcx, 2      ; Set RCX to 2 (number of positions to shift)
@@ -1896,6 +2052,7 @@ shl rax, cl     ; Shift RAX left by RCX (2 bits)
 ```
 
 In this example:
+
 - `RCX` contains the number of positions to shift (`2`).
 - `RAX` is shifted left by `2` bits, multiplying it by 4.
 
@@ -1904,11 +2061,13 @@ In this example:
 ### 7. **Accessing `RCX` as Smaller Registers**
 
 Just like other 64-bit registers, you can access the lower 32, 16, or 8 bits of `RCX`:
+
 - **32-bit**: `ECX` (lower 32 bits of `RCX`).
 - **16-bit**: `CX` (lower 16 bits of `RCX`).
 - **8-bit**: `CL` (low byte of `CX`) and `CH` (high byte of `CX`).
 
 For example:
+
 ```nasm
 mov ecx, 100     ; Access the lower 32 bits of RCX (ECX)
 mov cx, 0x1234   ; Access the lower 16 bits of RCX (CX)
@@ -1917,6 +2076,7 @@ mov ch, 0x78     ; Access the higher 8 bits of RCX (CH)
 ```
 
 In this example:
+
 - `ECX` accesses the lower 32 bits of `RCX`.
 - `CX` accesses the lower 16 bits.
 - `CL` and `CH` are used to access the 8-bit portions of `CX` (the low and high byte).
@@ -1928,6 +2088,7 @@ In this example:
 Similar to other registers in **x86-64** architecture, `RCX` can be used in system calls, particularly in passing function arguments, depending on the operating system and calling convention.
 
 For example, in **Linux** (using the **System V AMD64** calling convention):
+
 - `RCX` is the **fourth argument** to a system call.
 
 However, like other general-purpose registers, the exact use of `RCX` will depend on the system call being invoked.
@@ -1937,14 +2098,13 @@ However, like other general-purpose registers, the exact use of `RCX` will depen
 ### 9. **Conclusion**
 
 The **`RCX`** register is an essential **64-bit general-purpose register** in the **x86-64 architecture**. It serves various roles:
+
 - It is used for passing **function arguments** (especially in the **System V AMD64** calling convention).
 - It is often used as a **loop counter** in iteration and recursion.
 - It can be involved in **arithmetic operations** like multiplication and bitwise shifting.
 - It is used in **system calls** for passing arguments, especially for the **fourth argument**.
 
-
 ---
-
 
 ### [RDX](#rdx)
 
@@ -1959,12 +2119,14 @@ The **`RDX`** register is another **64-bit general-purpose register** in the **x
 ### 2. **Structure of `RDX`**
 
 Like other 64-bit registers, **`RDX`** can be accessed in smaller sizes:
+
 - **64-bit**: The full `RDX` register.
 - **32-bit**: The lower 32 bits of `RDX`, accessed via `EDX`.
 - **16-bit**: The lower 16 bits of `RDX`, accessed via `DX`.
 - **8-bit**: The lower 8 bits of `RDX`, accessed via `DL` (low byte) and `DH` (high byte of `DX`).
 
 The structure of `RDX` looks like this:
+
 ```
 +----------------------------------+
 |    RDX (64-bit)                  |
@@ -1980,7 +2142,9 @@ The structure of `RDX` looks like this:
 In **x86-64 calling conventions**, the **`RDX`** register is used to pass function arguments. Specifically, **`RDX`** is used for the **third argument** in the **System V AMD64 calling convention** (which is used by most Unix-like operating systems, including Linux). It is also used in the **Windows x64 calling convention** for passing the **second argument**.
 
 #### Example of Passing Arguments in Linux (System V AMD64):
+
 In **Linux** (System V AMD64 calling convention):
+
 - The first six arguments to a function are passed in the following registers:
   - **`RDI`**: First argument.
   - **`RSI`**: Second argument.
@@ -1990,6 +2154,7 @@ In **Linux** (System V AMD64 calling convention):
   - **`R9`**: Sixth argument.
 
 Example function call:
+
 ```nasm
 section .text
     global _start
@@ -2012,6 +2177,7 @@ my_function:
 ```
 
 In this example:
+
 - The function `my_function` receives its arguments in `RDI`, `RSI`, and `RDX`.
 
 ---
@@ -2021,7 +2187,9 @@ In this example:
 Like other general-purpose registers, **`RDX`** is used for **arithmetic operations**. A common use case is in **multiplication** and **division** operations, where `RDX` plays a crucial role in the results.
 
 #### Example of Multiplication (Using `RDX`):
+
 In the x86-64 architecture, **multiplication** of 64-bit values results in a 128-bit value. The result is stored in two registers: `RDX` and `RAX`. Specifically:
+
 - `RAX` holds the **lower 64 bits** of the result.
 - `RDX` holds the **upper 64 bits** of the result.
 
@@ -2032,9 +2200,11 @@ mul rdx                 ; Multiply RAX by RDX (result in RDX:RAX)
 ```
 
 In this example:
+
 - The `mul` instruction multiplies `RAX` by `RDX`, and the result is stored in the combination of `RDX` and `RAX`. Since `RAX` is the lower 64 bits and `RDX` is the upper 64 bits, the full result will be 128 bits.
 
 #### Example of Division (Using `RDX`):
+
 Similarly, **division** involves `RDX` for storing the **remainder**. The **`div`** and **`idiv`** instructions divide the 128-bit value formed by `RDX` and `RAX` by a specified operand.
 
 ```nasm
@@ -2045,6 +2215,7 @@ div rcx               ; RDX:RAX / RCX, quotient in RAX, remainder in RDX
 ```
 
 In this example:
+
 - The division of `RDX:RAX` by `RCX` stores the quotient in `RAX` and the remainder in `RDX`.
 
 ---
@@ -2054,11 +2225,13 @@ In this example:
 In **Linux** (System V AMD64 calling convention), `RDX` is used to pass the **third argument** to system calls. It is also used in **Windows x64** calling conventions for the **second argument**.
 
 For example, when performing a **write** system call in Linux, the following registers are used:
+
 - `RDI`: File descriptor.
 - `RSI`: Pointer to the buffer.
 - `RDX`: Number of bytes to write.
 
 Example of a system call (write):
+
 ```nasm
 section .data
     msg db "Hello, World!", 0
@@ -2082,6 +2255,7 @@ _start:
 ```
 
 In this example:
+
 - The **write** system call (`sys_write`) uses the **`RDX`** register to pass the number of bytes to write.
 
 ---
@@ -2089,11 +2263,13 @@ In this example:
 ### 6. **Accessing `RDX` as Smaller Registers**
 
 As with other 64-bit registers, **`RDX`** can be accessed in smaller sizes:
+
 - **32-bit**: `EDX` (lower 32 bits of `RDX`).
 - **16-bit**: `DX` (lower 16 bits of `RDX`).
 - **8-bit**: `DL` (low byte of `DX`) and `DH` (high byte of `DX`).
 
 For example:
+
 ```nasm
 mov edx, 100        ; Access the lower 32 bits of RDX (EDX)
 mov dx, 0x1234      ; Access the lower 16 bits of RDX (DX)
@@ -2102,6 +2278,7 @@ mov dh, 0x78        ; Access the higher 8 bits of RDX (DH)
 ```
 
 In this example:
+
 - `EDX` accesses the lower 32 bits of `RDX`.
 - `DX` accesses the lower 16 bits.
 - `DL` and `DH` access the 8-bit portions of `DX`.
@@ -2113,6 +2290,7 @@ In this example:
 While not as common as `RCX` or `RDI`, **`RDX`** can also be used as a loop counter or index in certain cases.
 
 Example of a loop using `RDX`:
+
 ```nasm
 section .text
     global _start
@@ -2132,6 +2310,7 @@ loop_start:
 ```
 
 In this example:
+
 - `RDX` is used as a loop counter, and the loop runs 5 times, decrementing `RDX` on each iteration.
 
 ---
@@ -2139,17 +2318,12 @@ In this example:
 ### 8. **Conclusion**
 
 The **`RDX`** register is a critical **64-bit general-purpose register** in the **x86-64 architecture**. It is versatile and plays a role in:
+
 - **Passing arguments** in function calls (especially in the **System V AMD64** and **Windows x64** calling conventions).
 - **Arithmetic operations**, especially multiplication and division.
 - **System calls**, where it is often used to pass arguments like the number of bytes to write or read.
 - It can be accessed in smaller sizes (32-bit, 16-bit, 8-bit) for specific operations.
-re examples or further details on any particular aspect of `RDX`!
-
-
-
-
-
-
+  re examples or further details on any particular aspect of `RDX`!
 
 ### [RSI](#rsi)
 
@@ -2164,12 +2338,14 @@ The **`RSI`** register is one of the **64-bit general-purpose registers** in the
 ### 2. **Structure of `RSI`**
 
 Like other 64-bit registers, **`RSI`** can be accessed in smaller sizes:
+
 - **64-bit**: The full `RSI` register.
 - **32-bit**: The lower 32 bits of `RSI`, accessed via `ESI`.
 - **16-bit**: The lower 16 bits of `RSI`, accessed via `SI`.
 - **8-bit**: The lower 8 bits of `RSI`, accessed via `SIL` (low byte) and `SIH` (high byte of `SI`).
 
 Here's how `RSI` is structured:
+
 ```
 +------------------------------------+
 |    RSI (64-bit)                    |
@@ -2185,7 +2361,9 @@ Here's how `RSI` is structured:
 In **x86-64 calling conventions**, the **`RSI`** register is commonly used to pass the **second argument** to functions. Specifically, it is used for the **second argument** in the **System V AMD64 calling convention** (used by most Unix-like operating systems, including Linux). It is also used in the **Windows x64 calling convention** for the **third argument**.
 
 #### Example of Passing Arguments in Linux (System V AMD64):
+
 In **Linux** (System V AMD64 calling convention):
+
 - The first six arguments to a function are passed in the following registers:
   - **`RDI`**: First argument.
   - **`RSI`**: Second argument.
@@ -2195,6 +2373,7 @@ In **Linux** (System V AMD64 calling convention):
   - **`R9`**: Sixth argument.
 
 Example function call:
+
 ```nasm
 section .text
     global _start
@@ -2216,6 +2395,7 @@ my_function:
 ```
 
 In this example:
+
 - The function `my_function` receives its arguments in `RDI` (the first argument) and `RSI` (the second argument).
 
 ---
@@ -2227,6 +2407,7 @@ One of the most significant uses of the **`RSI`** register is in **string operat
 These instructions automatically update the **`RSI`** register when performing operations, typically in conjunction with **`RDI`** (for the destination string). This makes **`RSI`** essential for string manipulations.
 
 #### Example of String Copy with `RSI`:
+
 ```nasm
 section .data
     source db "Hello, World!", 0
@@ -2251,6 +2432,7 @@ _start:
 ```
 
 In this example:
+
 - `RSI` holds the address of the source string, and `RDI` holds the address of the destination string.
 - The `movsb` instruction copies bytes from the string at `RSI` to `RDI` (one byte at a time).
 - The `rep` prefix repeats this instruction `RCX` times (13 times in this case).
@@ -2264,6 +2446,7 @@ Although **`RSI`** is primarily used in string operations and function calls, it
 For example, it can hold temporary values or intermediate results during calculations.
 
 #### Example of Arithmetic Using `RSI`:
+
 ```nasm
 mov rsi, 100   ; Set RSI to 100
 add rsi, 50    ; Add 50 to RSI (RSI now holds 150)
@@ -2271,6 +2454,7 @@ sub rsi, 30    ; Subtract 30 from RSI (RSI now holds 120)
 ```
 
 In this example:
+
 - `RSI` is used to store a value and undergo arithmetic operations (addition and subtraction).
 
 ---
@@ -2278,11 +2462,13 @@ In this example:
 ### 6. **`RSI` in System Calls**
 
 In **Linux** (System V AMD64 calling convention), `RSI` is used to pass the **second argument** to system calls. For example, when invoking the `read` system call, which reads from a file descriptor, the arguments are passed as follows:
+
 - **`RDI`**: File descriptor.
 - **`RSI`**: Pointer to the buffer where data will be stored.
 - **`RDX`**: Number of bytes to read.
 
 Example of a system call (read):
+
 ```nasm
 section .bss
     buffer resb 100       ; Reserve 100 bytes for reading
@@ -2305,6 +2491,7 @@ _start:
 ```
 
 In this example:
+
 - The `read` system call reads up to 100 bytes from `stdin` into the buffer pointed to by `RSI`.
 
 ---
@@ -2312,11 +2499,13 @@ In this example:
 ### 7. **Accessing `RSI` as Smaller Registers**
 
 As with other 64-bit registers, **`RSI`** can be accessed in smaller sizes:
+
 - **32-bit**: `ESI` (lower 32 bits of `RSI`).
 - **16-bit**: `SI` (lower 16 bits of `RSI`).
 - **8-bit**: `SIL` (low byte of `SI`) and `SIH` (high byte of `SI`).
 
 For example:
+
 ```nasm
 mov esi, 1000        ; Access the lower 32 bits of RSI (ESI)
 mov si, 0x1234       ; Access the lower 16 bits of RSI (SI)
@@ -2325,6 +2514,7 @@ mov sih, 0x78        ; Access the higher 8 bits of RSI (SIH)
 ```
 
 In this example:
+
 - `ESI` accesses the lower 32 bits of `RSI`.
 - `SI` accesses the lower 16 bits.
 - `SIL` and `SIH` access the 8-bit portions of `SI`.
@@ -2336,6 +2526,7 @@ In this example:
 While **`RSI`** is not commonly used as a primary loop counter, it can still serve as an index or counter in loops, especially when dealing with data or strings.
 
 #### Example of Using `RSI` as a Counter:
+
 ```nasm
 section .text
     global _start
@@ -2355,6 +2546,7 @@ loop_start:
 ```
 
 In this example:
+
 - `RSI` is used as a loop counter, and the loop runs 5 times, decrementing `RSI` each time.
 
 ---
@@ -2362,6 +2554,7 @@ In this example:
 ### 9. **Conclusion**
 
 The **`RSI`** register is a versatile **64-bit general-purpose register** in the **x86-64 architecture**. It plays a significant role in:
+
 - **Passing arguments** to functions (especially in the **System V AMD64** calling convention).
 - **String operations**, where it is used as a pointer to the source string in string manipulation instructions.
 - **Arithmetic operations** and **data manipulation** in various tasks.
@@ -2382,12 +2575,14 @@ The **`RDI`** register is one of the **64-bit general-purpose registers** in the
 ### 2. **Structure of `RDI`**
 
 Like other 64-bit registers, **`RDI`** can be accessed in smaller sizes:
+
 - **64-bit**: The full `RDI` register.
 - **32-bit**: The lower 32 bits of `RDI`, accessed via `EDI`.
 - **16-bit**: The lower 16 bits of `RDI`, accessed via `DI`.
 - **8-bit**: The lower 8 bits of `RDI`, accessed via `DIL` (low byte) and `DIH` (high byte of `DI`).
 
 The structure of `RDI` looks like this:
+
 ```
 +-------------------------------------+
 |    RDI (64-bit)                     |
@@ -2401,12 +2596,14 @@ The structure of `RDI` looks like this:
 ### 3. **Usage of `RDI` in Function Calls**
 
 In the **x86-64 calling conventions**, the **`RDI`** register is used to pass the **first argument** to functions. Specifically:
+
 - In the **System V AMD64** calling convention (used by most Unix-like operating systems, including Linux), `RDI` holds the **first argument** to a function.
 - In the **Windows x64 calling convention**, `RDI` also holds the **first argument** to a function.
 
 #### Example of Passing Arguments in Linux (System V AMD64):
 
 In **Linux** (System V AMD64 calling convention):
+
 - The first six arguments to a function are passed in the following registers:
   - **`RDI`**: First argument.
   - **`RSI`**: Second argument.
@@ -2416,6 +2613,7 @@ In **Linux** (System V AMD64 calling convention):
   - **`R9`**: Sixth argument.
 
 Example function call:
+
 ```nasm
 section .text
     global _start
@@ -2436,6 +2634,7 @@ my_function:
 ```
 
 In this example:
+
 - The function `my_function` receives its first argument in the `RDI` register.
 
 ---
@@ -2447,6 +2646,7 @@ One of the most important uses of **`RDI`** is in **string operations**. In **x8
 These instructions often automatically update the **`RDI`** register when performing operations, making **`RDI`** essential for manipulating strings in assembly programs.
 
 #### Example of String Copy with `RDI`:
+
 ```nasm
 section .data
     source db "Hello, World!", 0
@@ -2471,6 +2671,7 @@ _start:
 ```
 
 In this example:
+
 - `RDI` holds the address of the destination string, and `RSI` holds the address of the source string.
 - The `movsb` instruction copies one byte at a time from the string at `RSI` to the string at `RDI`.
 - The `rep` prefix repeats this operation `RCX` times (13 times, since the string is 13 characters long).
@@ -2482,6 +2683,7 @@ In this example:
 Although **`RDI`** is mainly used in function calls and string operations, it can also be used for **arithmetic** and **data manipulation**, just like any other general-purpose register. It can hold temporary values or intermediate results during calculations.
 
 #### Example of Arithmetic Using `RDI`:
+
 ```nasm
 mov rdi, 100   ; Set RDI to 100
 add rdi, 50    ; Add 50 to RDI (RDI now holds 150)
@@ -2489,6 +2691,7 @@ sub rdi, 30    ; Subtract 30 from RDI (RDI now holds 120)
 ```
 
 In this example:
+
 - `RDI` is used to store a value and undergo arithmetic operations (addition and subtraction).
 
 ---
@@ -2496,11 +2699,13 @@ In this example:
 ### 6. **`RDI` in System Calls**
 
 In **Linux** (System V AMD64 calling convention), **`RDI`** is used to pass the **first argument** to system calls. For example, when invoking the `write` system call, the arguments are passed as follows:
+
 - **`RDI`**: File descriptor.
 - **`RSI`**: Pointer to the buffer.
 - **`RDX`**: Number of bytes to write.
 
 Example of a system call (write):
+
 ```nasm
 section .data
     msg db "Hello, World!", 0
@@ -2524,6 +2729,7 @@ _start:
 ```
 
 In this example:
+
 - The **write** system call (`sys_write`) uses the **`RDI`** register to pass the **file descriptor** (1 for stdout).
 - `RSI` holds the pointer to the message to be written, and `RDX` holds the number of bytes to write.
 
@@ -2532,11 +2738,13 @@ In this example:
 ### 7. **Accessing `RDI` as Smaller Registers**
 
 As with other 64-bit registers, **`RDI`** can be accessed in smaller sizes:
+
 - **32-bit**: `EDI` (lower 32 bits of `RDI`).
 - **16-bit**: `DI` (lower 16 bits of `RDI`).
 - **8-bit**: `DIL` (low byte of `DI`) and `DIH` (high byte of `DI`).
 
 For example:
+
 ```nasm
 mov edi, 1000        ; Access the lower 32 bits of RDI (EDI)
 mov di, 0x1234       ; Access the lower 16 bits of RDI (DI)
@@ -2545,6 +2753,7 @@ mov dih, 0x78        ; Access the higher 8 bits of RDI (DIH)
 ```
 
 In this example:
+
 - `EDI` accesses the lower 32 bits of `RDI`.
 - `DI` accesses the lower 16 bits of `RDI`.
 - `DIL` and `DIH` access the 8-bit portions of `DI`.
@@ -2556,6 +2765,7 @@ In this example:
 While **`RDI`** is most commonly used to pass function arguments, it can also be used as an index or counter in loops when necessary.
 
 #### Example of Using `RDI` as a Loop Counter:
+
 ```nasm
 section .text
     global _start
@@ -2575,6 +2785,7 @@ loop_start:
 ```
 
 In this example:
+
 - `RDI` is used as a loop counter, and the loop runs 5 times, decrementing `RDI` each time.
 
 ---
@@ -2582,16 +2793,13 @@ In this example:
 ### 9. **Conclusion**
 
 The **`RDI`** register is a versatile **64-bit general-purpose register** in the **x86-64 architecture**. It is commonly used for:
+
 - **Passing the first argument** to functions (especially in the **System V AMD64** and **Windows x64** calling conventions).
 - **String operations**, where it is used as a pointer to the destination string.
 - **Arithmetic operations** and **data manipulation**.
 - **System calls**, where it often stores the file descriptor for system calls like `write`.
 
 ---
-
-
-
-
 
 ### [RBP](#rbp)
 
@@ -2606,12 +2814,14 @@ The **`RBP`** register is one of the **64-bit general-purpose registers** in the
 ### 2. **Structure of `RBP`**
 
 Like other 64-bit registers, **`RBP`** can be accessed in smaller sizes:
+
 - **64-bit**: The full `RBP` register.
 - **32-bit**: The lower 32 bits of `RBP`, accessed via `EBP`.
 - **16-bit**: The lower 16 bits of `RBP`, accessed via `BP`.
 - **8-bit**: The lower 8 bits of `RBP`, accessed via `BPL` (low byte) and `BPH` (high byte of `BP`).
 
 The structure of `RBP` looks like this:
+
 ```
 +-------------------------------------+
 |    RBP (64-bit)                     |
@@ -2632,6 +2842,7 @@ When a function is called, the **call stack** grows by allocating space for the 
 - Local variables and function arguments are accessed relative to `RBP` since it points to the base of the current function’s stack frame.
 
 #### Example of Stack Frame Setup:
+
 ```nasm
 section .text
     global _start
@@ -2663,6 +2874,7 @@ my_function:
 ```
 
 In this example:
+
 - The function `my_function` saves the old `RBP` (which points to the previous stack frame) and sets up a new `RBP` pointing to the base of the current function's stack frame.
 - Local variables are allocated space on the stack by adjusting the `RSP` register, and they can be accessed relative to `RBP`.
 
@@ -2678,6 +2890,7 @@ In **x86-64 function calling conventions**, the **`RBP`** register is used to ma
 - Function arguments and local variables can be accessed relative to the **`RBP`** register.
 
 Example of function call with `RBP`:
+
 ```nasm
 section .text
     global _start
@@ -2705,6 +2918,7 @@ my_function:
 ```
 
 In this example:
+
 - **`RBP`** helps set up the stack frame in `my_function`.
 - The first argument is passed in `RDI`, and `RBP` is used to manage the stack.
 
@@ -2715,6 +2929,7 @@ In this example:
 Local variables in a function can be accessed relative to the `RBP` register. When a function is entered, space is allocated on the stack for local variables, and these can be accessed by using offsets from `RBP`.
 
 #### Example of Local Variables:
+
 ```nasm
 section .text
     global _start
@@ -2752,6 +2967,7 @@ my_function:
 ```
 
 In this example:
+
 - The function `my_function` uses **`RBP`** to manage local variables on the stack.
 - Local variables are allocated relative to `RBP`, and their values can be accessed using negative offsets (e.g., `[rbp-8]`, `[rbp-16]`).
 
@@ -2768,11 +2984,13 @@ This is particularly helpful when performing **backtracing**, where the debugger
 ### 7. **Accessing `RBP` as Smaller Registers**
 
 As with other 64-bit registers, **`RBP`** can be accessed in smaller sizes:
+
 - **32-bit**: `EBP` (lower 32 bits of `RBP`).
 - **16-bit**: `BP` (lower 16 bits of `RBP`).
 - **8-bit**: `BPL` (low byte of `BP`) and `BPH` (high byte of `BP`).
 
 For example:
+
 ```nasm
 mov ebp, 1000        ; Access the lower 32 bits of RBP (EBP)
 mov bp, 0x1234       ; Access the lower 16 bits of RBP (BP)
@@ -2781,6 +2999,7 @@ mov bph, 0x78        ; Access the higher 8 bits of RBP (BPH)
 ```
 
 In this example:
+
 - `EBP` accesses the lower 32 bits of `RBP`.
 - `BP` accesses the lower 16 bits.
 - `BPL` and `BPH` access the 8-bit portions of `BP`.
@@ -2791,14 +3010,13 @@ In this example:
 
 The **`RBP`** register is a **64-bit general-purpose register** in the **x86-64 architecture** that is primarily used for **stack management** and
 
- **function call handling**. It helps maintain the **stack frame**, which is crucial for handling **local variables**, **function arguments**, and **return addresses**. 
+**function call handling**. It helps maintain the **stack frame**, which is crucial for handling **local variables**, **function arguments**, and **return addresses**.
 
 Understanding the role of `RBP` is essential for tasks like:
+
 - Setting up and managing **stack frames** in function calls.
 - Accessing **local variables** and **arguments** within a function.
 - Using `RBP` for **debugging** and **stack tracing**.
-
-
 
 ---
 
@@ -2816,12 +3034,14 @@ The **`RSP`** register is one of the **64-bit general-purpose registers** in the
 ### 2. **Structure of `RSP`**
 
 Like other 64-bit registers, **`RSP`** can be accessed in smaller sizes:
+
 - **64-bit**: The full `RSP` register.
 - **32-bit**: The lower 32 bits of `RSP`, accessed via `ESP`.
 - **16-bit**: The lower 16 bits of `RSP`, accessed via `SP`.
 - **8-bit**: The lower 8 bits of `RSP`, accessed via `SPL` (low byte) and `SPH` (high byte of `SP`).
 
 The structure of `RSP` looks like this:
+
 ```
 +-------------------------------------+
 |    RSP (64-bit)                     |
@@ -2837,7 +3057,7 @@ The structure of `RSP` looks like this:
 The **stack** is a part of memory that grows and shrinks dynamically as functions are called and return. The **`RSP`** register points to the top of the stack, which is where the next data (such as a return address or local variable) will be placed.
 
 - The stack grows **downwards**, meaning that **`RSP`** decreases in value as data is pushed onto the stack.
-- Conversely, **`RSP`` increases in value as data is popped off the stack.
+- Conversely, \*\*`RSP`` increases in value as data is popped off the stack.
 - The stack is often used to store **return addresses**, **function arguments**, **local variables**, and **saved register values**.
 
 ### 4. **Role of `RSP` in Function Calls**
@@ -2850,6 +3070,7 @@ In **x86-64** architecture, **`RSP`** plays a central role in **function calls**
 - **Function Return**: When the function returns, it pops the return address from the stack and uses `RSP` to clean up the stack, ensuring that it points to the correct location after the return.
 
 #### Example: Function Call Using `RSP`:
+
 ```nasm
 section .text
     global _start
@@ -2885,6 +3106,7 @@ my_function:
 ```
 
 In this example:
+
 - When `my_function` is called, the return address is pushed onto the stack.
 - The `RBP` is saved to preserve the previous stack frame, and `RSP` is adjusted to allocate space for local variables.
 - The function cleans up the stack before returning by restoring `RSP` and `RBP`.
@@ -2894,10 +3116,12 @@ In this example:
 ### 5. **`RSP` in Stack Operations**
 
 The **`RSP`** register is used for **pushing** and **popping** data to and from the stack:
+
 - **Push**: When data is pushed onto the stack, `RSP` is **decremented** (stack grows downward).
 - **Pop**: When data is popped from the stack, `RSP` is **incremented** (stack shrinks).
 
 #### Example: Using `RSP` for Stack Operations
+
 ```nasm
 section .text
     global _start
@@ -2918,6 +3142,7 @@ _start:
 ```
 
 In this example:
+
 - `push rax` and `push rbx` **decrement** `RSP` as they push data onto the stack.
 - `pop rbx` and `pop rax` **increment** `RSP` as they pop data from the stack.
 
@@ -2928,6 +3153,7 @@ In this example:
 In **Linux (System V AMD64 calling convention)**, the **system call interface** relies on registers to pass arguments and receive results. For system calls, the **`RSP`** register might be used when interacting with the stack to pass arguments, especially if there are too many arguments for the available registers.
 
 For example, the **`write`** system call (syscall number 1) in **Linux** uses the following registers:
+
 - **`RDI`**: File descriptor.
 - **`RSI`**: Pointer to the buffer.
 - **`RDX`**: Number of bytes to write.
@@ -2935,6 +3161,7 @@ For example, the **`write`** system call (syscall number 1) in **Linux** uses th
 While **`RSP`** isn’t directly used for passing arguments to system calls, it is used to manage the **call stack** and store return values.
 
 #### Example of System Call (`write`) Using `RSP`:
+
 ```nasm
 section .data
     msg db "Hello, World!", 0
@@ -2958,6 +3185,7 @@ _start:
 ```
 
 In this example:
+
 - The system call uses `RDI`, `RSI`, and `RDX` to pass arguments for the **write** system call.
 - `RSP` is indirectly used to maintain the call stack and store the return address.
 
@@ -2966,11 +3194,13 @@ In this example:
 ### 7. **Accessing `RSP` as Smaller Registers**
 
 As with other 64-bit registers, **`RSP`** can be accessed in smaller sizes:
+
 - **32-bit**: `ESP` (lower 32 bits of `RSP`).
 - **16-bit**: `SP` (lower 16 bits of `RSP`).
 - **8-bit**: `SPL` (low byte of `SP`) and `SPH` (high byte of `SP`).
 
 For example:
+
 ```nasm
 mov esp, 1000        ; Access the lower 32 bits of RSP (ESP)
 mov sp, 0x1234       ; Access the lower 16 bits of RSP (SP)
@@ -2979,6 +3209,7 @@ mov sph, 0x78        ; Access the higher 8 bits of RSP (SPH)
 ```
 
 In this example:
+
 - `ESP` accesses the lower 32 bits of `RSP`.
 - `SP` accesses the lower 16 bits of `RSP`.
 - `SPL` and `SPH` access the 8-bit portions of `SP`.
@@ -2988,11 +3219,13 @@ In this example:
 ### 8. **Conclusion**
 
 The **`RSP`** register is one of the most important registers in **x86-64** architecture, playing a central role in **stack management** during function calls. It points to the **top of the stack**, where return addresses, local variables, and saved registers are stored. Key points to remember about `RSP` include:
+
 - **Managing the call stack** during function calls.
 - **Pushing** and **popping** values to and from the stack.
-- **
+- \*\*
 
-Adjusting** the stack pointer when allocating space for local variables.
+Adjusting\*\* the stack pointer when allocating space for local variables.
+
 - **Helping maintain the stack frame** in function calls.
 
 ---
@@ -3050,6 +3283,7 @@ my_function:
 ```
 
 In this example:
+
 - When `call my_function` is executed, the **`RIP`** of the instruction following the `call` (i.e., the `mov eax, 60` instruction) is saved onto the stack.
 - The **`RIP`** is then updated to point to `my_function`, and execution continues there.
 - When `ret` is executed, the return address is popped from the stack, and **`RIP`** is updated to the address of the instruction after the `call`, resuming execution from there.
@@ -3069,6 +3303,7 @@ In **32-bit** x86 architecture, the equivalent of **`RIP`** is **`EIP`**, which 
 In **x86-64** assembly, **`RIP`** is typically not used directly for regular data manipulation, as it’s the **program counter**. However, certain instructions allow us to work with the address stored in **`RIP`**.
 
 #### Example: Accessing `RIP` in an Instruction
+
 You can use **`RIP-relative addressing`** to access data relative to the current instruction pointer. This is often used when dealing with **position-independent code** (PIC), such as in shared libraries.
 
 ```nasm
@@ -3092,6 +3327,7 @@ _start:
 ```
 
 In this example:
+
 - **`lea rdi, [rip + my_message]`** calculates the **RIP-relative address** of `my_message`. The instruction pointer is used to calculate the address of the message data, which is then passed to the `write` syscall.
 
 ---
@@ -3104,6 +3340,7 @@ The **`RIP`** register is also involved in **security mechanisms** designed to p
 - **Control Flow Integrity (CFI)**: This security mechanism ensures that **`RIP`** values cannot be manipulated arbitrarily, preventing exploits like **ROP**. It works by validating that **`RIP`** only points to valid addresses within the program’s code.
 
 #### Example of ROP Attack:
+
 In a typical buffer overflow vulnerability, an attacker may overwrite the return address stored on the stack, which is essentially the **`RIP`** value. By doing this, the attacker can control the flow of execution and redirect the program to malicious code.
 
 ---
@@ -3111,6 +3348,7 @@ In a typical buffer overflow vulnerability, an attacker may overwrite the return
 ### 7. **Conclusion**
 
 The **`RIP`** register in **x86-64** architecture is a critical component for managing **program control flow**. It:
+
 - Holds the **address of the next instruction** to be executed.
 - Is automatically updated after every instruction to point to the next instruction in memory.
 - Is used extensively in **function calls**, **jumps**, **returns**, and **position-independent code**.
@@ -3119,33 +3357,16 @@ While **`RIP`** is not typically directly accessed by programmers for data manip
 
 ---
 
+### R8-R15
 
-### [R8-R15](#r8-r15)
 - Registers **R8** through **R15** are available only in 64-bit mode and are used for general-purpose storage, additional counters, and specific operations.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ---
 
 # Segment Registers:
 
-#### [CS (Code Segment)](#cs-code-segment) :
+#### CS (Code Segment) :
+
 The **CS (Code Segment)** register in both **x86** and **x64** architectures serves the same fundamental purpose: to hold the base address of the **code segment**. The code segment contains the program's executable instructions. However, the way it functions and interacts with memory differs slightly between the **x86** and **x64** architectures due to differences in their memory management systems, addressing modes, and general architectural design.
 
 ### CS Register in **x86** (32-bit Architecture)
@@ -3153,34 +3374,38 @@ The **CS (Code Segment)** register in both **x86** and **x64** architectures ser
 In the **x86** architecture, which uses a **16-bit** or **32-bit** address space and memory segmentation, the **CS** register plays a key role in **segmented memory addressing**.
 
 #### 1. **Purpose**:
+
 - The **CS** register holds the **segment base address** of the **code segment** (the area of memory containing executable instructions).
 - The processor combines the value in the **CS** register with an offset (often provided by the **Instruction Pointer** register, **EIP**) to form the full address of the next instruction to execute.
-
 
 EIP (Extended Instruction Pointer): The EIP register holds the offset (or the position) of the next instruction to be executed within the current segment. This value is relative to the base address of the code segment, which is stored in CS.
 
 #### 2. **How it Works**:
+
 - The **CS** register is used in **real mode** or **protected mode** in the **x86 architecture**.
 - In **real mode**, the **CS** register contains the base address of the code segment, which is then combined with an offset provided by the **IP** (Instruction Pointer) register to produce a linear address.
 - In **protected mode**, the **CS** register is part of the segmented memory model and works together with other segment registers (like **DS**, **SS**) to refer to different regions of memory.
 
 #### 3. **Segmented Addressing**:
+
 - In **real mode**, the **CS** register holds a **16-bit segment** value, which is shifted left by 4 bits and added to the **16-bit offset** from the **EIP** register to generate a **20-bit physical address**.
-  
+
   For example:
+
   - **CS = 0x2000**, **EIP = 0x0100** → The physical address is `0x20000 + 0x0100 = 0x20100`.
-  
+
 - In **protected mode**, the **CS** register is 32 bits, and the **segment descriptor** is used to define the segment’s base address, limits, and access rights.
 
 #### 4. **Real Mode vs. Protected Mode**:
+
 - **Real Mode** (16-bit):
   - **CS** register holds a 16-bit value, forming a physical address by shifting the segment and adding it to the offset.
-  
 - **Protected Mode** (32-bit):
   - **CS** contains a 32-bit **segment selector**, which points to a segment descriptor in the **Global Descriptor Table (GDT)** or **Local Descriptor Table (LDT)**.
   - The processor uses the segment descriptor to find the base address and size of the segment, allowing for more advanced memory management.
 
 #### 5. **Example in Assembly (x86)**:
+
 ```assembly
 mov eax, [cs:1000h]    ; This loads the value at memory address 0x1000 from the code segment into the EAX register.
 ```
@@ -3190,54 +3415,56 @@ mov eax, [cs:1000h]    ; This loads the value at memory address 0x1000 from the 
 The **x64** (64-bit) architecture, which is an extension of the **x86** architecture, does not rely on **segmented addressing** as heavily as the **x86** architecture. While the **CS** register still exists in **x64**, it behaves differently due to the architecture’s use of **paging** for memory management.
 
 #### 1. **Purpose**:
+
 - The **CS** register in **x64** still points to the **code segment**, but in modern operating systems and processors, **segmentation** is largely **disabled**, and **paging** is used for memory addressing.
 - **CS** is used primarily for **storing the privilege level** (Ring 0 or Ring 3) and for **indicating the current execution segment** in a more simplified memory model.
 
 #### 2. **How it Works**:
+
 - In **x64**, the **CS** register is 64 bits wide but effectively only stores 16 bits of **segment information**.
 - **Segmentation** in **x64** is limited, and the **CS** register no longer plays a critical role in addressing memory. Instead, **paging** handles address translation, and **CS** is used for identifying the code segment in the segment descriptor.
 
 #### 3. **Segment Selector**:
+
 - **CS** in **x64** still holds a **segment selector** in the same way as in **x86**. However, the segment descriptors stored in the **GDT (Global Descriptor Table)** and **LDT (Local Descriptor Table)** are now ignored for the most part, with the system relying more on **paging** for address translation.
 - The segment selector in **CS** typically points to a code segment descriptor in the **GDT** or **LDT**, but its main function is to store privilege information and the **ring** of execution.
 
 #### 4. **Privileged and Non-Privileged Code**:
+
 - The **CS** register in **x64** is still used to distinguish between **privileged** (Ring 0) and **user-level** (Ring 3) code. It can store information about the **current privilege level (CPL)**, which helps control access to different levels of the system.
 - For example, in a 64-bit kernel, code running at Ring 0 (privileged mode) might execute from a different code segment than code running at Ring 3 (user mode).
 
 #### 5. **Paging and Linear Addresses**:
+
 - In **x64**, **paging** is responsible for translating linear addresses to physical addresses. **CS** holds the segment selector, but it doesn't directly contribute to the final physical address calculation as in **x86**.
 
 #### 6. **Example in Assembly (x64)**:
+
 ```assembly
 mov rax, [cs:1000h]    ; This instruction would still load data from a segment, but segmentation is not crucial here.
 ```
 
 ### Key Differences Between CS in x86 and x64:
 
-| **Aspect**               | **x86 (32-bit)**                                | **x64 (64-bit)**                                |
-|--------------------------|------------------------------------------------|------------------------------------------------|
-| **Segmentation**          | Used extensively for memory addressing.        | Limited use of segmentation, primarily for access control. |
-| **Addressing Mode**       | 16-bit real mode and 32-bit protected mode.     | Uses **paging** for addressing, and **segmentation** is not used for memory access. |
-| **Register Size**         | 16-bit or 32-bit, depending on mode.            | 64-bit, but only uses 16-bit for the segment selector. |
-| **Purpose**               | Points to the **code segment** for memory addressing. | Stores a **segment selector** for code execution, with segmentation largely disabled. |
-| **Privilege Levels**      | Handles **Ring 0** (kernel) and **Ring 3** (user). | Still distinguishes between **Ring 0** (kernel) and **Ring 3** (user) but uses paging for memory management. |
+| **Aspect**           | **x86 (32-bit)**                                      | **x64 (64-bit)**                                                                                             |
+| -------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Segmentation**     | Used extensively for memory addressing.               | Limited use of segmentation, primarily for access control.                                                   |
+| **Addressing Mode**  | 16-bit real mode and 32-bit protected mode.           | Uses **paging** for addressing, and **segmentation** is not used for memory access.                          |
+| **Register Size**    | 16-bit or 32-bit, depending on mode.                  | 64-bit, but only uses 16-bit for the segment selector.                                                       |
+| **Purpose**          | Points to the **code segment** for memory addressing. | Stores a **segment selector** for code execution, with segmentation largely disabled.                        |
+| **Privilege Levels** | Handles **Ring 0** (kernel) and **Ring 3** (user).    | Still distinguishes between **Ring 0** (kernel) and **Ring 3** (user) but uses paging for memory management. |
 
 ### Conclusion:
+
 - In **x86**, the **CS** register plays a significant role in **segmented memory addressing**, directly influencing how the processor accesses code. It combines the segment base (from **CS**) with an offset (from **EIP**) to generate the full physical address.
 - In **x64**, while the **CS** register still exists, its role is more about maintaining **privilege level** and **access control** rather than determining memory addresses. The system uses **paging** for address translation instead of relying on segmentation.
 
 The **CS** register is still essential in both architectures, but its function is more simplified and less involved in memory addressing in the **x64** architecture compared to **x86**.
 
-
 ---
 
+#### DS (Data Segment) :
 
-
-
-
-
-#### [DS (Data Segment)](#ds-data-segment) :
 ### **DS (Data Segment) Register in Detail:**
 
 The **DS** (Data Segment) register is a **segment register** used in the **x86** architecture to reference a segment of memory that typically holds data, such as variables, arrays, and general-purpose data. It is used by the processor to determine where the data resides in memory. The usage and behavior of the **DS** register vary significantly between **x86** (32-bit) and **x64** (64-bit) systems due to changes in the architecture and memory management.
@@ -3249,28 +3476,34 @@ Let's break it down in both the **x86 (32-bit)** and **x64 (64-bit)** modes.
 ### **1. DS Register in x86 (32-bit)**
 
 #### **Overview of x86 Real and Protected Mode**:
+
 - In **x86 architecture**, the **DS** register is used to point to the **data segment** in both **real mode** and **protected mode**.
 - In **real mode**, memory is divided into **16-bit** segments, and the **DS** register holds the **base address** of the data segment.
 - In **protected mode**, the **DS** register holds a **segment selector**, which references a segment descriptor in the **Global Descriptor Table (GDT)** or **Local Descriptor Table (LDT)**. The descriptor contains details like the base address and the size of the data segment.
 
 #### **How It Works in x86 Real Mode**:
+
 - In **real mode**, the processor uses **segmentation** to divide the memory into 64KB blocks. The **DS** register holds the **base address** of the data segment, and the **offset** is usually stored in registers like **SI** (source index) or **DI** (destination index) to form the full address.
-  
+
 **Physical Address Calculation in Real Mode**:
+
 - The **DS** register holds a **16-bit** segment value, and the **offset** (16-bit) is added to the base address from **DS** to form the physical memory address.
 
 **Formula**:
+
 ```
 Physical Address = (DS * 16) + Offset
 ```
 
 For example:
+
 - If **DS = 0x2000** and **Offset = 0x10**, then:
   ```
   Physical Address = (0x2000 * 16) + 0x10 = 0x20000 + 0x10 = 0x20010
   ```
 
 #### **How It Works in x86 Protected Mode**:
+
 - In **protected mode**, the **DS** register no longer holds a simple **base address**. Instead, it holds a **segment selector**.
 - The **segment selector** in **DS** points to a **segment descriptor** in the **GDT** or **LDT**. This descriptor contains information like:
   - **Base address**: The starting address of the data segment.
@@ -3280,6 +3513,7 @@ For example:
 When the processor accesses memory in **protected mode**, it uses the **segment descriptor** from the **GDT/LDT** and combines the **base address** from the descriptor with the **offset** (which is stored in the **SI** or **DI** registers) to calculate the **linear address**.
 
 **Formula in Protected Mode**:
+
 ```
 Linear Address = Base Address (from Descriptor) + Offset
 ```
@@ -3287,19 +3521,22 @@ Linear Address = Base Address (from Descriptor) + Offset
 ### **2. DS Register in x64 (64-bit)**
 
 #### **Overview of x64 Architecture**:
+
 - In **x64 architecture**, **segmentation** is mostly **disabled** for user applications. The **DS** register is still present, but its function has changed considerably compared to **x86**.
 - The **x64 architecture** uses **paging** instead of segmentation for memory management. Segmentation is now largely used for **compatibility** with 32-bit code and for some specialized purposes (like **kernel mode** operations).
 - In **x64 mode**, the **DS** register holds the **segment selector** for **compatibility mode** (for running 32-bit applications) and does not play a major role in addressing memory directly for modern 64-bit applications.
 
 #### **How It Works in x64 Mode**:
+
 - In **64-bit** mode, the **DS** register points to a **segment descriptor**, but the **linear address** is calculated differently. In modern **x64** systems, **segment registers** like **DS** do not impact the **effective address calculation** for most applications, and the processor uses **paging** to translate virtual addresses to physical addresses.
-  
 - In **x64** mode, the **DS** register is typically set to the same value as the **CS** register when running **32-bit applications** in **compatibility mode** (i.e., **x86 code** running on a 64-bit processor). This enables the system to behave as if it were still in **32-bit** protected mode for backward compatibility.
 
 #### **Segment Registers in x64**:
+
 - In **64-bit** mode, segmentation is only used for certain **compatibility** and **control purposes**, not for actual memory addressing like in **x86**. The **DS** register can still be used to define **access control** but does not affect the linear address calculation in normal user applications.
 
 #### **Key Points for DS in x64**:
+
 - In **64-bit mode**, the **DS** register is not used for **memory segmentation** as it is in **x86**.
 - **Memory addressing in x64** is done via **virtual memory and paging**, and segment registers (including **DS**) are not directly involved in forming memory addresses.
 - The **DS** register is still important for **compatibility** with **32-bit code** (in **compatibility mode**), and its value is set to point to the **GDT** or **LDT** descriptor.
@@ -3308,36 +3545,139 @@ Linear Address = Base Address (from Descriptor) + Offset
 
 ### **Key Differences Between DS in x86 and x64**:
 
-| **Feature**                | **x86 (32-bit)**                          | **x64 (64-bit)**                           |
-|----------------------------|------------------------------------------|--------------------------------------------|
-| **Primary Role**            | Points to the base address of the data segment in both real and protected mode. | In 64-bit mode, used for compatibility with 32-bit code (no direct impact on memory addressing). |
-| **Addressing**              | In **real mode**, DS is used with an offset to calculate the physical address. In **protected mode**, DS is a segment selector used with paging. | In **64-bit mode**, DS is not used for addressing memory directly. Paging is used instead. |
-| **Segmentation**            | Segmentation is active. DS holds the segment base. | Segmentation is inactive in 64-bit mode, DS is used for backward compatibility. |
-| **Compatibility**           | Works in both real and protected modes. | Primarily for compatibility with 32-bit applications in **compatibility mode**. |
-| **Memory Limit**            | **1 MB** in real mode. In protected mode, the system can access up to **4 GB** (32-bit). | The system can address up to **16 exabytes** of memory, but segment registers don't affect memory addressing. |
+| **Feature**       | **x86 (32-bit)**                                                                                                                                 | **x64 (64-bit)**                                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| **Primary Role**  | Points to the base address of the data segment in both real and protected mode.                                                                  | In 64-bit mode, used for compatibility with 32-bit code (no direct impact on memory addressing).              |
+| **Addressing**    | In **real mode**, DS is used with an offset to calculate the physical address. In **protected mode**, DS is a segment selector used with paging. | In **64-bit mode**, DS is not used for addressing memory directly. Paging is used instead.                    |
+| **Segmentation**  | Segmentation is active. DS holds the segment base.                                                                                               | Segmentation is inactive in 64-bit mode, DS is used for backward compatibility.                               |
+| **Compatibility** | Works in both real and protected modes.                                                                                                          | Primarily for compatibility with 32-bit applications in **compatibility mode**.                               |
+| **Memory Limit**  | **1 MB** in real mode. In protected mode, the system can access up to **4 GB** (32-bit).                                                         | The system can address up to **16 exabytes** of memory, but segment registers don't affect memory addressing. |
 
 ---
 
 ### **Summary**:
 
 - In **x86 (32-bit)**, the **DS** register is used for addressing the **data segment**, with **real mode** using simple 16-bit segmentation, and **protected mode** using **segment selectors** and **descriptors** for memory management.
-- In **x64 (64-bit)** mode, segmentation (including **DS**) is largely irrelevant to modern memory management, which is based on **paging**. The **DS** register primarily serves compatibility purposes when running **32-bit** applications under **compatibility mode**. 
+- In **x64 (64-bit)** mode, segmentation (including **DS**) is largely irrelevant to modern memory management, which is based on **paging**. The **DS** register primarily serves compatibility purposes when running **32-bit** applications under **compatibility mode**.
 
 The **DS** register in **x86** was crucial for addressing data, but in **x64**, it plays a much smaller role and is mainly relevant for compatibility with older **32-bit** software.
 
+---
+
+#### SS (Stack Segment) :
+
+- **Purpose**: Points to the memory segment for the stack. The stack stores function call data, return addresses, local variables, and more.
+
+#### ES (Extra Segment):
+
+- **Purpose**: Typically used for additional memory segments, such as when dealing with string operations or buffers.
+
+#### FS (Additional Segment) :
+
+- **Purpose**: Often used in modern systems to store thread-specific data or for operating system-specific purposes.
+
+#### GS (Additional Segment) :
+
+- **Purpose**: Another segment register used for storing additional data, like thread-local storage or OS-related data.
 
 ---
 
+<br>
+<br>
 
-#### [SS (Stack Segment)](#ss-stack-segment) :
-- **Purpose**: Points to the memory segment for the stack. The stack stores function call data, return addresses, local variables, and more.
+# [Special Purpose Register](#special-purpose-register)
 
-#### [ES (Extra Segment)](#es-extra-segment) :
-- **Purpose**: Typically used for additional memory segments, such as when dealing with string operations or buffers.
+- ## **CR0** - Control Register 0
+  The **CR0 register** is one of the key control registers in the x86 architecture. It plays a crucial role in controlling the processor's operational mode, as well as controlling features such as protection, paging, and virtual memory.
 
-#### [FS (Additional Segment)](#fs-additional-segment ) :
-- **Purpose**: Often used in modern systems to store thread-specific data or for operating system-specific purposes.
+  Below is a detailed explanation of the **CR0 register** in both **32-bit** and **64-bit** systems.
 
-#### [GS (Additional Segment)](gs-additional-segment) :
-- **Purpose**: Another segment register used for storing additional data, like thread-local storage or OS-related data.
+  ### Overview of CR0 Register
 
+  The **CR0** register is a 32-bit register in both 32-bit and 64-bit x86 processors, but its meaning and usage can differ between these architectures. In general, it contains control flags that influence the processor’s behavior, particularly in regard to protection, virtual memory, and various other features.
+
+  ### Structure of CR0 Register (32-bit and 64-bit)
+
+  The **CR0** register consists of 32 bits, and it has several individual flags, each of which can be set or cleared to control specific processor operations.
+
+  Here’s a breakdown of each bit of **CR0**:
+
+  | Bit | Name                         | Description                                                                                |
+  | --- | ---------------------------- | ------------------------------------------------------------------------------------------ |
+  | 0   | **PE (Protection Enable)**   | Enables protected mode. When set, the processor operates in protected mode.                |
+  | 1   | **MP (Monitor Coprocessor)** | Used for multitasking environments with floating-point exceptions.                         |
+  | 2   | **EM (Emulation)**           | When set, the processor emulates floating-point instructions rather than executing them.   |
+  | 3   | **TS (Task Switched)**       | Indicates whether the task switch has occurred (for task-level switching of the FPU).      |
+  | 4   | **ET (Extension Type)**      | Used to enable the use of 287 floating-point extensions. (Obsolete in modern CPUs.)        |
+  | 5   | **NE (Numeric Error)**       | Controls the exception behavior of the processor for numeric errors.                       |
+  | 6   | **WP (Write Protect)**       | Enables write protection on certain memory regions.                                        |
+  | 7   | **Reserved**                 | This bit is reserved and must be 0.                                                        |
+  | 8   | **AM (Alignment Mask)**      | Determines whether unaligned memory accesses will cause exceptions (useful for debugging). |
+  | 9   | **FM (Fast System Call)**    | Enables a fast system call mechanism (only in certain processors).                         |
+  | 10  | **Reserved**                 | This bit is reserved and must be 0.                                                        |
+  | 11  | **WP (Write Protect)**       | This bit is used to enable the ability to block writes to read-only segments.              |
+  | 12  | **Reserved**                 | This bit is reserved and must be 0.                                                        |
+  | 13  | **Reserved**                 | This bit is reserved and must be 0.                                                        |
+  | 14  | **PE (Protection Enable)**   | Enables protected mode if set.                                                             |
+
+  ### CR0 in 32-bit systems
+
+  In **32-bit systems**, the **CR0** register is primarily used for controlling the processor's mode of operation and for managing protected mode, paging, and various other features related to memory protection.
+
+  - **PE (Protection Enable)**: When the **PE** flag is set to 1, the processor enters protected mode. This enables features such as memory protection and multitasking.
+  - **MP (Monitor Coprocessor)**: This flag is used for supporting the floating-point unit (FPU) in multitasking environments, and it works with the **TS** flag to manage task switching involving the FPU.
+
+  - **EM (Emulation)**: When this flag is set, the processor emulates floating-point operations, which means floating-point instructions are handled in software rather than hardware.
+
+  - **WP (Write Protect)**: This flag, when set, enables write protection for pages that are marked as read-only, preventing any modification to those pages.
+
+  - **AM (Alignment Mask)**: This flag controls whether unaligned memory accesses (memory accesses that do not respect the natural boundaries of data types) will cause a fault. If set, unaligned accesses will not trigger an exception.
+
+  ### CR0 in 64-bit systems
+
+  In **64-bit systems**, the **CR0** register continues to control the processor's basic operational state, but certain flags may have different or additional roles due to the 64-bit extensions and modern architecture features.
+
+  - **PE (Protection Enable)**: As in 32-bit systems, the **PE** flag is crucial for entering protected mode, but in 64-bit mode, this flag is typically already set.
+
+  - **MP (Monitor Coprocessor) & EM (Emulation)**: These flags are largely irrelevant in modern 64-bit systems since the floating-point unit is fully supported in hardware, and these older flags were designed for compatibility with older versions of the x86 architecture.
+
+  - **WP (Write Protect)**: Similar to 32-bit systems, this flag enables the processor to protect pages marked as read-only from being written to.
+
+  - **AM (Alignment Mask)**: This flag also works in the same way as in 32-bit mode, controlling the exception behavior for misaligned memory accesses.
+
+  ### Special Considerations in 64-bit Mode
+
+  In 64-bit mode, **CR0** still operates similarly, but some flags may have become less relevant as the 64-bit architecture has introduced new control registers and capabilities. For instance:
+
+  - The **PE** flag is always set in 64-bit mode, meaning the processor is always operating in protected mode.
+  - Other flags like **MP**, **EM**, and **TS** may be less critical in 64-bit systems as the architecture has advanced with more sophisticated handling of floating-point operations and task switching.
+
+  ### Key Differences Between 32-bit and 64-bit Use
+
+  - In **64-bit mode**, the processor supports a 64-bit wide address space, and **CR0** remains relevant for basic control, but many of its flags are either deprecated or have little effect on the modern 64-bit processor.
+  - The **CR0** register’s primary function in 64-bit systems is for legacy support and backward compatibility with 32-bit operating systems and applications.
+
+  ### Common Operations Involving CR0
+
+  1. **Switching Between Protected Mode and Real Mode**:  
+     The **PE** flag in **CR0** is used to switch between real mode (unprotected) and protected mode (where memory protection and paging can be enabled).
+  2. **Enabling/Disabling Paging**:  
+     To enable paging, the **PG** flag in **CR0** must be set. This allows the processor to use paging for virtual memory management.
+
+  3. **Enabling/Disabling Write Protection**:  
+     The **WP** flag in **CR0** can enable or disable write protection for certain memory regions.
+
+  ### Conclusion
+
+  The **CR0** register is essential for controlling the operational state of the processor, particularly in terms of memory protection, paging, and floating-point operations. While its functionality is largely the same in both 32-bit and 64-bit modes, some flags have diminished relevance in 64-bit systems due to advancements in processor architecture and the introduction of new control registers. Nonetheless, understanding **CR0** is crucial for low-level programming and system-level control in x86 and x86-64 architectures.
+
+---
+
+- ## **CR1** - Control Register 1
+- ## **CR2** - Control Register 2
+- ## **CR3** - Control Register 3
+- ## **CR4** - Control Register 4
+- ## **GDTR** - Global Descriptor Table Register
+- ## **IDTR** - Interrupt Descriptor Table Register
+- ## **LDTR** - Local Descriptor Table Register
+- ## **TR** - Task Register

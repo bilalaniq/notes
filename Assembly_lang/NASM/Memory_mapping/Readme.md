@@ -368,3 +368,106 @@ we will get this
 ```
 
 to examine memory using gdb click [here](./../gdb/Readme.md)
+
+---
+
+<br>
+<br>
+
+# Exercises
+
+- #### 1. Assuming that the stack size limit is 16MB, about how large canyou declare an array of doubles inside a C++ function. Do not use the keyword static.
+
+  To calculate the maximum size of an array of doubles you can declare inside a C++ function given that the stack size limit is 16 MB, we need to consider the following factors
+  **Stack Size Limit**: You are given that the stack size is limited to 16 MB (16 _ 1024 _ 1024 bytes)
+  **Size of `double`**: In most systems, a `double` typically takes **8 bytes** of memory
+
+  ### Steps to Calculate the Maximum Number of Element
+
+  **Total stack size limit**: 16 MB = 16 _ 1024 _ 1024 bytes = 16,777,216 bytes.
+  **Size of each `double`**: 8 bytes
+  **Maximum number of `double` elements**:
+  To calculate the maximum number of `double` elements you can declare, we divide the total stack size by the size of a `double`
+  Maximum Number of Doubles = Total Stack Size / Size of Each Double
+  Maximum Number of Doubles = 16,777,216 bytes / 8 bytes
+  Maximum Number of Doubles = 2,097,152 double
+
+  ### Conclusion
+
+  Given a 16 MB stack size limit, you can declare an array of **2,097,152 doubles** inside a C++ function without exceeding the stack size, assuming the `double` type is 8 bytes (which is the typical size on most platforms)
+
+  ### Important Consideration
+
+  - **Function Call Stack**: The array will be allocated on the **local stack**. If your program uses recursion or has other large local variables, this could affect how much of the stack is available for your array.
+  - **Operating System and Compiler Limitations**: Stack size limits may be configurable depending on the platform, operating system, and compiler. The exact behavior could vary, so it's important to verify stack size configurations if you are working in a specific environment
+    If the array size exceeds the stack size limit, a **stack overflow** error will occur, causing the program to crash. To allocate larger arrays, consider using **heap memory** (via `new` or `malloc`), which is not limited by the stack size.
+
+---
+
+<br>
+<br>
+
+- #### 2. Find out the stack size limit using the ulimit command in bash. If bash is not your shell, simply type in bash to start a sub-shell.
+
+  To find out the stack size limit using the `ulimit` command in bash, follow these steps:
+
+  ### Steps:
+
+  1. **Open a Terminal**: If you are not already in a terminal, open one.
+  2. **Start a bash shell** (if you are using a different shell):
+     If you're not currently using bash, start a bash shell by typing:
+     ```bash
+     bash
+     ```
+  3. **Check the Stack Size Limit**:
+     Once you're in the bash shell, run the following command:
+     ```bash
+     ulimit -s
+     ```
+     This will display the **stack size limit** in kilobytes (KB). For example, you might see something like:
+     ```
+     8192
+     ```
+     This means the stack size limit is 8192 KB (or 8 MB).
+
+  ### Explanation:
+
+  - **`ulimit -s`**: This command shows the stack size limit in the current shell session. The stack size refers to the maximum amount of memory that can be allocated for the call stack (i.e., the memory used for function calls, local variables, and return addresses).
+  - The output will be in **kilobytes (KB)**. To convert it to megabytes (MB), divide the value by 1024. For instance, 8192 KB is 8 MB.
+
+  ### Additional Information:
+
+  - If you want to check other limits (like the maximum number of open file descriptors), you can use the `ulimit` command with other options. For example:
+    ```bash
+    ulimit -a  # Displays all current limits, including stack size
+    ```
+    output:
+
+  ```bash
+  > ulimit -a
+  real-time non-blocking time  (microseconds, -R) unlimited
+  core file size              (blocks, -c) 0
+  data seg size               (kbytes, -d) unlimited
+  scheduling priority                 (-e) 0
+  file size                   (blocks, -f) unlimited
+  pending signals                     (-i) 31528
+  max locked memory           (kbytes, -l) 65536
+  max memory size             (kbytes, -m) unlimited
+  open files                          (-n) 1024
+  pipe size                (512 bytes, -p) 8
+  POSIX message queues         (bytes, -q) 819200
+  real-time priority                  (-r) 0
+  stack size                  (kbytes, -s) 8192
+  cpu time                   (seconds, -t) unlimited
+  max user processes                  (-u) 31528
+  virtual memory              (kbytes, -v) unlimited
+  file locks                          (-x) unlimited
+  ```
+
+  ***
+
+<br>
+<br>
+
+
+
