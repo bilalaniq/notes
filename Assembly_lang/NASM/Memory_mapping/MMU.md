@@ -39,20 +39,56 @@ With the growth of technology the function of Memory Management Unit (MMU) is in
 <br>
 <br>
 
-# TLB (TRANSLATION LOOKASIDE BUFFER)
+# CPU Support for Fast Lookups
 
-The os instructs the mmu to perform a full loopup process reading the page tables translating physical address and handling the cpu back the correct physical address but this is unfortunately very slow. The cpu has to wait hundres or thousands of clock cycles for MMU to grt it act togatherand come up with an correct address translation
+## TLB (TRANSLATION LOOKASIDE BUFFER)
+
+The os instructs the mmu to perform a full loopup process reading the page tables translating physical address and handling the cpu back the correct physical address but this is unfortunately very slow. The cpu has to wait hundres or thousands of clock cycles for MMU to get it act togather and come up with an correct address translation
 
 here is where TLB comes a small fast memory cache that stores the most frequently accessed page entrires intstead of searching the page table the system first cheaks the TLB for the entry if the desires entry is there it can quickly translate the virtual address to a physical address saving a lot of time
+
+A TLB operates much like a hash table. It is presented with a virtual page address and produces a physical page address or failure within roughly 1/2 of a clock cycle.
+In the case of a failure the memory search takes from 10 to 100 cycles. Typical miss rates are from 0.01% to 1%.
+
+Clearly there is a limit to the number of entries in the TLB for a CPU.
+The Intel Core 2 series has a total of 16 entries in a level 1 TLB and 256 entries in a level 2 TLB. The Core i7 has 64 level 1 TLB entries and 512 level 2 entries.
+
+The AMD Athlon II CPU has 1024 TLB entries.
+
+Given the relatively small number of TLB entries in a CPU it seems
+like it would be a good idea to migrate to allocating 2 MB pages for
+programs. Linux supports the use of 2 MB pages through its `HUGETLB`
+option. It requires adjusting the system parameters and allocating shared
+memory regions using the `SHM_HUGETLB` option. This could improve the
+performance of processes using large arrays.
+
+why 2MB gages will be better than 4KB pages
+
+### TLB misses:
+
+- With 4 KB pages:
+
+  - This can result in more TLB misses because the TLB has fewer entries to store translations, meaning that when an address isn't in the TLB, the system has to access the page tables, which is much slower.
+
+- With 2 MB pages:
+
+  - A single 2 MB page corresponds to many 4 KB pages. As a result, fewer TLB entries are needed to cover the same amount of memory.
+  - This reduces the TLB miss rate because each TLB entry covers a much larger range of memory, making it more likely that the needed translation is in the TLB.
+
+so in summary
+
+4 KB pages are typically better for general-purpose applications, providing finer granularity, less fragmentation, and lower
+memory waste.
+
+2 MB pages (huge pages) are beneficial for memory-intensive applications that deal with large blocks of data, as they reduce TLB misses, improve performance for large memory allocations, and reduce page table overhead.
+
+so both have their pros & cons
 
 ---
 
 ![TLB](https://cstaleem.com/wp-content/uploads/2020/05/Translation-Look-aside-Buffer-TLB.jpg)
 
 ---
-
-
-
 
 but how does the TLB know which entries to store
 
@@ -75,14 +111,9 @@ TLB's are not perfect either once or a while you may get a question from you tea
 
 TLB MISSES are very inefficient which is why we try to avoid them it may take hundreds or thousends of time to look up a memory address during the TLB miss
 
-
 ## TLB working Model
 
-
 ![model](https://cstaleem.com/wp-content/uploads/2020/05/cache-and-TLB-working-together.jpg)
-
-
-
 
 ---
 

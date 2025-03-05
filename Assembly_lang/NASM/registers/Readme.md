@@ -1,3 +1,47 @@
+# Registers
+
+Computer memory is essentially an array of bytes which software uses
+for instructions and data. While the memory is relatively fast, there is
+a need for a- small amount of faster data to permit the CPU to execute
+instructions faster. One type of faster memory is `cache memory`, which
+is perhaps 10 times as fast as main memory. A second type of faster
+memory is the CPU's `registers`. Cache might be several megabytes, but
+the CPU has only a few registers.
+
+The x86-64 CPUs have 16 general purpose 64 bit registers and 16
+modern floating point registers.
+
+These floating point registers are either
+128 or 256 bits depending on the CPU model and can operate on multiple
+integer or floating point values.There is also a floating point register stack
+
+if you want to learn about floating point registers/stack then click [here](./Floating-Point-Registers.md)
+
+The CPU has a 64 bit instruction
+pointer register (rip) which contains the address of the next instruction
+to execute. There is also a 64 bit flags register (rflags). There are
+additional registers . Having 16 registers
+mean that a register's "address" is only 4 bits. This makes instructions
+using registers much smaller, than if instructions had to use only memory
+addresses
+
+The 16 general purpose registers are 64 bit values stored within the
+CPU. Software can access the registers as 64 bit values, 32 bit values, 16
+bit values and 8 bit values. Since the CPU evolved from the 8088 CPU,
+the registers have evolved from 16 bit registers to 32 bit registers and
+finally to 64 bit registers.
+
+On the 8088 registers were more special purpose than general purpose:
+
+- ax - accumulator for numeric operations
+- bx - base register (array access)
+- ex - count register (string operations)
+- dx - data register
+- si - source index
+- di - destination index
+- bp - base pointer (for function frames)
+- sp - stack pointer
+
 # x86 Registers (32-bit and 64-bit)
 
 ## Table of Contents
@@ -3588,6 +3632,7 @@ The **DS** register in **x86** was crucial for addressing data, but in **x64**, 
 # [Special Purpose Register](#special-purpose-register)
 
 - ## **CR0** - Control Register 0
+
   The **CR0 register** is one of the key control registers in the x86 architecture. It plays a crucial role in controlling the processor's operational mode, as well as controlling features such as protection, paging, and virtual memory.
 
   Below is a detailed explanation of the **CR0 register** in both **32-bit** and **64-bit** systems.
@@ -3675,7 +3720,93 @@ The **DS** register in **x86** was crucial for addressing data, but in **x64**, 
 
 - ## **CR1** - Control Register 1
 - ## **CR2** - Control Register 2
+
+---
+
 - ## **CR3** - Control Register 3
+
+  The **CR3 register** is a control register in the x86 and x86-64 architectures that is crucial for managing the paging mechanism in the CPU. It specifically holds the physical address of the page directory, which is part of the paging system used to translate virtual addresses to physical addresses in the system's memory. Understanding CR3 is vital for dealing with memory management, virtual memory, and context switching in operating systems.
+
+Here’s a detailed breakdown of **CR3**:
+
+### 1. **Purpose of CR3 Register**
+
+- **CR3** holds the **physical address** of the **Page Directory** in **paging mode**. It is used by the CPU to determine where to find the page table structures necessary for translating virtual addresses to physical addresses.
+
+### 2. **CR3 in Paging**
+
+- **Paging** is a memory management scheme that eliminates the need for contiguous physical memory, allowing more efficient use of memory by using page tables.
+- In modern x86 processors (32-bit and 64-bit), CR3 is used to refer to the page directory in paging mode.
+  - **32-bit mode (x86)** uses **page directories and page tables** to map 4KB pages.
+  - **64-bit mode (x86-64)** expands this to support larger address spaces, often involving a **4-level page table** structure (PML4, Page Directory Pointer Tables, Page Directories, and Page Tables).
+
+### 3. **Structure of CR3 (in 32-bit and 64-bit)**
+
+#### **In 32-bit Mode (x86)**:
+
+- The CR3 register contains a 32-bit value representing the **physical address** of the **Page Directory**.
+- The Page Directory in 32-bit systems has entries that map to page tables that hold the physical addresses of the actual data pages.
+- Bits 31:12 in CR3 are the physical address of the Page Directory.
+- Bits 11:0 are reserved, and typically the lower 12 bits are set to 0, as page directory entries are aligned to 4KB boundaries.
+
+#### **In 64-bit Mode (x86-64)**:
+
+- CR3 has the same primary purpose but is used in a more complex address translation structure.
+- In **x86-64** mode, the system can support **64-bit virtual addressing**, so CR3 must hold the **physical address of the PML4 table**, which is part of the 4-level paging mechanism (PML4 → PDPT → PD → PT).
+- The structure of the **CR3 register** in 64-bit mode is:
+  - **Bits 51:12**: The **physical address** of the **Page Map Level 4 (PML4)**.
+  - **Bits 11:0**: Reserved, with typically 12 lower bits set to 0 for alignment reasons.
+
+### 4. **Control Bits in CR3**
+
+- In addition to holding the address of the page directory (or PML4), **CR3** has a few control bits that influence paging behavior. These include:
+  - **Page Table Directory Base Register (PDBR)**: This part of CR3 points to the page directory or PML4.
+  - **Accessed and Dirty flags**: In some cases, the bits of CR3 may influence how the CPU marks pages as accessed or dirty. However, CR3 itself doesn’t directly hold these flags. Instead, the page tables and page directories hold bits like **Accessed (A)** and **Dirty (D)** to mark the status of pages.
+
+### 5. **CR3 and Virtual Memory**
+
+- **Context Switching**: When the operating system switches between processes (context switching), the **CR3 register** is updated to point to the page directory of the newly scheduled process. This allows the new process to have its own address space and virtual memory layout.
+- Each process typically has its own page directory and page tables, which are stored in memory and referenced by CR3. When the CPU switches between processes, the page tables may be changed to reflect the new process's memory mapping.
+- This allows **virtual memory isolation**, where each process can have a separate virtual address space.
+
+### 6. **CR3 in 64-bit Systems (PML4)**:
+
+- In a **64-bit system**, CR3 points to the **PML4** table. The PML4 table is the highest-level table in the 4-level paging hierarchy.
+- A virtual address is translated by traversing through the levels:
+  1.  **PML4 (CR3 points here)**: Contains pointers to the next level (Page Directory Pointer Table).
+  2.  **PDPT (Page Directory Pointer Table)**: Contains pointers to the next level (Page Directory).
+  3.  **PD (Page Directory)**: Contains pointers to the Page Table.
+  4.  **PT (Page Table)**: Finally maps to the physical page frame.
+
+### 7. **Changing CR3**
+
+- **Updating CR3**: The OS sets or updates the CR3 register during context switches or when changing the page directory.
+- A context switch between processes requires the operating system to load the appropriate page directory's physical address into CR3.
+
+### 8. **Special Uses of CR3**
+
+- **System Calls**: Certain system calls may directly manipulate CR3 to implement memory management features.
+- **Hypervisors/Virtualization**: In virtualized environments, the CR3 register can also be used by the hypervisor to manage virtual machine memory mapping.
+
+### 9. **Access Control**
+
+- The **CR3 register** is not directly writable by user programs. It is usually set by the kernel during context switches. Privileged operations like setting or reading CR3 are typically only accessible in **kernel mode** or with appropriate privileges (Ring 0).
+
+### Example of CR3 Usage:
+
+- When an operating system switches between processes, it saves the current CR3 value (i.e., the page directory of the current process) and loads the CR3 value for the new process. This changes the virtual-to-physical address mapping for the new process, enabling each process to have its own isolated address space.
+
+---
+
+### Summary:
+
+- **CR3** is a **control register** in the **x86/x86-64** architecture that holds the **physical address of the page directory (or PML4 in 64-bit)**.
+- It plays a key role in the **paging** process, which translates **virtual addresses to physical addresses**.
+- In **32-bit mode**, CR3 holds the physical address of the **page directory**; in **64-bit mode**, CR3 holds the physical address of the **PML4** table.
+- CR3 is crucial for **virtual memory management**, enabling process isolation and efficient memory usage in modern operating systems.
+
+---
+
 - ## **CR4** - Control Register 4
 - ## **GDTR** - Global Descriptor Table Register
 - ## **IDTR** - Interrupt Descriptor Table Register

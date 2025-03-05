@@ -407,6 +407,8 @@ to examine memory using gdb click [here](./../gdb/Readme.md)
 <br>
 <br>
 
+---
+
 - #### 2. Find out the stack size limit using the ulimit command in bash. If bash is not your shell, simply type in bash to start a sub-shell.
 
   To find out the stack size limit using the `ulimit` command in bash, follow these steps:
@@ -469,5 +471,82 @@ to examine memory using gdb click [here](./../gdb/Readme.md)
 <br>
 <br>
 
+---
+
+<br>
+<br>
+
+- #### 3. Suppose you were given the opportunity to redesign the memory mapping hierarchy for a new CPU. We have seen that 4 KB pages seem a little small. Suppose you made the pages 2^17 = 131072 bytes. How many 64 bit pointers would fit in such a page? How many bits would be required for the addressing of a page table? How would you break up the bit fields of virtual addresses?
+
+  ### 1. **Number of 64-bit pointers in a 128 KB page**:
+
+  - A **64-bit pointer** is 8 bytes.
+  - **Page size** is **128 KB (131,072 bytes)**.
+  - Number of pointers in the page:
+
+    131,072 / 8 = 16,384 pointers
+
+  ### 2. **Bits for addressing a page table**:
+
+  - Each page table has **16,384 entries**.
+  - Bits required to address 16,384 entries:
+
+    log2(16,384) = 14 bits
+
+  ### 3. **Breaking up the virtual address** (for a 64-bit address):
+
+  - **Page size** :
+    131,072 bytes / 1024 = 128 KB
+  - since 131,072 bytes = 128 KB
+    log2(131,072) = 17 bits
+    Thus, 17 bits are required for the page offset to address a location within the 128 KB page.
+  - Remaining bits for **virtual page number**:
+
+    64 - 17 - 14 = 33 bits
+
+  ### Summary:
+
+  - **Page offset**: **17 bits**
+  - **Page table index**: **14 bits**
+  - **Virtual page number**: **33 bits**
+
+---
+
+<br>
+<br>
+
+- #### 4. Having much larger pages seems desirable. Let's design a memory mapping system with 2^20 = 1048576 bytes but use partial pages for memory mapping tables. Design a system with 3 levels of page mapping tables with at least 48 bits of usable virtual address space.
+
+To design a memory mapping system with **1 MiB (2²⁰ bytes) pages** and **at least 48-bit virtual address space**, while using **partial pages for memory mapping tables**, we can follow this approach:
+
+### **Key Assumptions:**
+
+- **Page size = 1 MiB (2²⁰ bytes)**
+- **Virtual address space = 48 bits**
+- **Partial pages for page tables (i.e., each table doesn't need a full page)**
+
+### **Breakdown of Virtual Address Structure:**
+
+A **48-bit virtual address** needs to be divided among:
+
+1. **L1 Index** (Level 1 Page Table)
+2. **L2 Index** (Level 2 Page Table)
+3. **L3 Index** (Level 3 Page Table)
+4. **Offset within Page** (Determined by the page size)
+
+Since we are using **1 MiB pages (2²⁰ bytes)**, the **offset** part of the virtual address takes **20 bits**. That leaves us with **28 bits** for indexing page tables.
+
+Using **partial pages**, assume **each page table entry is 8 bytes** (64-bit address), so a **1 KiB (2¹⁰ bytes) partial page** can hold:
+
+2^10(bytes per partial page) / 8 (bytes per entry) = 2^7 = 128 entries per table
 
 
+Thus, we need **3 levels of page tables** to cover the full 48-bit space:
+
+- **L1 Index:** **10 bits** → 1024 entries
+- **L2 Index:** **9 bits** → 512 entries
+- **L3 Index:** **9 bits** → 512 entries
+- **Offset:** **20 bits** (for 1 MiB pages)
+
+
+This ensures a **3-level page table** that efficiently maps a **48-bit virtual address space** with **1 MiB pages**, while minimizing page table memory usage by using **partial pages**. 🚀
