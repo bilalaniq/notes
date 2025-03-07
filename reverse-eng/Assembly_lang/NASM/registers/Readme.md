@@ -42,6 +42,48 @@ On the 8088 registers were more special purpose than general purpose:
 - bp - base pointer (for function frames)
 - sp - stack pointer
 
+In addition the 2 halves of the first 4 registers can be accessed using al
+for the low byte of ax, ah for the high byte of ax, and bl , bh, cl , eh ,
+dl and dh for the halves of bx , ex and dx respectivlly.
+
+| **16-bit Register**   | **Lower 8-bit** | **Upper 8-bit** |
+| --------------------- | --------------- | --------------- |
+| `AX` (Accumulator)    | `AL`            | `AH`            |
+| `BX` (Base Register)  | `BL`            | `BH`            |
+| `CX` (Count Register) | `CL`            | `CH`            |
+| `DX` (Data Register)  | `DL`            | `DH`            |
+
+These are the **only registers** that have **separate upper (`H`) and lower (`L`) 8-bit access** in x86-64.
+
+When the `386` CPU was designed the registers were expanded to 32
+bits and renamed as `eax`, `ebx`, `ecx`, `edx`, `esi`, `edi`, `ebp`, and `esp`. Software
+could also use the original names to access to lower 16 bits of each of the
+registers. The 8 bit registers were also retained without allowing access
+to individual bytes of the upper halves of the registers.
+
+For the `x86-64` architecture the registers were expanded to 64 bits
+and `8` additional general purpose registers were added. The names used
+to access the 64 bit registers are `rax`, `rbx`, `rex`, `rdx`, `rsi`, `rdi`, `rbp`, and
+`rsp` for the compatible collection and `r8-r15` for the 8 new registers.
+
+As you might expect you can still use ax to access the lowest word of the
+rax register along with eax to access the lower half of the register. You
+can also access registers r8-r15 as byte, word, double word registers by
+appending `b`, `w` or `d` to the register name.
+
+---
+
+The rflags(64-bit mode) register is a 64 bit register, but currently only the lower
+32 bits are used, so it is generally sufficient to refer to eflags(32-bit mode).
+
+In addition the flags register is usually not referred to directly. Instead `conditional instructions` are used which internally access 1 or more flags of the flags register to determine what action to take.
+
+Moving data seems to be a fundamental task in assembly language.
+In the case of moving values to/from the integer registers, the basic command is mov. It can move constants, addresses and memory contents into registers, move data from 1 register to another and move the contents of
+a register into memory.
+
+---
+
 # x86 Registers (32-bit and 64-bit)
 
 ## Table of Contents
@@ -92,6 +134,8 @@ On the 8088 registers were more special purpose than general purpose:
 
 - **FLAGS** (Contains the status flags for the processor)
 
+if you want to learn about flags then click [here](./Flags.md)
+
 ---
 
 ## 64-bit Registers (x86-64)
@@ -140,6 +184,8 @@ On the 8088 registers were more special purpose than general purpose:
 ### [Flags Register](#flags-register-1)
 
 - **RFLAGS** (64-bit equivalent of FLAGS)
+
+if you want to learn about flags then click [here](./Flags.md)
 
 ---
 
