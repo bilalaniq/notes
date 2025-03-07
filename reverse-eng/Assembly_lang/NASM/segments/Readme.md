@@ -2,6 +2,29 @@
 
 so when when we decide to run an binary the os initilizes the setup of new process to runing the program complete with its own virtual address space. then the os maps an interpreter into the virtual memory of the process. this interpreter the user space program possess the knowlage and capability to load the binary and perform nessesary reallocations
 
+so the role of interpreter crutial in preparing the binary for execution it carries out series of tasks such as resolving symbols, refrencessetting up the program's initial memory layout and performing nessesary reallocations
+
+by delaging thses risponsbilities to the interpreter the os can ensure a consistant and reliable execution enviroment for binaries across various platforms
+
+linux elf binaries come with an spetial section called `.interp` that specifies the path to the interpreter that is being used to load the binary
+
+```bash
+readelf -p .interp elf_file
+```
+
+output:
+
+```bash
+String dump of section '.interp':
+  [     0]  /lib64/ld-linux-x86-64.so.2
+```
+
+and so mentioned before the interpreter load the binary into the virtual address space. the space in which the interpreter is loaded 
+and it then parses the binary to find out among one of the things, which dinamic lbraries this binary uses so the interpreter maps these into virtual address space using mmap() or other equivalent function and then performs last minute realocations in the binarycode sections to fill in the correct addrssess for refrences to the dynamic libraries
+
+in reality the process of resolving refrences to the functions in the dynamic libraries is often deffered until later. so in other words instead of resolving these refrences immidiatly at load time the interpreter resolve these refrences only when they are invoking for the first time so this is also known as `lazy binding`
+
+
 if you want to learn about memory mapping area then click [here](./memory_mapping_area.md)
 
 `note`: it is important to note that the binary representation in memory is not nessessariy mirrors its own disk representasion for example the section of zero initilized data wiin the disk binary may have compressed to conserve disk space. however when loaded in the memory these sections expands to contain the actual zero values
