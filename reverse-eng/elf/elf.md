@@ -271,6 +271,8 @@ The fields have the following meanings:
   - **EM_VAX**:
     DEC Vax
 
+  these are so many other Legal values for e_machine you can look at them in the headerfile
+
   ### **📌 Note: ELF `e_machine` for Intel x86-64**
 
   For **Intel x86-64** architecture, the correct `e_machine` value is:
@@ -294,3 +296,130 @@ The fields have the following meanings:
     Invalid version
   - **EV_CURRENT**:
     Current version
+
+- ## `e_entry`:
+
+  This member gives the virtual address to which the system
+  first transfers control, thus starting the process. If the
+  file has no associated entry point, this member holds zero.
+
+- ## `e_phoff`:
+
+  This member holds the program header table's file offset in
+  bytes. If the file has no program header table, this
+  member holds zero.
+
+- ## `e_shoff`:
+
+  This member holds the section header table's file offset in
+  bytes. If the file has no section header table, this
+  member holds zero.
+
+- ## `e_flags`:
+
+  This member holds processor-specific flags associated with
+  the file. Flag names take the form EF\_`machine_flag'.
+  Currently, no flags have been defined.
+  or in simple words The e_flags field in an ELF (Executable and Linkable Format) file header is used to store processor-specific flags. These flags provide extra information about the binary that is relevant to the CPU architecture it was compiled for.
+
+- ## `e_ehsize`:
+
+  This member holds the ELF header's size in bytes.
+
+- ## `e_phentsize`:
+
+  This member holds the size in bytes of one entry in the
+  file's program header table; all entries are the same size.
+
+  program header table is an Group of multiple sections for execution
+
+- ## `e_ehsize`:
+
+  This member holds the ELF header's size in bytes.
+
+- ## `e_phentsize`:
+
+  This member holds the size in bytes of one entry in the
+  file's program header table; all entries are the same size.
+
+- ## `e_phnum`:
+
+  This member holds the number of entries in the program
+  header table. Thus the product of `e_phentsize` and `e_phnum`
+  gives the table's size in bytes. If a file has no program
+  header, e_phnum holds the value zero.
+
+  If the number of entries in the program header table is
+  larger than or equal to `PN_XNUM` (0xffff), this member holds
+  `PN_XNUM` (0xffff) and the real number of entries in the
+  program header table is held in the sh_info member of the
+  initial entry in section header table. Otherwise, the
+  sh_info member of the initial entry contains the value
+  zero.
+
+  The e_phnum field is only 16 bits, so it can store a maximum of 65535 headers.
+  If an ELF file has more program headers, the actual count is stored in the sh_info field of the first section header.
+
+  If e_phnum is set to PN_XNUM (0xffff), then the OS (or any ELF parser) will ignore its value and instead retrieve the actual number of program headers from the sh_info field of the first entry in the Section Header Table (SHT).
+
+  **PN_XNUM**:
+  This is defined as 0xffff(65535), the largest number
+  e_phnum can have, specifying where the actual number
+  of program headers is assigned.
+
+- ## `e_shentsize`:
+
+  This member holds a sections header's size in bytes. A
+  section header is one entry in the section header table;
+  all entries are the same size.
+
+- ## `e_shnum`:
+
+  This member holds the number of entries in the section
+  header table. Thus the product of `e_shentsize` and `e_shnum`
+  gives the section header table's size in bytes. If a file
+  has no section header table, e_shnum holds the value of
+  zero.
+
+  If the number of entries in the section header table is
+  larger than or equal to SHN_LORESERVE (0xff00(65280)), e_shnum
+  holds the value zero and the real number of entries in the
+  section header table is held in the sh_size member of the
+  initial entry in section header table. Otherwise, the
+  sh_size member of the initial entry in the section header
+  table holds the value zero.
+
+- ## `e_shstrndx`:
+
+  This member holds the section header table index of the
+  entry associated with the section name string table. If
+  the file has no section name string table, this member
+  holds the value SHN_UNDEF.
+
+  If the index of section name string table section is larger
+  than or equal to SHN_LORESERVE (0xff00), this member holds
+  SHN_XINDEX (0xffff) and the real index of the section name
+  string table section is held in the sh_link member of the
+  initial entry in section header table. Otherwise, the
+  sh_link member of the initial entry in section header table
+  contains the value zero.
+
+
+  The **`e_shstrndx`** field in the **ELF header** holds the index of the **section header table entry** that contains the **section name string table**.
+
+  #### **Breaking It Down:**
+
+  1. **Section Name String Table (`.shstrtab`)**
+
+     - This is a special section in an ELF file that contains **names of all other sections** (e.g., `.text`, `.data`, `.bss`, etc.).
+     - It helps the OS or debugger **identify** different sections by name.
+
+  2. **`e_shstrndx` Purpose**
+
+     - The **section header table** contains multiple **section headers**.
+     - `e_shstrndx` tells **which entry** in the section header table corresponds to the **section name string table**.
+     - This allows tools like `readelf` or `objdump` to **look up section names** properly.
+
+  3. **Special Case: `SHN_UNDEF`**
+     - If `e_shstrndx == SHN_UNDEF (0)`, it means the ELF file **does not have a section name string table**.
+     - This is uncommon but might occur in some stripped binaries.
