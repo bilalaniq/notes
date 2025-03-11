@@ -84,12 +84,12 @@ access to the memory.
 
 ## Interrupts
 
-if you want to learn about Interrupts click [here](./interrupts/Interrupts.md)
+if you want to learn about Interrupts click [here](./chap1/interrupts/Interrupts.md)
 
 ---
 
 ## Storage Structure
 
-if you want to learn about Storage Structure click [here](./Storage_Structure/Storage_Structure.md)
+if you want to learn about Storage Structure click [here](./chap1/Storage_Structure/Readme.md)
 
 ---

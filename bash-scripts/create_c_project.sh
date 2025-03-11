@@ -10,25 +10,30 @@ compiler="gcc"
 
 # Create main source file
 cat <<EOF >"$project_name/src/$main_file"
-#include <stdio.h>
 #include "../include/utils.h"
 
-int main() {
+int main(int , char**) {
     printf("Hello, World!\n");
-    print_message();
     return 0;
 }
 
-void print_message() {
-    printf("This is a utility function!\n");
-}
+
 EOF
 
 # Create header file with #pragma once
 cat <<EOF >"$project_name/include/utils.h"
 #pragma once
 
-void print_message();
+#include <stdio.h>
+#include<string.h>
+#include<unistd.h>
+#include<stdlib.h>
+#include<assert.h>
+#include<error.h>
+#include<stdbool.h>
+
+
+int main(int , char**);
 EOF
 
 # Create Makefile
