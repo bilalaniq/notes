@@ -82,6 +82,12 @@ access to the memory.
 
 ---
 
+<br>
+<br>
+
+
+# CHAPTER # 1
+
 ## Interrupts
 
 if you want to learn about Interrupts click [here](./chap1/interrupts/Interrupts.md)
@@ -91,5 +97,27 @@ if you want to learn about Interrupts click [here](./chap1/interrupts/Interrupts
 ## Storage Structure
 
 if you want to learn about Storage Structure click [here](./chap1/Storage_Structure/Readme.md)
+
+---
+
+---
+
+## Computer-System Architecture
+
+if you want to learn about Computer-System Architecture click [here](./chap1/comp-sy-architecture/Readme.md)
+
+---
+
+## Operating-System Operations
+
+if you want to learn about Operating-System Operations click [here](./chap1/os-operations/Readme.md)
+
+---
+
+---
+
+## Resource Management
+
+if you want to learn about Resource Management click [here](./chap1/Resource_managment/Readme.md)
 
 ---

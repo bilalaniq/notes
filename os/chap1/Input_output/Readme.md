@@ -22,12 +22,23 @@ The **I/O system** consists of several key components that work together to hand
    - Interfaces through which the CPU communicates with the device controller.
 
 4. **I/O Bus**
+
    - A communication pathway that allows data transfer between the CPU, memory, and I/O devices. Common types include:
      - **PCI (Peripheral Component Interconnect)**
      - **USB (Universal Serial Bus)**
      - **SATA (Serial ATA) for storage devices**
 
----
+5. **local buffer**
+
+   - Input/output devices each have a small memory for processing data. This is called a local buffer.
+
+     Once all data has been read into the local buffer, the controller generates an interrupt to notify the main CPU that the I/O operation is complete.
+
+6. **Work queue for each device**
+
+   - A queue exists to process tasks requested from each device in sequence.
+
+     When multiple processes request input/output operations simultaneously, synchronicity is guaranteed.
 
 ## **I/O Operation Mechanism**
 
@@ -88,3 +99,20 @@ I/O devices can be classified based on their function:
 <br>
 
 if you want to learn about DMA click [here](./DMA.md)
+
+# Input/output structure
+
+- ## Synchronous I/O Structure
+- ## Asynchronous I/O structure
+
+| Feature               | Synchronous I/O                                                                  | Asynchronous I/O                                                                                  |
+| --------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Definition**        | The process waits for the I/O operation to complete before continuing execution. | The process continues execution without waiting for the I/O operation to complete.                |
+| **Blocking Behavior** | Blocking – the CPU is idle until the I/O completes.                              | Non-blocking – the CPU continues executing other tasks while the I/O completes.                   |
+| **Execution Flow**    | The CPU executes instructions, then pauses while waiting for I/O, then resumes.  | The CPU initiates the I/O request and continues processing other tasks.                           |
+| **Efficiency**        | Less efficient, as CPU time is wasted waiting.                                   | More efficient, as CPU can perform other operations while waiting.                                |
+| **Complexity**        | Simpler to implement and manage.                                                 | More complex due to the need for callbacks, polling, or interrupts.                               |
+| **Example**           | Reading a file where the program halts until the entire file is loaded.          | Reading a file while performing calculations in parallel.                                         |
+| **Use Case**          | Suitable for simple programs where immediate I/O completion is necessary.        | Preferred in high-performance systems like databases, web servers, and multitasking environments. |
+
+![structure](https://velog.velcdn.com/images%2Fasdfg5415%2Fpost%2F908c61fa-3d89-488c-8745-dbe859b86211%2Fimage.png)
