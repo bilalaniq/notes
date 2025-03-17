@@ -280,3 +280,8 @@ This will tell you if you are using a 32-bit or 64-bit architecture.
 - **On a 32-bit system**, `rsp` is 32 bits (4 bytes) long.
 
 So, if you are working on a 64-bit system, `rsp` will be **64 bits**. On a 32-bit system, it will be **32 bits**.
+
+---
+
+<br>
+<br>
