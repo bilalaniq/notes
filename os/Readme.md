@@ -85,7 +85,6 @@ access to the memory.
 <br>
 <br>
 
-
 # CHAPTER # 1
 
 ## Interrupts
@@ -97,8 +96,6 @@ if you want to learn about Interrupts click [here](./chap1/interrupts/Interrupts
 ## Storage Structure
 
 if you want to learn about Storage Structure click [here](./chap1/Storage_Structure/Readme.md)
-
----
 
 ---
 
@@ -121,3 +118,41 @@ if you want to learn about Operating-System Operations click [here](./chap1/os-o
 if you want to learn about Resource Management click [here](./chap1/Resource_managment/Readme.md)
 
 ---
+
+## virtulization
+
+click [here](./chap1/virtulization/Readme.md) to learn about virtulization
+
+---
+
+## Distributed Systems
+
+click [here](./chap1/Distributed_Systems/Readme.md) to learn about Distributed Systems
+
+---
+
+## Kernel Data Structures
+
+click [here](./chap1/data_structures/Readme.md) to learn about Kernel Data Structures
+
+---
+
+## Computing Environments
+
+click [here](./chap1/computing_enviroment/Readme.md) to learn about Computing Environments
+
+---
+
+## Chapter #1 Exercise
+
+click [here](./chap1/Exercise/Readme.md) see chapter 1 exercise
+
+---
+
+<br>
+<br>
+
+# CHAPTER # 2
+
+
+
