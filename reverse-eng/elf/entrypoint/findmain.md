@@ -86,9 +86,203 @@ When everything is ready, control is handed to your program by calling `_start()
 8048301:       f4                      hlt
 ```
 
-xor of anything with itself sets it to zero. so the `xor %ebp,%ebp` sets %ebp to zero. This is suggested by the ABI (Application Binary Interface specification), to mark the outermost frame. Next we pop off the top of the stack.
+xor of anything with itself sets it to zero. so the `xor %ebp,%ebp` sets %ebp to zero. This is suggested by the ABI (Application Binary Interface specification), to mark the outermost frame.
 
-Next we pop off the top of the stack. On entry we have argc, argv and envp on the stack, so the pop makes argc go into %esi. We're just going to save it and push it back on the stack in a minute. Since we popped off argc, %esp is now pointing at argv. The mov puts argv into %ecx without moving the stack pointer.
+Next we pop off the top of the stack. On entry we have argc, argv and envp on the stack, so the pop makes argc go into %esi. We're just going to save it and push it back on the stack in a minute. Since we popped off `argc`, %esp is now pointing at `argv`. The mov puts argv into %ecx without moving the stack pointer.
 
 Then we and the stack pointer with a mask that clears off the bottom four bits. `and    $0xfffffff0,%esp`
+Depending on where the stack pointer was it will move it lower, by 0 to 15 bytes.
 
+16-byte alignment refers to the practice of arranging data in memory such that the address of the data is a multiple of 16 bytes (0x10 in hexadecimal). This means that the memory address where the data starts should be divisible by 16.
+
+This is an important operation, particularly in modern architectures and for ensuring the proper functioning of certain hardware and software features.
+
+- Memory Alignment for Performance:
+
+  Memory alignment is a key consideration for modern CPUs. Accessing memory that is properly aligned (to boundaries like 16 bytes) can be much faster than accessing unaligned memory. Misaligned memory access can cause performance penalties or even faults on certain architectures.
+
+- SSE (Streaming SIMD Extensions) Requirements:
+
+  Modern CPUs often use SIMD instructions like SSE to perform operations on multiple pieces of data at once (e.g., processing 4 single-precision floating-point numbers simultaneously). These instructions often require that the data being processed is aligned on 16-byte boundaries for correct operation. If the stack pointer (%esp) is not aligned, accessing the data could cause SSE exceptions or degrade performance
+
+- ABI (Application Binary Interface) Convention:
+
+  The ABI specification for many platforms (such as Linux x86-64) requires that the stack pointer be aligned to 16-byte boundaries when entering functions, particularly when calling certain library functions.
+
+<br>
+
+Suppose %esp initially points to some address, say 0x12345678.
+
+Applying the and $0xfffffff0, %esp operation would modify %esp to align it to the nearest 16-byte boundary, which would be 0x12345670. The lower 4 bits are cleared, ensuring it is aligned to a multiple of 16.
+
+This alignment is done so that all of the stack variables are likely to be nicely aligned for memory and cache efficiency, in particular, this is required for SSE (Streaming SIMD Extensions), instructions that can work on vectors of single precision floating point simultaneously.
+
+---
+
+<br>
+<br>
+
+## Now set up for calling `__libc_start_main`
+
+So now we start pushing arguments for `__libc_start_main` onto the stack.
+
+```bash
+80482e8:       50                      push   %eax
+80482e9:       54                      push   %esp
+80482ea:       52                      push   %edx
+80482eb:       68 00 84 04 08          push   $0x8048400
+80482f0:       68 a0 83 04 08          push   $0x80483a0
+80482f5:       51                      push   %ecx
+80482f6:       56                      push   %esi
+80482f7:       68 94 83 04 08          push   $0x8048394
+```
+
+The first one, %eax is garbage pushed onto the stack just because 7 things are going to be pushed on the stack and they needed an 8th one to keep the 16-byte alignment. It's never used for anything.
+
+`__libc_start_main` is linked in from glibc. In the source tree for glibc, it lives in csu/libc-start.c. `__libc_start_main` is specified like
+
+```c
+int __libc_start_main(  int (*main) (int, char * *, char * *),
+			    int argc, char * * ubp_av,
+			    void (*init) (void),
+			    void (*fini) (void),
+			    void (*rtld_fini) (void),
+			    void (* stack_end));
+```
+
+So we expect `_start` to push those arguments on the stack in reverse order before the call to `__libc_start_main`.
+
+| **Register/Memory** | **Value**                          | **Description**                                                                                                                                                                                                                                                               |
+| ------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **$eax**            | Don't know.                        | Don't care. This value is not important in this context.                                                                                                                                                                                                                      |
+| **%esp**            | `void (*stack_end)`                | Our aligned stack pointer, pointing to the top of the stack. special argument passed to `__libc_start_main`. It represents the end of the stack area, often used to mark the boundary of the stack or to track the end of the stack space used during program initialization. |
+| **%edx**            | `void (*rtld_fini)(void)`          | Destructor of the dynamic linker passed in `%edx`. It is used to call the FINI for dynamic libraries.                                                                                                                                                                         |
+| `0x8048400`         | `void (*fini)(void)`               | `__libc_csu_fini` - Destructor of this program, registered by `__libc_start_main`.                                                                                                                                                                                            |
+| `0x80483a0`         | `void (*init)(void)`               | `__libc_csu_init` - Constructor of this program, called by `__libc_start_main` before `main`.                                                                                                                                                                                 |
+| **%ecx**            | `char **ubp_av`                    | Points to the `argv` (argument vector) on the stack, which is the list of command-line arguments passed to the program.                                                                                                                                                       |
+| **%esi**            | `argc`                             | The number of command-line arguments (count) passed to the program, popped from the stack.                                                                                                                                                                                    |
+| `0x8048394`         | `int (*main)(int, char**, char**)` | The address of the `main` function, called by `__libc_start_main`. The return value of `main` is passed to `exit()` to terminate the program.                                                                                                                                 |
+
+---
+
+<br>
+
+### 1. **`rtld_fini` (Runtime Linker Destructor)**:
+
+- **Role**: This function is the **destructor of the dynamic linker** and is responsible for cleaning up the dynamic linker and any resources it used during the program’s execution. It is related to unloading shared libraries and performing necessary finalization steps for the dynamic linker itself.
+- **Purpose**: It is registered by the `__libc_start_main` function (or other similar startup functions) and is part of the program’s dynamic loading process. The dynamic linker loads and links shared libraries during program startup, and `rtld_fini` handles cleanup when the program finishes, particularly in relation to the shared libraries.
+- **Where it is used**: `rtld_fini` is involved in the process of finalizing the environment of dynamically loaded libraries and their destructors. It is passed via the `rtld_fini` argument in `__libc_start_main` and is executed before the program exits.
+
+### 2. **`fini` (Program’s C-level Destructor)**:
+
+- **Role**: This function, often **`__libc_csu_fini`**, is the **C-level destructor of the program**. It handles cleanup tasks specific to the program itself, especially for static variables and any finalization required for the program’s own resources.
+- **Purpose**: `fini` is used for program-specific cleanup (like cleaning up static variables or performing any final actions before the program completely terminates). It is registered by `__libc_start_main` using the `__cxat_exit()` mechanism to ensure that destructors of dynamically linked libraries are called when the program exits.
+- **Where it is used**: It is called after all dynamic linkers' destructors (`rtld_fini`) and is responsible for cleaning up program-specific resources (like calling destructors of global/static variables in the main program).
+
+---
+
+<br>
+<br>
+
+## envp
+
+Did you notice that we didn't get envp, the pointer to our environment variables off the stack? It's not one of the arguments to `__libc_start_main`, either. But we know that main is called int main(int argc, char** argv, char** envp) so what's up?
+
+When the program starts, `__libc_start_main` is called, and it first invokes `__libc_init_first`. This function uses internal knowledge to locate the environment variables (`envp`), which are placed right after the argument vector (`argv`) in memory. It finds them by looking just past the **null terminator** that marks the end of the argument list. Once it identifies the environment variables, it sets a global variable called `__environ` to point to them. This allows `__libc_start_main` and other parts of the program to access the environment variables later on. Additionally, just after the environment variables, there’s another section of memory called the **ELF auxiliary vector**, which contains additional information passed to the process by the loader. You can view this auxiliary vector by setting the environment variable `LD_SHOW_AUXV=1` before running the program.
+
+```bash
+The auxiliary vector is a special structure used in the Linux operating system to pass additional information from the dynamic linker/loader to a running program when it is started. It is primarily used to convey useful system-level information about the environment in which the program is running, such as memory layout, program entry point, and other critical runtime details
+```
+
+```bash
+export LD_SHOW_AUXV=1
+./cpp
+```
+
+output:
+
+```bash
+AT_SYSINFO_EHDR:      0x7ffd8b71b000
+AT_MINSIGSTKSZ:       1776
+AT_HWCAP:             1f8bfbff
+AT_PAGESZ:            4096
+AT_CLKTCK:            100
+AT_PHDR:              0x55e508e89040
+AT_PHENT:             56
+AT_PHNUM:             13
+AT_BASE:              0x7fcd3e788000
+AT_FLAGS:             0x0
+AT_ENTRY:             0x55e508e8a060
+AT_UID:               1000
+AT_EUID:              1000
+AT_GID:               1000
+AT_EGID:              1000
+AT_SECURE:            0
+AT_RANDOM:            0x7ffd8b6d2a19
+AT_HWCAP2:            0x2
+AT_EXECFN:            ./cpp
+AT_PLATFORM:          x86_64
+Hello World
+```
+
+| **Auxiliary Vector** | **Value**      | **Description**                                                            |
+| -------------------- | -------------- | -------------------------------------------------------------------------- |
+| **AT_SYSINFO_EHDR**  | 0x7ffd8b71b000 | Address of the system call interface header in memory.                     |
+| **AT_MINSIGSTKSZ**   | 1776           | Minimum stack size required for signal handling.                           |
+| **AT_HWCAP**         | 1f8bfbff       | Hardware capabilities of the CPU (bitmask indicating supported features).  |
+| **AT_PAGESZ**        | 4096           | Memory page size (in bytes) used by the system (4 KB).                     |
+| **AT_CLKTCK**        | 100            | Number of clock ticks per second on the system.                            |
+| **AT_PHDR**          | 0x55e508e89040 | Address of the program header in memory.                                   |
+| **AT_PHENT**         | 56             | Size (in bytes) of each entry in the program header table.                 |
+| **AT_PHNUM**         | 13             | Number of entries in the program header table.                             |
+| **AT_BASE**          | 0x7fcd3e788000 | Base address of the loaded program in memory.                              |
+| **AT_FLAGS**         | 0x0            | Flags related to the program's execution environment.                      |
+| **AT_ENTRY**         | 0x55e508e8a060 | Entry point address of the program.                                        |
+| **AT_UID**           | 1000           | User ID of the program’s creator (real UID).                               |
+| **AT_EUID**          | 1000           | Effective User ID of the program.                                          |
+| **AT_GID**           | 1000           | Group ID of the program’s creator (real GID).                              |
+| **AT_EGID**          | 1000           | Effective Group ID of the program.                                         |
+| **AT_SECURE**        | 0              | Indicates whether the program is running in a secure environment (0 = no). |
+| **AT_RANDOM**        | 0x7ffd8b6d2a19 | A pointer to a random number used for entropy (for security purposes).     |
+| **AT_HWCAP2**        | 0x2            | Additional hardware capabilities.                                          |
+| **AT_EXECFN**        | ./cpp          | Path to the executable file that was executed.                             |
+| **AT_PLATFORM**      | x86_64         | The platform the program is running on (e.g., x86_64 architecture).        |
+
+---
+
+<br>
+<br>
+
+## **environment variables (envp)** `vs` **auxiliary vector (auxv)**:
+
+| **Aspect**             | **Environment Variables (envp)**                                                                    | **Auxiliary Vector (auxv)**                                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **Purpose**            | Holds user-defined settings or configuration values (e.g., `PATH`, `HOME`, `USER`).                 | Holds system-level information passed by the operating system to the program (e.g., system page size, CPU capabilities). |
+| **Content**            | Key-value pairs (e.g., `PATH=/usr/bin`, `HOME=/home/user`).                                         | System-level values (e.g., `AT_PAGESZ`, `AT_ENTRY`, `AT_HWCAP`).                                                         |
+| **Source**             | Set by the user or shell before running the program.                                                | Set by the operating system when the program starts.                                                                     |
+| **Usage**              | Used by the program to configure its runtime environment (e.g., locating executables, directories). | Used by the program (via loader) to obtain system-level information like memory pages, hardware features.                |
+| **Location in Memory** | Stored in a null-terminated array of strings passed to `main` or accessed via `environ`.            | Stored as a structured list of key-value pairs passed to the program by the loader.                                      |
+| **Modification**       | Can be modified by the user or program during execution.                                            | Cannot be modified directly by the program.                                                                              |
+| **Examples**           | `PATH`, `HOME`, `USER`, `LANG`, `SHELL`.                                                            | `AT_PAGESZ`, `AT_ENTRY`, `AT_HWCAP`, `AT_SYSINFO_EHDR`.                                                                  |
+
+In summary:
+
+- **envp** contains user-configurable environment variables that the program can use to interact with the system or control its behavior.
+- **auxv** contains low-level system information that is passed by the OS to the program to provide it with details about the environment it's running in, such as system architecture and memory page size.
+
+if that was not enough for you then see this [example](./envp.md) this will give you an idea of `envp`
+
+note : to unset the `LD_SHOW_AUXV` use
+
+```bash
+unset LD_SHOW_AUXV
+```
+
+now your program will work as normal or you could restart the terminal again
+
+---
+
+<br>
+<br>
+
+few!!! lets get back to
