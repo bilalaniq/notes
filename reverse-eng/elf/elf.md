@@ -404,7 +404,6 @@ The fields have the following meanings:
   sh_link member of the initial entry in section header table
   contains the value zero.
 
-
   The **`e_shstrndx`** field in the **ELF header** holds the index of the **section header table entry** that contains the **section name string table**.
 
   #### **Breaking It Down:**
@@ -423,3 +422,122 @@ The fields have the following meanings:
   3. **Special Case: `SHN_UNDEF`**
      - If `e_shstrndx == SHN_UNDEF (0)`, it means the ELF file **does not have a section name string table**.
      - This is uncommon but might occur in some stripped binaries.
+
+---
+
+we can see this info by using `readelf`
+
+use this command
+
+```bash
+readelf -h program
+```
+
+output:
+
+for 64 bit
+
+```bash
+readelf -h '/mnt/c/Users/bilal/OneDrive/Desktop/cpp'
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              DYN (Position-Independent Executable file)
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x1060
+  Start of program headers:          64 (bytes into file)
+  Start of section headers:          14512 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)   # this is 52 for 32 bit
+  Size of program headers:           56 (bytes)
+  Number of program headers:         13
+  Size of section headers:           64 (bytes)
+  Number of section headers:         31
+  Section header string table index: 30
+```
+
+for 32 bit
+
+```bash
+ readelf -h hm
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              DYN (Position-Independent Executable file)
+  Machine:                           Intel 80386
+  Version:                           0x1
+  Entry point address:               0x1070
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          14236 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         11
+  Size of section headers:           40 (bytes)
+  Number of section headers:         30
+  Section header string table index: 29
+
+```
+
+here this is all the info that is with in the elf header struct by using readelf
+
+```bash
+Section header string table index: 29  # for 32 bit
+Section header string table index: 30  # for 64 bit
+```
+
+this shows the index of the The **`e_shstrndx`** field in the **ELF header** holds the index of the **section header table entry** that contains the **section name string table**.
+
+so we can get names of all the sections using this lets get the names of each section by using the
+`.shstrtab` table
+
+```bash
+readelf -p .shstrtab elf
+```
+
+-p for getting th string dump of an section
+
+output :
+
+```bash
+readelf -p .shstrtab cpp
+
+String dump of section '.shstrtab':
+  [     1]  .symtab
+  [     9]  .strtab
+  [    11]  .shstrtab
+  [    1b]  .interp
+  [    23]  .note.gnu.property
+  [    36]  .note.gnu.build-id
+  [    49]  .note.ABI-tag
+  [    57]  .gnu.hash
+  [    61]  .dynsym
+  [    69]  .dynstr
+  [    71]  .gnu.version
+  [    7e]  .gnu.version_r
+  [    8d]  .rela.dyn
+  [    97]  .rela.plt
+  [    a1]  .init
+  [    a7]  .plt.got
+  [    b0]  .text
+  [    b6]  .fini
+  [    bc]  .rodata
+  [    c4]  .eh_frame_hdr
+  [    d2]  .eh_frame
+  [    dc]  .init_array
+  [    e8]  .fini_array
+  [    f4]  .dynamic
+  [    fd]  .got.plt
+  [   106]  .data
+  [   10c]  .bss
+  [   111]  .comment
+```

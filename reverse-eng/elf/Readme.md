@@ -8,4 +8,7 @@ ELF was designed to be flexible, extensible, and platform-independent, providing
 
 ### Structure of an ELF File
 
-the header file which contains the info about how to set up an elf file is  `/usr/include/elf.h` click [here](./elf.md) to learn about it
+the header file which contains the info about how to set up an elf file is `/usr/include/elf.h` click [here](./elf.md) to learn about it
+
+---
+
