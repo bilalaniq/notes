@@ -285,4 +285,200 @@ now your program will work as normal or you could restart the terminal again
 <br>
 <br>
 
-few!!! lets get back to
+few!!! lets get back to `__libc_start_main` which calls `__libc_init_first`
+
+```c
+void __libc_init_first(int argc, char *arg0, ...)
+{
+    char **argv = &arg0, **envp = &argv[argc + 1];
+    __environ = envp;   // converting the argument vector to global
+    __libc_init (argc, argv, envp);
+}
+```
+
+this is about as much as we are going to cover about `__libc_start_main`
+but in general, it
+
+- Takes care of some security problems with `setuid` `setgid` programs
+
+  setuid and setgid are special flags that can be set on executables or scripts, allowing them to run with the privileges of the user who owns the file (often root), rather than the user who runs the program. This is commonly used for programs that need elevated privileges, such as changing system settings.
+
+- Starts up `threading`
+- Registers the `fini` (our program), and `rtld_fini` (run-time loader) arguments to get run by `at_exit` to run the program's and the loader's cleanup routines
+- Calls the `init` argument
+- Calls the `main` with the `argc` and `argv` arguments passed to it and with the global `__environ` argument as detailed above.
+- Calls `exit` with the return value of main
+
+---
+
+<br>
+<br>
+
+## Calling the init argument
+
+The init argument, to `__libc_start_main`, is set to `__libc_csu_init` which is also linked into our code. It's compiled from a C program which lives in the glibc source tree in csu/elf-init.c and linked into our program. The C code is similar to (but with a lot more #ifdefs)
+
+`__libc_csu_init` is a function in the GNU C Library (glibc) that is called during the initialization of a program, specifically in the startup process before the `main()` function is invoked. It is part of the program's setup to handle various initialization tasks, particularly for programs that require elevated privileges (like those using `setuid` or `setgid`). This function is compiled from a source file (`csu/elf-init.c`) in the glibc source tree and linked into the final executable. The main responsibilities of `__libc_csu_init` include performing security checks (such as clearing out dangerous environment variables), handling library initialization, and setting the correct user and group IDs for the program. It ensures that the program starts with the right environment and privileges, reducing the risk of security vulnerabilities before the `main()` function starts executing.
+
+```c
+void
+__libc_csu_init (int argc, char **argv, char **envp)
+{
+
+  _init ();
+
+  const size_t size = __init_array_end - __init_array_start;
+  for (size_t i = 0; i < size; i++)
+      (*__init_array_start [i]) (argc, argv, envp);
+}
+```
+
+The `__libc_csu_init` function is crucial for setting up a program when it starts executing. Even though the term "constructor" is often associated with C++, the concept of constructors and destructors actually existed long before C++ and applies to C programs as well. Every executable has a C-level constructor (`__libc_csu_init`) and a C-level destructor (`__libc_csu_fini`). These functions are responsible for initializing and cleaning up the environment for the program.
+
+The `__libc_csu_init` function is executed when the program starts, before entering the `main()` function. This function's role is to search for and call any global C-level constructors that the program may have, ensuring that they are executed properly before the main logic begins. Although it may feel like the concept of constructors and destructors belongs to C++, these functions are used in C programs as well, and they are often referred to as "initializers" (for constructors) and "finalizers" (for destructors). This mechanism allows a C program to have setup and teardown routines similar to those in C++.
+
+```bash
+080483a0 <__libc_csu_init>:
+ 80483a0:       55                      push   %ebp
+ 80483a1:       89 e5                   mov    %esp,%ebp
+ 80483a3:       57                      push   %edi
+ 80483a4:       56                      push   %esi
+ 80483a5:       53                      push   %ebx
+ 80483a6:       e8 5a 00 00 00          call   8048405 <__i686.get_pc_thunk.bx>
+ 80483ab:       81 c3 49 1c 00 00       add    $0x1c49,%ebx
+ 80483b1:       83 ec 1c                sub    $0x1c,%esp
+ 80483b4:       e8 bb fe ff ff          call   8048274 <_init>
+ 80483b9:       8d bb 20 ff ff ff       lea    -0xe0(%ebx),%edi
+ 80483bf:       8d 83 20 ff ff ff       lea    -0xe0(%ebx),%eax
+ 80483c5:       29 c7                   sub    %eax,%edi
+ 80483c7:       c1 ff 02                sar    $0x2,%edi
+ 80483ca:       85 ff                   test   %edi,%edi
+ 80483cc:       74 24                   je     80483f2 <__libc_csu_init+0x52>
+ 80483ce:       31 f6                   xor    %esi,%esi
+ 80483d0:       8b 45 10                mov    0x10(%ebp),%eax
+ 80483d3:       89 44 24 08             mov    %eax,0x8(%esp)
+ 80483d7:       8b 45 0c                mov    0xc(%ebp),%eax
+ 80483da:       89 44 24 04             mov    %eax,0x4(%esp)
+ 80483de:       8b 45 08                mov    0x8(%ebp),%eax
+ 80483e1:       89 04 24                mov    %eax,(%esp)
+ 80483e4:       ff 94 b3 20 ff ff ff    call   *-0xe0(%ebx,%esi,4)
+ 80483eb:       83 c6 01                add    $0x1,%esi
+ 80483ee:       39 fe                   cmp    %edi,%esi
+ 80483f0:       72 de                   jb     80483d0 <__libc_csu_init+0x30>
+ 80483f2:       83 c4 1c                add    $0x1c,%esp
+ 80483f5:       5b                      pop    %ebx
+ 80483f6:       5e                      pop    %esi
+ 80483f7:       5f                      pop    %edi
+ 80483f8:       5d                      pop    %ebp
+ 80483f9:       c3                      ret
+```
+
+# something intresting:
+
+Not much to talk about here, but I thought you'd want to see it. The get_pc_thunk thing is a little interesting.
+
+<`__i686.get_pc_thunk.bx`> what is this
+
+A "thunk" in programming, especially in low-level systems programming, is a small piece of code that acts as an intermediary to modify the control flow or perform some setup before jumping to the target code. It essentially "thunks" or "wraps" around another function or action to adjust something before that function is executed.
+
+## Position-Independent Code (PIC):
+
+This code involves involves **position-independent code (PIC)**, which is code designed to run correctly regardless of its memory address. This is crucial for shared libraries, where the code must work no matter where it's loaded in memory.
+
+we seem to be looking at some assembly code related to position-independent code (PIC) and the **Global Offset Table (GOT)**, which is part of how dynamic linking works in such code.
+
+Here's what’s going on step-by-step:
+
+1. **The Goal of Position-Independent Code**:
+
+   - Position-independent code is meant to run correctly regardless of where it is loaded in memory.
+   - To do this, the code needs to access certain global variables or functions, but the addresses of those variables or functions are not known until runtime (when the code is actually loaded into memory). This is where the Global Offset Table (GOT) comes in—it holds addresses to variables and functions that the program can access.
+
+2. **`__get_pc_thunk_bx`**:
+   - The `__get_pc_thunk_bx` function is a special assembly function used in PIC to obtain the correct address of the **Global Offset Table** (GOT).
+   - The basic problem being solved is how to get the correct address of the **GOT** when the code is not at a fixed memory address.
+3. **The Code**:
+
+   - The code involves a **call** to `__get_pc_thunk_bx`. Here’s a breakdown of what happens:
+
+   ```asm
+   push %ebx                       ; Save the value in the ebx register
+   call __get_pc_thunk_bx          ; Call __get_pc_thunk_bx, which gets the current address
+   add $_GLOBAL_OFFSET_TABLE_, %ebx ; Adds the offset to the base of the GOT
+   ```
+
+4. **The `__get_pc_thunk_bx` Function**:
+
+   ```asm
+   __get_pc_thunk_bx:
+   movel (%esp), %ebx    ; Move the return address from the stack (the address after the call) into ebx
+   return                ; Return, which jumps to the address stored in ebx (the return address)
+   ```
+
+   - The call instruction pushes the return address (the address of the instruction following the `call` to `__get_pc_thunk_bx`) onto the stack.
+   - Inside the `__get_pc_thunk_bx` function, this return address is popped into `%ebx`, so that `%ebx` now holds the address of the next instruction.
+   - The `return` instruction then pops the value off the stack and jumps back to the address of the instruction that follows the `call`.
+   - The key trick here is that the return address will be the address where the instruction after the `call` was located, which is important because that's the code we're trying to calculate the offset from in order to access the GOT.
+
+5. **Adding the Offset**:
+   - After returning from `__get_pc_thunk_bx`, the next instruction adds `$_GLOBAL_OFFSET_TABLE_` (a symbol representing the address of the GOT) to `%ebx`.
+   - This allows the code to compute the correct address for the global offset table, enabling the code to access global variables or functions that are stored in the GOT.
+
+### Why All This Is Needed:
+
+- In position-independent code, addresses of global variables or functions are not known at compile time.
+- The GOT holds these addresses, but since the code could be loaded at any address in memory, it needs to use a **thunk** (a helper function like `__get_pc_thunk_bx`) to dynamically calculate the correct address of the GOT and the data/functions inside it.
+
+### A More Concrete Example:
+
+Imagine you have a global variable `myVar` that is part of a shared library. In a typical program, the compiler would just use the address of `myVar` directly. But in a shared library (using PIC), the actual address of `myVar` isn’t known until runtime. So, the code uses the GOT to store the address of `myVar` (which is fixed at runtime), and the program uses the thunk to get that address dynamically.
+
+The **thunk** is a tiny helper function that sets up the address of the Global Offset Table (GOT) in position-independent code. It's part of the machinery that allows dynamic linking, so even though your code doesn’t know the exact memory location of global data and functions when it’s compiled, it can calculate those addresses at runtime and continue execution.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+## loop ?
+
+```asm
+80483eb:       83 c6 01                add    $0x1,%esi
+80483ee:       39 fe                   cmp    %edi,%esi
+80483f0:       72 de                   jb     80483d0 <__libc_csu_init+0x30>
+```
+
+The loop from `__libc_csu_init` will be discussed in a minute after we discuss the init() call that really calls `_init`. For now, just remember that it calls any C level initializers for our program.
+
+---
+
+## `_init` gets the call
+
+Ok, the loader handed control to `_start`, who called `__libc_start_main` who called `__libc_csu_init` who now calls `_init`.
+
+that is what we have learned so far
+
+```asm
+08048274 <_init>:
+ 8048274:       55                      push   %ebp
+ 8048275:       89 e5                   mov    %esp,%ebp
+ 8048277:       53                      push   %ebx
+ 8048278:       83 ec 04                sub    $0x4,%esp
+ 804827b:       e8 00 00 00 00          call   8048280 <_init+0xc>
+ 8048280:       5b                      pop    %ebx
+ 8048281:       81 c3 74 1d 00 00       add    $0x1d74,%ebx        (.got.plt)
+ 8048287:       8b 93 fc ff ff ff       mov    -0x4(%ebx),%edx
+ 804828d:       85 d2                   test   %edx,%edx
+ 804828f:       74 05                   je     8048296 <_init+0x22>
+ 8048291:       e8 1e 00 00 00          call   80482b4 <__gmon_start__@plt>
+ 8048296:       e8 d5 00 00 00          call   8048370 <frame_dummy>
+ 804829b:       e8 70 01 00 00          call   8048410 <__do_global_ctors_aux>
+ 80482a0:       58                      pop    %eax
+ 80482a1:       5b                      pop    %ebx
+ 80482a2:       c9                      leave
+ 80482a3:       c3                      ret
+```
+
+It starts with the regular C calling convention. click [here](../../Ccallingconventions/Readme.md) to learn about C calling conventions
