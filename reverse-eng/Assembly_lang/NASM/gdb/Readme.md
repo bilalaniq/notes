@@ -285,5 +285,192 @@ So, if you are working on a 64-bit system, `rsp` will be **64 bits**. On a 32-bi
 
 <br>
 <br>
+<br>
+<br>
+
+---
+
+# deguging c
+
+lets debug an c program
+
+```c
+int f(int i)
+{
+    int a=3;
+    i=4+i+a;
+    return i;
+}
+
+int
+main()
+{
+    return f(2);
+}
+```
+
+compile it using
+
+```bash
+gcc -ggdb -o test test.c
+```
+
+I tell gdb, `set disassemble-next-line` on which makes it print the next line of assembler that will be executed the same way you're used to it printing out the next line of C that will be executed. Since several lines of assembler correspond to one line of C, everytime a line of C is printed, you'll see several lines of assembler like this
+
+but note that this does not work in gef (GDB Enhanced Features)
+so dissable it for now using this command
+
+```bash
+gdb -n
+```
+
+```bash
+
+0x080483a4	5	    i=4+i+a;
+=> 0x080483a1 <f+13>:	 8b 45 08	mov    0x8(%ebp),%eax
+   0x080483a4 <f+16>:	 83 c0 04	add    $0x4,%eax
+   0x080483a7 <f+19>:	 03 45 fc	add    -0x4(%ebp),%eax
+   0x080483aa <f+22>:	 89 45 08	mov    %eax,0x8(%ebp)
+
+```
+
+This tells you that line 5 from the C source compiled to four lines of assembler.
+
+I step through the assembler with si (step instruction), and you'll see that gdb will tell you which line of the assembler will be executed next by marking it on the left with =>. Each time you tell gdb to step to the next instruction, the => will move down one, but the line of C won't change until you si off the bottom of the assembler lines that correspond to the line of C.
+
+When you start doing mixed assembler and C/C++ debugging there will be times you, by habit, type n (next) or s (step) and go to the next line of C when you meant to type ni (next instruction) or si (step instruction). It will be frustrating. At the worst you will have just done a lot of work to set up to see the smoking gun on a rare, hard to trace, bug and then you'll have to start over. Be careful. I'll do several step immediate before the C line will change. I'll only type si for the first one, I'll just press enter to take advantage of the way gdb will repeat the last instruction everytime you press `enter`.
+
+lets debug :)
+
+```bash
+(gdb) r
+
+Breakpoint 1, main () at test.cpp:13
+13          return f(2);
+=> 0x565561b4 <main()+13>:      6a 02                   push   $0x2
+   0x565561b6 <main()+15>:      e8 c2 ff ff ff          call   0x5655617d <_Z1fi>
+   0x565561bb <main()+20>:      83 c4 04                add    $0x4,%esp
+
+```
+
+```bash
+(gdb) si
+0x565561b6      13          return f(2);
+   0x565561b4 <main()+13>:      6a 02                   push   $0x2
+=> 0x565561b6 <main()+15>:      e8 c2 ff ff ff          call   0x5655617d <_Z1fi>
+   0x565561bb <main()+20>:      83 c4 04                add    $0x4,%esp
+```
+
+now the function at 0x5655617d will be called
+
+```bash
+(gdb)
+f (i=2) at test.cpp:4
+4       {
+=> 0x5655617d <_Z1fi+0>:        55                      push   %ebp
+   0x5655617e <_Z1fi+1>:        89 e5                   mov    %esp,%ebp
+   0x56556180 <_Z1fi+3>:        83 ec 10                sub    $0x10,%esp
+   0x56556183 <_Z1fi+6>:        e8 39 00 00 00          call   0x565561c1 <__x86.get_pc_thunk.ax>
+   0x56556188 <_Z1fi+11>:       05 6c 2e 00 00          add    $0x2e6c,%eax
+
+```
+
+if you want to know about the `thunk` what is this and its related context click [here](../../../Thunk/Readme.md)
+
+but in short `__x86.get_pc_thunk.ax` is an example of a thunk function used in x86 assembly, particularly in Position-Independent Code (PIC) for dynamically linked executables (shared libraries).
+
+if you also want to learn about pic and pie click [here](../../../pie&pic/Readme.md)
+
+```c
+(gdb)
+0x565561c0 in __x86.get_pc_thunk.ax ()
+=> 0x565561c0 <__x86.get_pc_thunk.ax+0>:        8b 04 24                mov    (%esp),%eax
+```
+
+```c
+(gdb)
+5           int a=3;
+=> 0x5655618d <f+16>:   c7 45 fc 03 00 00 00    movl   $0x3,-0x4(%ebp)
+```
+
+```c
+(gdb)
+6           i=4+i+a;
+=> 0x56556194 <f+23>:   8b 45 08                mov    0x8(%ebp),%eax
+   0x56556197 <f+26>:   8d 50 04                lea    0x4(%eax),%edx
+```
+
+```c
+(gdb)
+0x56556197      6           i=4+i+a;
+   0x56556194 <f+23>:   8b 45 08                mov    0x8(%ebp),%eax
+=> 0x56556197 <f+26>:   8d 50 04                lea    0x4(%eax),%edx
+```
+
+```c
+(gdb)
+7           return i;
+=> 0x565561a2 <f+37>:   8b 45 08                mov    0x8(%ebp),%eax
+```
+
+```c
+8       }
+=> 0x565561a5 <f+40>:   c9                      leave
+   0x565561a6 <f+41>:   c3                      ret
+```
+
+```c
+(gdb)
+0x565561bb in main () at test.c:13
+13          return f(2);
+   0x565561b4 <main+13>:        6a 02                   push   $0x2
+   0x565561b6 <main+15>:        e8 c2 ff ff ff          call   0x5655617d <f>
+=> 0x565561bb <main+20>:        83 c4 04                add    $0x4,%esp
+```
+
+```c
+(gdb)
+14      }
+=> 0x565561be <main+23>:        c9                      leave
+   0x565561bf <main+24>:        c3                      ret
+
+```
+
+end of main
+
+We backed out of main and into the function that called main, `__libc_start_main`.
+if you want to learn about the how main is called click [here](../../../elf/entrypoint/Readme.md) to learn
+
+So I just type c (continue) and let the program exit, since we don't have any need to debug functions in libc.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# What does array access look like in assembler?
+
+We'll write a simple C program to access elements of an array of ints so that you'll see what sort of assembler code corresponds to your C. We save the program as array1.c and then
+
+```bash
+gcc -ggdb -o array1 array1.c
+```
+
+```c
+int array1[]={ 0,1,2,3,4,5 };
+
+int
+main()
+{
+    int index, i=array1[1];
+    array1[4]=40;
+    index=3;
+    array1[index]=array1[index+1];
+}
+```
+
+We'll load it up in gdb and see what it looks like.
 
 

@@ -381,6 +381,8 @@ Not much to talk about here, but I thought you'd want to see it. The get_pc_thun
 
 A "thunk" in programming, especially in low-level systems programming, is a small piece of code that acts as an intermediary to modify the control flow or perform some setup before jumping to the target code. It essentially "thunks" or "wraps" around another function or action to adjust something before that function is executed.
 
+if you want to learn about thunks click [here](../../Thunk/Readme.md)
+
 ## Position-Independent Code (PIC):
 
 This code involves involves **position-independent code (PIC)**, which is code designed to run correctly regardless of its memory address. This is crucial for shared libraries, where the code must work no matter where it's loaded in memory.
