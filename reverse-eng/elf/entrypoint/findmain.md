@@ -437,6 +437,8 @@ Imagine you have a global variable `myVar` that is part of a shared library. In 
 
 The **thunk** is a tiny helper function that sets up the address of the Global Offset Table (GOT) in position-independent code. It's part of the machinery that allows dynamic linking, so even though your code doesn’t know the exact memory location of global data and functions when it’s compiled, it can calculate those addresses at runtime and continue execution.
 
+click [here](../../pie&pic/Readme.md) to learn about pic and pie
+
 ---
 
 <br>

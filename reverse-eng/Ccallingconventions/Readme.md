@@ -78,9 +78,23 @@ Here are some of the most common calling conventions:
 
 5. **x86-64 (System V AMD64 ABI)**
    - For 64-bit systems, there are several conventions like **System V** (used by Unix-like systems).
+   - x86_64 (System V ABI) generally uses left-to-right argument passing.
    - **Argument Passing**: The first six integer arguments are passed in registers (`RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9`), and any additional arguments are passed on the stack.
    - **Return Value**: The return value is placed in the `RAX` register.
    - **Stack Cleanup**: The caller is generally responsible for cleaning up the stack, but it depends on the calling convention.
+
+---
+
+### **Key Differences Between x86 and x86-64 Calling Conventions**
+
+| Feature              | x86 (32-bit `cdecl`)               | x86-64 (System V ABI)                      |
+| -------------------- | ---------------------------------- | ------------------------------------------ |
+| **Argument Passing** | **Right to left (stack)**          | **Left to right (registers first)**        |
+| **Registers Used**   | None (all on stack)                | RDI, RSI, RDX, RCX, R8, R9                 |
+| **Stack Cleanup**    | Caller cleans stack (`add esp, X`) | Caller responsible, but typically not used |
+| **Return Value**     | `EAX`                              | `RAX`                                      |
+
+📌 **In 64-bit, registers are used for arguments instead of the stack**.
 
 ### Why Are Calling Conventions Important?
 
@@ -118,7 +132,7 @@ main()
 in asssemblly this will look like (i am only using general asm code)
 
 ```asm
-;call
+;add
 
 pushl %ebp
 movel %esp, %ebp
@@ -187,4 +201,235 @@ The next line is a=num1+num2. That corresponds to the next couple of lines where
 Like the code prologue, there's a standard way to exit a function. We have to undo the things the prologue does, we adjust the stack, pop the caller's base pointer off the stack so that it points in the right place and with the return address now on the top of the stack, we can return. We have the return value in %eax where the convention says that we're supposed to put it, and so we adjust the stack to get rid of our variable, and pop main's %ebx. Notice that nothing takes the values out of stack memory, the pointer just adjusts to free the memory. Later if something else got pushed onto the stack it would overwrite the values, but otherwise they're just sitting there. Finally, the return pops the return address off of the stack into %eip the instruction pointer, and execution returns to main right after the call.
 
 Main pops the %ebx that belonged to main's caller off the stack and returns to them. Why didn't they have to set up the return value
-this is because we did not explicitlly return an value it is an special case for main fun that the compiler will automatically assume that main returns 0.
+this is because we did not explicitlly return an value it is an special case for main fun that the compiler will automatically assume that main returns 0 or any other value upon error.
+
+---
+
+lets see what are the changes in the 64 bit version of this code
+
+```asm
+
+;add
+
+0x000055555555512d      4       {
+0x0000555555555129 <add+0>:  55                      push   %rbp
+0x000055555555512a <add+1>:  48 89 e5                mov    %rsp,%rbp
+0x000055555555512d <add+4>:  89 7d ec                mov    %edi,-0x14(%rbp)
+0x0000555555555130 <add+7>:  89 75 e8                mov    %esi,-0x18(%rbp)
+
+
+int a = num1;
+=> 0x0000555555555133 <add+10>: 8b 45 ec                mov    -0x14(%rbp),%eax
+   0x0000555555555136 <add+13>: 89 45 fc                mov    %eax,-0x4(%rbp)
+
+0x000055555555513f      6  a = num1 + num2;
+0x0000555555555139 <add+16>: 8b 55 ec                mov    -0x14(%rbp),%edx
+0x000055555555513c <add+19>: 8b 45 e8                mov    -0x18(%rbp),%eax
+0x000055555555513f <add+22>: 01 d0                   add    %edx,%eax
+0x0000555555555141 <add+24>: 89 45 fc                mov    %eax,-0x4(%rbp)
+
+7           return a;
+=> 0x0000555555555144 <add+27>: 8b 45 fc                mov    -0x4(%rbp),%eax
+
+8       }
+0x0000555555555147 <add+30>: 5d                      pop    %rbp
+0x0000555555555148 <add+31>: c3                      ret
+
+
+; main
+
+0x0000555555555157      12          return add(3, 7);
+0x000055555555514d <main+4>: be 07 00 00 00          mov    $0x7,%esi
+0x0000555555555152 <main+9>: bf 03 00 00 00          mov    $0x3,%edi
+0x0000555555555157 <main+14>:        e8 cd ff ff ff          call   0x555555555129 <add>
+
+13      }
+=> 0x000055555555515c <main+19>:        5d                      pop    %rbp
+   0x000055555555515d <main+20>:        c3                      ret
+
+
+```
+
+now if you are an keen observer you can see that the parameters of the function add are not pushed on the stack
+rather they are moved to the registers
+
+lets see the other differences between both architectures
+
+# **Differences in Calling Conventions (x86 vs. x86-64)**
+
+The **x86 (32-bit)** and **x86-64 (64-bit)** versions of your assembly code follow different calling conventions. The major differences include:
+
+| Feature                        | x86 (32-bit, `cdecl`)                                      | x86-64 (System V ABI)                                      |
+| ------------------------------ | ---------------------------------------------------------- | ---------------------------------------------------------- |
+| **Argument Passing**           | Pushed **right-to-left** onto the stack                    | Passed **left-to-right** in registers (`RDI`, `RSI`, etc.) |
+| **Function Cleanup**           | Caller removes arguments from the stack (`add $0x8, %esp`) | No cleanup needed (registers are used)                     |
+| **Base Pointer (`EBP`/`RBP`)** | Used to access stack variables                             | Still used, but stack is **aligned**                       |
+| **Return Value**               | Stored in `EAX`                                            | Stored in `RAX`                                            |
+
+---
+
+## **Step-by-Step Comparison of `add(int num1, int num2)`**
+
+### **1. Function Prologue (Setting Up the Stack Frame)**
+
+**x86 (32-bit):**
+
+```assembly
+push   %ebp          ; Save old base pointer
+mov    %esp, %ebp    ; Set up new base pointer
+sub    $0x10, %esp   ; Allocate space for local variables
+```
+
+- The function saves `EBP` and sets it up for referencing function arguments.
+- Stack space is allocated manually.
+
+**x86-64 (64-bit):**
+
+```assembly
+push   %rbp          ; Save old base pointer
+mov    %rsp, %rbp    ; Set up new base pointer
+```
+
+- The same concept, but **`RSP` is already aligned**, so no need for explicit stack space allocation in this case.
+
+---
+
+### **2. Passing Arguments to the Function**
+
+**x86 (32-bit) (`cdecl`):**
+
+```assembly
+push  $0x7       ; Push second argument (rightmost)
+push  $0x3       ; Push first argument (leftmost)
+call  add        ; Call function
+```
+
+- Arguments are **pushed onto the stack from right to left**.
+- The **caller** (`main()`) is responsible for **cleaning up the stack** after the function call.
+
+**x86-64 (64-bit) (System V ABI):**
+
+```assembly
+mov  $0x7, %esi  ; Move second argument into `RSI`
+mov  $0x3, %edi  ; Move first argument into `RDI`
+call add         ; Call function
+```
+
+you may be asking why not use 64bit registers the reason behind this is that
+
+The assembler optimizes mov $0x7, %rsi into mov $0x7, %esi because 32-bit moves automatically clear the upper 32 bits of the 64-bit register. and also This results in a smaller and more efficient instruction encoding (4 bytes instead of 7).
+
+- Arguments are **passed in registers** (`RDI`, `RSI`, `RDX`, etc.).
+- No need to push values onto the stack.
+- No stack cleanup is required since registers are used instead.
+
+---
+
+### **3. Accessing Function Parameters**
+
+**x86 (32-bit) (`cdecl`):**
+
+```assembly
+mov  0x8(%ebp), %eax  ; Load num1 from stack
+mov  0xc(%ebp), %eax  ; Load num2 from stack
+```
+
+- Arguments are accessed via `EBP + X` because they were pushed onto the stack.
+
+**x86-64 (64-bit) (System V ABI):**
+
+```assembly
+mov  %edi, -0x14(%rbp)  ; Store num1 in local variable
+mov  %esi, -0x18(%rbp)  ; Store num2 in local variable
+```
+
+- No need to fetch arguments from the stack; they are **already in registers**.
+
+but what the heck is -0x14 and -0x18 !!!
+
+In x86 (32-bit, cdecl), the stack alignment is only 4-byte.
+
+In x86-64 (System V ABI), the stack must be 16-byte aligned before calling another function.
+
+%ebp points to the saved base pointer, and arguments are right next to it (small positive offsets).
+Local variables are right below %ebp (small negative offsets).
+
+function needs to store arguments in memory, they are stored farther from %rbp to maintain alignment.
+Local variables also follow alignment rules, which can push them farther away.
+
+so -0x14 is `-20` and -0x18 is `-24`
+
+you should know that padding is often added when a function is called, but not always. It depends on the stack alignment requirements and the calling convention.
+
+Padding is added only when necessary to maintain 16-byte stack alignment(64 bit ) and 4-byte stack alignment
+
+and if you are an keen absorver you can see that In x86-64, the parameters (num1 and num2) are stored in memory (-0x14(%rbp) and -0x18(%rbp)), whereas in x86 (32-bit), they are used directly from the stack without storing them in local variables.
+
+this is because registers are volatile, meaning their values can be overwritten by another function call
+To ensure the values are preserved, the compiler often stores them in memory (even though they are not local variables).
+
+---
+
+### **4. Performing the Addition**
+
+**x86 (32-bit) (`cdecl`):**
+
+```assembly
+mov  0x8(%ebp), %edx  ; Load num1
+mov  0xc(%ebp), %eax  ; Load num2
+add  %edx, %eax       ; num1 + num2
+mov  %eax, -0x4(%ebp) ; Store result in `a`
+```
+
+**x86-64 (64-bit) (System V ABI):**
+
+```assembly
+mov  -0x14(%rbp), %edx  ; Load num1
+mov  -0x18(%rbp), %eax  ; Load num2
+add  %edx, %eax         ; num1 + num2
+mov  %eax, -0x4(%rbp)   ; Store result in `a`
+```
+
+now what the hell -0x4(%rbp) it is storing the eax value 
+
+
+- **Same operations**, but in 64-bit, the function parameters are stored in local variables **after being passed via registers**.
+
+---
+
+### **5. Returning the Value**
+
+**x86 (32-bit) (`cdecl`):**
+
+```assembly
+mov  -0x4(%ebp), %eax  ; Load return value into EAX
+leave                  ; Restore stack frame (mov %ebp, %esp + pop %ebp)
+ret                    ; Return to caller
+```
+
+**x86-64 (64-bit) (System V ABI):**
+
+```assembly
+mov  -0x4(%rbp), %eax  ; Load return value into EAX (same as 32-bit)
+pop  %rbp              ; Restore base pointer
+ret                    ; Return to caller
+```
+
+- The return value is stored in **`EAX` (`RAX` in 64-bit)** in both cases.
+
+---
+
+## **Summary of Key Differences**
+
+| Feature                 | x86 (32-bit) `cdecl`    | x86-64 (System V ABI)                           |
+| ----------------------- | ----------------------- | ----------------------------------------------- |
+| **Argument Passing**    | Right-to-left on stack  | Left-to-right in registers (`RDI`, `RSI`, etc.) |
+| **Stack Cleanup**       | Caller (`add $X, %esp`) | No cleanup (registers used)                     |
+| **Accessing Arguments** | `EBP + X` (stack-based) | Directly in registers                           |
+| **Return Value**        | `EAX`                   | `RAX`                                           |
+
+### **Why is x86-64 More Efficient?**
+
+1. **Faster Argument Passing**: Using registers is much faster than pushing/popping from the stack.
+2. **Less Stack Manipulation**: No need to push/pop arguments or clean up the stack after function calls.
+3. **Better Performance**: Avoids memory accesses when possible.
