@@ -486,3 +486,73 @@ that is what we have learned so far
 ```
 
 It starts with the regular C calling convention. click [here](../../Ccallingconventions/Readme.md) to learn about C calling conventions
+
+the `_init` calls the three functions (there are others but we will only disscous 3)
+
+- `_gmon_start__`
+- `frame_dummy`
+- `__do_global_ctors_aux`
+
+---
+
+<br>
+<br>
+
+# `_gmon_start__`
+
+`__gmon_start__` is a function used by the GNU `gprof` profiler for runtime instrumentation. It is part of the GNU toolchain’s mechanism to collect profiling information when a program is compiled with the `-pg` flag.
+
+- It is a function that gets called at runtime to initialize the GNU profiling system (`gprof`).
+- It is usually invoked in the `_init` section of dynamically linked ELF executables and shared libraries.
+- If the program is not compiled for profiling, `__gmon_start__` may not exist or may be a weak symbol that does nothing.
+
+---
+
+## ** When and Where is `__gmon_start__` Used?**
+
+- It appears in binaries that are compiled with **profiling support (`-pg`)**.
+- It is typically called from the ELF **initialization routines** (e.g., `_init` or `__libc_csu_init`).
+- The linker may automatically insert it in dynamically linked programs.
+
+## ** What Happens if `__gmon_start__` is Not Defined?**
+
+- Since `__gmon_start__` is a **weak symbol**, it does not cause a linker error if missing.
+- If the binary is not compiled with profiling (`-pg` is not used), `_init` will **not** call `__gmon_start__`.
+
+You should see a call to `__gmon_start__` somewhere in `_init` or `__libc_csu_init`.
+
+---
+
+## **7. Summary**
+
+- `__gmon_start__` is used by `gprof` for profiling.
+- It is usually called in `_init` or other initialization routines.
+- If `-pg` is **not** used, `_init` does **not** call `__gmon_start__`.
+- It is a weak symbol, meaning its absence does not cause linker errors.
+
+lets see in our code where is `__gmon_start__` being called the
+
+```
+00001000 <_init>:
+    1000:       53                      push   %ebx
+    1001:       83 ec 08                sub    $0x8,%esp
+    1004:       e8 f8 00 00 00          call   1101 <__x86.get_pc_thunk.bx>
+    1009:       81 c3 eb 2f 00 00       add    $0x2feb,%ebx
+    100f:       8d 83 bc d0 ff ff       lea    -0x2f44(%ebx),%eax
+    1015:       85 c0                   test   %eax,%eax
+    1017:       74 02                   je     101b <_init+0x1b>
+    1019:       ff d0                   call   *%eax
+    101b:       83 c4 08                add    $0x8,%esp
+    101e:       5b                      pop    %ebx
+    101f:       c3                      ret
+```
+
+here you can see that i have compiled the program using `-pg` and still not seeing the `__gmon_start__` fun
+
+`__gmon_start__` is typically called indirectly via GOT
+
+Since RIP-relative addressing is available in x86-64, function addresses can often be accessed without the GOT.
+
+so we see direct call in x64 bit 
+
+now i will debug this in gdb to see what is `call   *%eax` calling to 

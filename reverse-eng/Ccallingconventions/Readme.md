@@ -390,10 +390,16 @@ add  %edx, %eax         ; num1 + num2
 mov  %eax, -0x4(%rbp)   ; Store result in `a`
 ```
 
-now what the hell -0x4(%rbp) it is storing the eax value 
-
-
 - **Same operations**, but in 64-bit, the function parameters are stored in local variables **after being passed via registers**.
+
+now what the hell -0x4(%rbp) it is storing the eax value with an alighnment of 4 bytes what is this
+we have talked that the parameters variable stored are stored using 16 bytes alighnment
+
+this is because Parameter variables (coming from function arguments) must follow 16-byte alignment rules for consistent stack alignment.
+
+Local variables (created inside the function) only need natural alignment (4 or 8 bytes) unless they are large.
+
+32-bit does not have this issue because all parameters are pushed sequentially onto the stack and do not need to worry about register-based argument passing.
 
 ---
 
@@ -433,3 +439,128 @@ ret                    ; Return to caller
 1. **Faster Argument Passing**: Using registers is much faster than pushing/popping from the stack.
 2. **Less Stack Manipulation**: No need to push/pop arguments or clean up the stack after function calls.
 3. **Better Performance**: Avoids memory accesses when possible.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# **Handling More Parameters Than Registers in x86 (32-bit) vs. x86-64 (64-bit)**
+
+When a function has **more parameters than available registers**, the system must handle the extra arguments properly. The way this is done is **different** in **32-bit (x86)** and **64-bit (x86-64)**.
+
+---
+
+## **1. 32-bit (x86 - cdecl Calling Convention)**
+
+### **How Parameters Are Passed?**
+
+- **All parameters are pushed onto the stack** in **right-to-left order**.
+- **There are no register-based arguments** in cdecl (everything is on the stack).
+
+### **What Happens if There Are Many Parameters?**
+
+- Since **all parameters are already passed on the stack**, nothing changes.
+- The **function accesses arguments by reading from `EBP`**:
+  ```assembly
+  mov  0x8(%ebp), %eax  ; Load first argument
+  mov  0xc(%ebp), %edx  ; Load second argument
+  mov  0x10(%ebp), %ecx  ; Load third argument
+  ```
+- If there are **more parameters**, they just have higher offsets:
+  ```
+  0x8(%ebp)   -> First argument
+  0xC(%ebp)   -> Second argument
+  0x10(%ebp)  -> Third argument
+  0x14(%ebp)  -> Fourth argument
+  ```
+- The **stack grows downward**, and every extra argument is pushed onto the stack.
+
+#### **Example: `void func(int a, int b, int c, int d, int e, int f);`**
+
+- The caller pushes arguments **right-to-left**:
+  ```assembly
+  push f
+  push e
+  push d
+  push c
+  push b
+  push a
+  call func
+  ```
+- The function accesses them from the stack:
+  ```assembly
+  mov  0x8(%ebp), %eax  ; Load a
+  mov  0xC(%ebp), %edx  ; Load b
+  mov  0x10(%ebp), %ecx ; Load c
+  ```
+
+👉 **In 32-bit, nothing special happens when more parameters are passed**—they are all just pushed onto the stack.
+
+---
+
+## **2. 64-bit (x86-64 - System V ABI)**
+
+### **How Parameters Are Passed?**
+
+- **First 6 integer parameters** are passed **in registers**:
+  - `RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9`
+- **Any additional parameters are passed on the stack**.
+
+### **What Happens if There Are More Than 6 Parameters?**
+
+- The **first 6 arguments** go into registers.
+- **Remaining arguments are pushed onto the stack**, similar to 32-bit.
+
+#### **Example: `void func(int a, int b, int c, int d, int e, int f, int g, int h);`**
+
+1. The **caller assigns**:
+   ```assembly
+   mov  $a, %rdi   ; First parameter (register)
+   mov  $b, %rsi   ; Second parameter (register)
+   mov  $c, %rdx   ; Third parameter (register)
+   mov  $d, %rcx   ; Fourth parameter (register)
+   mov  $e, %r8    ; Fifth parameter (register)
+   mov  $f, %r9    ; Sixth parameter (register)
+   push h          ; Eighth parameter (stack)
+   push g          ; Seventh parameter (stack)
+   call func
+   ```
+2. **Inside the function**:
+   - The first 6 parameters are in registers.
+   - The 7th and 8th parameters are in **memory** at:
+     ```
+     0(%rsp)  -> g
+     8(%rsp)  -> h
+     ```
+
+### **How Does the Function Access Extra Parameters?**
+
+- **First 6 arguments: Registers** (`RDI`, `RSI`, etc.).
+- **Arguments 7 and beyond: Stack (accessed using `RSP`)**.
+  ```assembly
+  mov  0(%rsp), %rax  ; Load g from stack
+  mov  8(%rsp), %rbx  ; Load h from stack
+  ```
+- The stack **still follows 16-byte alignment rules**, so padding may be added.
+
+👉 **In 64-bit, when there are more than 6 parameters, the extra ones are passed on the stack, but the first 6 remain in registers.**
+
+---
+
+## **3. Summary: How Extra Parameters Are Handled**
+
+| **Architecture**                   | **Where First Arguments Go**                 | **Where Extra Arguments Go**      | **How They Are Accessed**                       |
+| ---------------------------------- | -------------------------------------------- | --------------------------------- | ----------------------------------------------- |
+| **32-bit (x86 - cdecl)**           | **Stack** (`push`ed right-to-left)           | **Stack** (next memory locations) | Accessed via `EBP` (`mov  0x8(%ebp), %eax`)     |
+| **64-bit (x86-64 - System V ABI)** | **Registers** (`RDI, RSI, RDX, RCX, R8, R9`) | **Stack** (after 6th parameter)   | First 6: Registers, others: `mov 0(%rsp), %rax` |
+
+🚀 **Key Takeaways**:
+
+- **In 32-bit**: Everything is already on the stack, so extra arguments are just at higher memory addresses.
+- **In 64-bit**: The first 6 are in registers, and **only extra ones go to the stack**.
+- **In both cases, extra parameters are accessed via stack memory (`EBP` in x86, `RSP` in x86-64).**
+
+---
