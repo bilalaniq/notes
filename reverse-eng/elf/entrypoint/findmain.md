@@ -713,6 +713,8 @@ In C, since there are no constructors, `_do_global_ctors_aux` is not used. Howev
   The function marked with `__attribute__((constructor))` executes before main(), similar to a C++ constructor.
   This is used in shared libraries (.so / .dll) for initialization.
 
+  if you want to learn about `__attribute__` click [here](../../__attribute__/Readme.md)
+
 - ## .init_array Section (Used in ELF Binaries)
 
   When a program is compiled, the linker places initialization functions in a special section called .init_array.
@@ -762,5 +764,233 @@ why this is
 
 `__do_global_ctors_aux` is still used in older GCC versions, certain embedded systems, or systems that explicitly use the .ctors and .dtors sections for global initialization and destruction. However, modern compilers (GCC, Clang) prefer using .init_array and `__libc_csu_init()` for initialization, making `__do_global_ctors_aux` less relevant in newer toolchains. Nevertheless, it's still included in some contexts for backward compatibility.
 
-
 so lets see its code
+
+```c
+__do_global_ctors_aux (void)
+{
+  func_ptr *p;
+  for (p = __CTOR_END__ - 1; *p != (func_ptr) -1; p--)
+    (*p) ();
+}
+```
+
+In this code, `__do_global_ctors_aux` initializes a pointer `p` to point at `__CTOR_END__ - 1`. `__CTOR_END__` is a global variable that marks the end of the constructor function table, and subtracting 1 from it makes the pointer point to the last constructor in the table. The code then enters a loop where it checks if the function pointer at `p` is not equal to `-1` (a sentinel value marking the end of the table). If it isn't `-1`, the function pointed to by `p` is called, and `p` is decremented to point to the previous function in the table. This process repeats until the sentinel value (`-1`) is reached, indicating the end of the constructor list. The use of pointer arithmetic allows the code to traverse the table of function pointers in reverse order, calling each constructor function in sequence.
+
+lets convert this code into assemblly
+
+```asm
+08048450 <__do_global_ctors_aux>:
+ 8048450:       55                      push   %ebp
+ 8048451:       89 e5                   mov    %esp,%ebp
+ 8048453:       53                      push   %ebx
+ 8048454:       83 ec 04                sub    $0x4,%esp
+ 8048457:       a1 14 9f 04 08          mov    0x8049f14,%eax
+ 804845c:       83 f8 ff                cmp    $0xffffffff,%eax
+ 804845f:       74 13                   je     8048474 <__do_global_ctors_aux+0x24>
+ 8048461:       bb 14 9f 04 08          mov    $0x8049f14,%ebx
+ 8048466:       66 90                   xchg   %ax,%ax
+ 8048468:       83 eb 04                sub    $0x4,%ebx
+ 804846b:       ff d0                   call   *%eax
+ 804846d:       8b 03                   mov    (%ebx),%eax
+ 804846f:       83 f8 ff                cmp    $0xffffffff,%eax
+ 8048472:       75 f4                   jne    8048468 <__do_global_ctors_aux+0x18>
+ 8048474:       83 c4 04                add    $0x4,%esp
+ 8048477:       5b                      pop    %ebx
+ 8048478:       5d                      pop    %ebp
+ 8048479:       c3                      ret
+```
+
+There's the normal preamble with the addition of saving %ebx as well because we're going to use it in the function, and we also save room for the pointer p. You'll notice that even though we save room on the stack for it, we never store it there. p will instead live in %ebx, and `*p` will live in %eax
+
+It looks like an optimization has occurred, instead of loading `__CTOR_END__` and then subtracting 1 from it, and dereferencing it, instead, we go ahead and load `*(__CTOR_END__ - 1)`, which is the immediate value `0x8049f14`. We load the value in it (remember `$0x8049f14` would mean put that value, without the $, just 0x8049f14 means the contents of that address), into %eax.
+
+Immediately, we compare this first value with -1 and if it's equal, we're done and jump to address 0x8048474, where we clean up our stack, pop off the things we've saved on there and return
+
+Assuming that there's at least one thing in the function table, though, we also move the immediate value $0x8049f14, into %ebx which is f our function pointer, and then do the `xchg %ax,%ax`. What the heck is that? Well, grasshopper, that is what they use for a `nop (No OPeration)` in 16 or 32 bit x86. It does nothing but take a cycle and some space. In this case, it's used to make the loop (the top of the loop is the subtract on the next line) start on 8048468 instead of 8048466. The advantage of that is that it aligns the start of the loop on a 4 byte boundary and gives a better chance that the whole loop will fit in a cache line instead of being broken across two. It speeds things up.
+
+Next we subtract 4 from %ebx to be ready for the next time through the loop, call the function we've got the address of in %eax, move the next function pointer into %eax, and compare it to -1. If it's not -1 we jump back up to the subtract and loop again.
+
+Otherwise we fall through into our function epilogue and return to `_init`, which immediately falls through into its epilogue and returns to `__libc_csu_init__`. Bet you forgot all about him. There's still a loop to deal with
+
+---
+
+<br>
+<br>
+
+# Back up to `__libc_csu_init__`
+
+here it is in C.
+
+```c
+void
+__libc_csu_init (int argc, char **argv, char **envp)
+{
+
+  _init ();
+
+  const size_t size = __init_array_end - __init_array_start;
+  for (size_t i = 0; i < size; i++)
+      (*__init_array_start [i]) (argc, argv, envp);
+}
+```
+
+What is this `__init_array`? I thought you'd never ask. You can have code run at this stage as well. Since this is just after returning from running `_init` which ran our constructors, that means anything in this array will run after constructors are done. You can tell the compiler you want a function to run at this phase. The function will receive the same arguments as main.
+
+```c
+void init(int argc, char **argv, char **envp) {
+ printf("%s\n", __FUNCTION__);
+}
+
+__attribute__((section(".init_array"))) typeof(init) *__init = init;
+
+```
+
+but before we do this there are more things to disscous
+
+We'll be all the way back in `__libc_start_main__`
+
+it calls our main now, and then passes the result to exit().
+
+# exit
+
+exit() runs some more loops of functions
+
+The `exit()` function in C and C++ is used to terminate a program, and it goes through several steps to clean up before the program ends. Specifically, when `exit()` is called, it ensures that various resources are properly released and that certain functions are executed before the program terminates. Here's a detailed breakdown of the sequence of events that `exit()` triggers:
+
+### Steps exit() Calls:
+
+1. **Functions Registered with `atexit()`**:
+
+   - These are functions that have been registered by the program using the `atexit()` function. They are executed in reverse order of their registration.
+   - These functions are typically used for cleanup tasks that should be performed before the program exits.
+   - They are executed **first** in the process of termination.
+   - For example, if you register cleanup functions using `atexit()`, they will be called when `exit()` is invoked.
+
+2. **Functions in the `.fini` Section (Fini Array)**:
+
+   - After running `atexit()` functions, the program will look for functions in the **fini section** (sometimes called the **fini array**) of the program's binary.
+   - These functions are typically responsible for more low-level or platform-specific cleanup, such as deallocating resources, unregistering signal handlers, or freeing memory used by static data structures.
+   - The functions in the **.fini** section are executed after `atexit()` functions and before destructors.
+
+3. **Destructors**:
+
+   - If your program is written in C++, the **destructors** of global and static objects are executed next. These are the functions that clean up any objects that were created during the program's execution.
+   - Destructors are typically used to release any resources (like memory or file handles) associated with global or static objects.
+   - These destructors are executed **last** in the exit process, in reverse order of their construction.
+
+   one example of this is `__do_global_dtors_aux`
+
+### High-Level Breakdown of `exit()` Calls:
+
+1. **atexit() Functions**: Functions registered via `atexit()` are executed first.
+2. **Fini Array Functions**: Functions in the `.fini` section (used mainly for low-level cleanup).
+3. **Destructors**: The destructors for static and global objects are called last.
+
+### Example Code:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void cleanup1() {
+    printf("Cleanup function 1\n");
+}
+
+void cleanup2() {
+    printf("Cleanup function 2\n");
+}
+
+int main() {
+    atexit(cleanup1);  // Register cleanup1
+    atexit(cleanup2);  // Register cleanup2
+
+    printf("Program is ending...\n");
+    exit(0);  // Exit the program
+}
+```
+
+### Output:
+
+```
+Program is ending...
+Cleanup function 2
+Cleanup function 1
+```
+
+### How This Works:
+
+- `cleanup1()` and `cleanup2()` are registered using `atexit()`, so they are executed in reverse order of their registration when `exit()` is called.
+- The program will print "Program is ending..." and then call the registered cleanup functions in the order `cleanup2()` first, then `cleanup1()`.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# summery
+
+at last i will give you an code which will give you the order in which the c/c++ elf files are executed
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void preinit(int argc, char **argv, char **envp) {
+    printf("%s\n", __FUNCTION__);
+}
+
+void init(int argc, char **argv, char **envp) {
+    printf("%s\n", __FUNCTION__);
+}
+
+void fini() {
+    printf("%s\n", __FUNCTION__);
+}
+
+__attribute__((section(".init_array"))) typeof(init) *__init = init;
+__attribute__((section(".preinit_array"))) typeof(preinit) *__preinit = preinit;
+__attribute__((section(".fini_array"))) typeof(fini) *__fini = fini;
+
+void  __attribute__ ((constructor)) constructor() {
+    printf("%s\n", __FUNCTION__);
+}
+
+void __attribute__ ((destructor)) destructor() {
+    printf("%s\n", __FUNCTION__);
+}
+
+void my_atexit() {
+    printf("%s\n", __FUNCTION__);
+}
+
+void my_atexit2() {
+    printf("%s\n", __FUNCTION__);
+}
+
+int main() {
+    atexit(my_atexit);
+    atexit(my_atexit2);
+    return 0;
+}
+
+```
+
+output:
+
+```bash
+preinit
+init
+constructor
+my_atexit2
+my_atexit
+destructor
+fini
+```
+
+---
+
+<br>
+# The End
