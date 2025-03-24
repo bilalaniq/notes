@@ -508,13 +508,13 @@ the `_init` calls the three functions (there are others but we will only disscou
 
 ---
 
-## ** When and Where is `__gmon_start__` Used?**
+## When and Where is `__gmon_start__` Used?
 
 - It appears in binaries that are compiled with **profiling support (`-pg`)**.
 - It is typically called from the ELF **initialization routines** (e.g., `_init` or `__libc_csu_init`).
 - The linker may automatically insert it in dynamically linked programs.
 
-## ** What Happens if `__gmon_start__` is Not Defined?**
+## What Happens if `__gmon_start__` is Not Defined?
 
 - Since `__gmon_start__` is a **weak symbol**, it does not cause a linker error if missing.
 - If the binary is not compiled with profiling (`-pg` is not used), `_init` will **not** call `__gmon_start__`.
@@ -522,8 +522,6 @@ the `_init` calls the three functions (there are others but we will only disscou
 You should see a call to `__gmon_start__` somewhere in `_init` or `__libc_csu_init`.
 
 ---
-
-## **7. Summary**
 
 - `__gmon_start__` is used by `gprof` for profiling.
 - It is usually called in `_init` or other initialization routines.
@@ -553,6 +551,216 @@ here you can see that i have compiled the program using `-pg` and still not seei
 
 Since RIP-relative addressing is available in x86-64, function addresses can often be accessed without the GOT.
 
-so we see direct call in x64 bit 
+so we see direct call in x64 bit
 
-now i will debug this in gdb to see what is `call   *%eax` calling to 
+now i will debug this in gdb to see what is `call   *%eax` calling to
+
+it is calling to
+
+```asm
+Dump of assembler code for function __gmon_start__:
+   0x565560b0 <+0>:     push   %ebx
+   0x565560b1 <+1>:     call   0x56556101 <__x86.get_pc_thunk.bx>
+   0x565560b6 <+6>:     add    $0x2f3e,%ebx
+   0x565560bc <+12>:    sub    $0x8,%esp
+   0x565560bf <+15>:    mov    0x24(%ebx),%edx
+   0x565560c5 <+21>:    test   %edx,%edx
+   0x565560c7 <+23>:    jne    0x565560f7 <__gmon_start__+71>
+   0x565560c9 <+25>:    sub    $0x8,%esp
+   0x565560cc <+28>:    lea    -0x3ff4(%ebx),%eax
+   0x565560d2 <+34>:    push   -0x8(%ebx)
+   0x565560d8 <+40>:    push   %eax
+   0x565560d9 <+41>:    movl   $0x1,0x24(%ebx)
+   0x565560e3 <+51>:    call   0x56556050 <__monstartup@plt>
+   0x565560e8 <+56>:    pop    %eax
+```
+
+Then we grab the address of gmon_start. If it's zero then we don't call it, instead we jump past it. Otherwise, we call it to set up profiling. It runs a routine to start profiling, and calls at_exit to schedule another routine to run later to write gmon.out at the end of execution.
+
+if you want to learn about profiling click [here](../../profiling/Readme.md)
+
+---
+
+<br>
+<br>
+
+# `frame_dummy`
+
+`frame_dummy` is a small, compiler-generated function used to set up exception handling by preparing arguments for the `__register_frame_info` function. `__register_frame_info` is a function used in the GNU toolchain (primarily in GCC and related environments) to register exception handling and stack unwinding information for dynamically loaded code. It is part of the DWARF Exception Handling (EH) system, which helps manage stack unwinding when an exception is thrown. However, in many cases, especially in simple programs without C++ exceptions or global constructors, `frame_dummy` is either empty or never executed. While it plays a role in program initialization, it is not always relevant for analysis unless you are specifically investigating exception handling mechanisms.
+
+---
+
+<br>
+<br>
+
+# `__do_global_ctors_aux`
+
+The function `__do_global_ctors_aux` is responsible for **calling global constructors** in a compiled program. This is part of the **C++ runtime initialization** process, ensuring that all global (static) objects with constructors are properly initialized before `main()` is executed.
+
+The addresses of constructors and destructors of static objects are each stored in a different section in ELF executable. for the constructors there is a section called .CTORS and for the destructors there is the .DTORS section.
+
+the compiler creates two auxillary functions `__do_global_ctors_aux` and `__do_global_dtors_aux` for calling the constructors and destructors of these static objects, respectively.
+
+`__do_global_ctors_aux` function simply performs a walk on the .CTORS section, while the `__do_global_dtors_aux` does the same job only for the .DTORS section which contains the program specified destructors functions.
+
+---
+
+#### **Background: Global Constructors in C++**
+
+In C++, objects declared at the global (or static) scope are initialized before `main()` starts. This includes:
+
+- **Global static objects**
+- **Local static objects within functions**
+- **Static objects inside shared libraries (`.so` or `.dll`)**
+
+Because their constructors must run before `main()`, the compiler generates code to **collect and call** them during program startup.
+
+---
+
+#### **What `_do_global_ctors_aux` Does**
+
+- It **iterates over an array of function pointers** to all global constructors.
+- It **calls each constructor** in the correct order, ensuring all global objects are initialized before `main()`.
+- This function is usually called from `_init` or a similar startup routine.
+
+##### **Sequence of Execution**
+
+1. The linker places global constructor function pointers in a special section (usually `.ctors` or `.init_array`).
+2. `_do_global_ctors_aux` retrieves these function pointers.
+3. It loops through them and **calls each constructor function**.
+4. Once all constructors have run, control is passed to `main()`.
+
+---
+
+#### **Where You Might See It**
+
+- In disassembled binaries where static/global objects exist.
+- In debugging sessions when tracing **program startup**.
+- Inside dynamic libraries (`.so`, `.dll`) to handle **per-library constructor calls**.
+
+---
+
+### **Example (Simplified Pseudocode)**
+
+```cpp
+// Example of a global object
+class Global {
+public:
+    Global() { std::cout << "Global constructor called!" << std::endl; }
+};
+
+// Global instance
+Global g;
+```
+
+At the **assembly level**, the runtime initialization mechanism ensures:
+
+1. `_do_global_ctors_aux` is invoked before `main()`.
+2. The constructor of `g` is called before execution proceeds.
+
+```assembly
+call _do_global_ctors_aux  ; Calls all global constructors
+call main                  ; Proceeds to main()
+```
+
+---
+
+### **Why Does This Matter?**
+
+- If `__do_global_ctors_aux` **fails**, uninitialized objects could cause crashes.
+- If debugging startup issues, tracing `__do_global_ctors_aux` can reveal **constructor-related bugs**.
+- Understanding it helps when analyzing **malware or reverse-engineering C++ programs**.
+
+In C++, global and static objects with constructors are explicitly initialized before main(). This is why `__do_global_ctors_aux` is needed.
+
+In C, since there are no constructors, `_do_global_ctors_aux` is not used. However, initialization functions may still run before main()—especially when using GCC attributes (**attribute**((constructor))) or compiler-specific sections (.init_array).
+
+## How Does C Handle Initialization Before main()?
+
+- ### Static and Global Variable Initialization
+
+  In C, global and static variables are initialized before main() starts, but only with:
+
+  - Zero for uninitialized variables (.bss section).
+  - Their defined values (.data section).
+    Unlike C++, C does not have constructors, so `_do_global_ctors_aux` is unnecessary.
+
+- ### `__attribute__((constructor)) in GCC`
+
+  In GCC and Clang, you can force functions to run before main() using:
+
+  ```c
+  #include <stdio.h>
+
+  __attribute__((constructor))
+  void before_main() {
+      printf("This runs before main!\n");
+  }
+
+  int main() {
+      printf("Main function!\n");
+      return 0;
+  }
+  ```
+
+  output:
+
+  ```bash
+  This runs before main!
+  Main function!
+  ```
+
+  The function marked with `__attribute__((constructor))` executes before main(), similar to a C++ constructor.
+  This is used in shared libraries (.so / .dll) for initialization.
+
+- ## .init_array Section (Used in ELF Binaries)
+
+  When a program is compiled, the linker places initialization functions in a special section called .init_array.
+  The runtime calls each function in .init_array before main() starts.
+  This is similar to `_do_global_ctors_aux` but applies to both C and C++
+
+<br>
+<br>
+
+In C++, `_do_global_ctors_aux` ensures global constructors are executed before main().
+In C, there are no constructors, but functions can run before main() using `__attribute__((constructor))` or .init_array.
+In both cases, the program ensures necessary initialization is done before entering main().
+
+but Modern compilers, like g++ with recent versions of glibc and libstdc++, have moved to a different mechanism using .init_array sections instead of explicit function calls.
+
+Instead of a single function like `__do_global_ctors_aux`, constructors are now stored in the `.init_array` section of the ELF binary.
+The runtime loader automatically calls each function in .init_array in order, eliminating the need for `_do_global_ctors_aux`.
+
+Old GCC versions (before .init_array) used `_do_global_ctors_aux` to call global constructors before main().
+
+but `__do_global_dtors_aux` Still Exists
+
+The destruction mechanism (`__do_global_dtors_aux`) still exists because the runtime needs to ensure proper cleanup of global objects.
+
+if you want to learn about global constructor and distructor in c (not in c++ ) click [here](../../c_con_&_dis/Readme.md)
+
+so click [here](../init_array.md) to learn about `init_array`
+
+but learning about `_do_global_ctors_aux` give you an overview of how things work
+
+so in summary
+
+`_do_global_ctors_aux` was used in older GCC versions (before .init_array).
+
+Modern GCC and Clang use .init_array instead.
+
+C++ global constructors are now called via `__libc_csu_init()`.
+
+---
+
+<br>
+<br>
+<br>
+
+but wtf it is still used i have cheaked it in the gcc code `gcc/libgcc/crtstuff.c`
+why this is
+
+`__do_global_ctors_aux` is still used in older GCC versions, certain embedded systems, or systems that explicitly use the .ctors and .dtors sections for global initialization and destruction. However, modern compilers (GCC, Clang) prefer using .init_array and `__libc_csu_init()` for initialization, making `__do_global_ctors_aux` less relevant in newer toolchains. Nevertheless, it's still included in some contexts for backward compatibility.
+
+
+so lets see its code
