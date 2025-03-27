@@ -13,7 +13,7 @@ we have already talked about the [attribute](../__attribute__/Readme.md) and [co
 
 
 
-> **Note:**
+> [!Note]
 > On ELF platforms, initialization functions (constructors) are implemented using two schemes:
 >
 > - **Legacy approach**: Uses `.init` / `.ctors` sections.
