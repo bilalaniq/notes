@@ -741,7 +741,7 @@ The destruction mechanism (`__do_global_dtors_aux`) still exists because the run
 
 if you want to learn about global constructor and distructor in c (not in c++ ) click [here](../../c_con_&_dis/Readme.md)
 
-so click [here](../init_array.md) to learn about `init_array`
+so click [here](../init&finit_array.md) to learn about `init_array`
 
 but learning about `_do_global_ctors_aux` give you an overview of how things work
 
