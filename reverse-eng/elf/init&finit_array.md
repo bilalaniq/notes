@@ -10,11 +10,10 @@ Priorities from 0 to 100 are reserved for the implementation (-Wprio-ctor-dtor c
 
 we have already talked about the [attribute](../__attribute__/Readme.md) and [constructor & distructor](../c_con_&_dis/Readme.md)
 
-
-
-
 > [!Note]
 > On ELF platforms, initialization functions (constructors) are implemented using two schemes:
 >
 > - **Legacy approach**: Uses `.init` / `.ctors` sections.
 > - **Modern approach**: Uses `.init_array`.
+
+if you have read [this](./entrypoint/Readme.md) you will relize that the reason you don't see `do_global_ctors_aux` anymore in modern GCC-produced binaries is due to the adoption of the `.init_array` section for managing constructors, which is a more modern and flexible approach compared to the legacy `.ctors` and `.init` sections.

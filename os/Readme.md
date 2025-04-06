@@ -154,5 +154,84 @@ click [here](./chap1/Exercise/Readme.md) see chapter 1 exercise
 
 # CHAPTER # 2
 
+An operating system (OS) provides the environment for executing programs and varies in structure depending on its design. Before designing an OS, clear goals must be established to guide decision-making.
 
+Operating systems can be analyzed from three perspectives:
 
+1. **Services provided** – What functionalities the OS offers.
+2. **User and programmer interfaces** – How users interact with the OS.
+3. **Internal components** – How different parts of the OS connect and function.
+
+This chapter explores OS services, system calls, and various design methodologies, including monolithic, layered, microkernel, modular, and hybrid architectures. It also covers the OS boot process, performance monitoring tools, and Linux kernel module development.
+
+---
+
+## Operating-System Services
+
+An operating system (OS) provides an environment for executing programs and offers various services to users and programs. While specific services vary across OS types, common categories exist. These services simplify programming tasks and improve usability. A visual representation (Figure 2.1) illustrates how different OS services interconnect and support users.
+
+Operating systems provide essential services for both users and system efficiency.
+
+### **User-Oriented Services:**
+
+- **User Interface (UI):** Supports graphical (GUI), command-line (CLI), and touchscreen interfaces.
+- **Program Execution:** Loads and runs programs, handling normal and abnormal terminations.
+- **I/O Operations:** Manages input and output operations for devices and files, ensuring efficiency and protection.
+- **File-System Manipulation:** Enables reading, writing, creating, deleting, and managing file permissions.
+- **Communication:** Allows process interaction via shared memory or message passing, both locally and over networks.
+- **Error Detection:** Monitors and responds to errors in hardware, I/O devices, and user programs.
+
+### **System-Oriented Services:**
+
+- **Resource Allocation:** Manages CPU, memory, and I/O resources among multiple processes.
+- **Logging & Accounting:** Tracks resource usage for monitoring and optimization.
+- **Protection & Security:** Controls access to data, ensures process isolation, and secures external connections.
+
+These services collectively ensure a functional, efficient, and secure computing environment.
+
+---
+
+## User and Operating-System Interface
+
+Operating systems provide multiple ways for users to interact with them:
+
+### **1. Command-Line Interface (CLI)**
+
+- Allows users to enter text-based commands directly.
+- Found in Linux, UNIX, and Windows, where it is often called a **shell** (e.g., Bash, Korn, C shell).
+- Commands can be built into the interpreter or executed as separate system programs.
+- CLI is preferred by system administrators and power users for efficiency and automation via shell scripts.
+
+### **2. Graphical User Interface (GUI)**
+
+- Uses a window-based system with icons, menus, and a pointing device (mouse/touchpad).
+- First appeared with Xerox Alto (1973) and became popular with Apple Macintosh and Microsoft Windows.
+- Common in modern desktop environments like KDE and GNOME (Linux) and Aqua (macOS).
+
+### **3. Touch-Screen Interface**
+
+- Used in smartphones and tablets, enabling interaction via gestures like swiping and tapping.
+- Eliminates the need for physical keyboards, replacing them with on-screen versions.
+- Common in iOS (Springboard) and Android devices.
+
+### **User Interface Choice**
+
+- CLI is favored by advanced users for automation and system management.
+- GUI is preferred by general users for ease of use.
+- Modern OSs (e.g., macOS, Windows) provide both CLI and GUI options.
+- Mobile systems primarily use touch-screen interfaces, with limited CLI availability.
+
+While the user interface differs across platforms, the OS focuses on providing fundamental services rather than dictating how users interact with the system.
+
+![sevices](https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQwrqm_g56WL2Wsa_U8ClmiOjpFFIDs_N0z2OFS5-w1ep-tqNIe)
+
+---
+
+<br>
+<br>
+
+## system-call
+
+if you want to learn about system calls clcik [here](./chap2/Sys_calls/Readme.md)
+
+---
