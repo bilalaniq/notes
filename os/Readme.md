@@ -235,3 +235,78 @@ While the user interface differs across platforms, the OS focuses on providing f
 if you want to learn about system calls clcik [here](./chap2/Sys_calls/Readme.md)
 
 ---
+
+## **System Services**
+
+System services, or **system utilities**, are programs that help users interact with the operating system. These services make it easier to develop, manage, and run applications. They are like tools or helpers that provide important functions for the computer system. Here's a breakdown of the different categories of system services:
+
+---
+
+### **Types of System Services:**
+
+1. **File Management:**
+
+   - These programs help with organizing and manipulating files. Examples include programs that **create**, **delete**, **copy**, **rename**, or **list** files and directories.
+
+2. **Status Information:**
+
+   - Some services gather information about the system, like **current time**, **available memory**, or **disk space**. These programs might display status info in **text** or a **graphical window**.
+   - More complex status tools might track the performance of the system or log events for debugging.
+
+3. **File Modification:**
+
+   - These are tools like **text editors** that help you create or modify the content of files. Some also allow searching within files or transforming the text in various ways.
+
+4. **Programming Language Support:**
+
+   - These services include **compilers**, **debuggers**, and **interpreters** for programming languages like **C**, **C++**, **Java**, and **Python**. They help you write, compile, and test your programs.
+
+5. **Program Loading and Execution:**
+
+   - Once a program is written, it needs to be loaded into memory to run. These services help with **loading** the program into memory and **executing** it. They may include tools like **linkers** (for combining code) and **debugging tools**.
+
+6. **Communications:**
+
+   - These programs allow communication between users or processes. For example, **email**, **messaging**, **file transfer**, or even **remote login**.
+
+7. **Background Services (Daemons):**
+   - These are programs that run in the background to help the system function smoothly. They might **start automatically** when the system boots up and run continuously. Examples include network services or print servers.
+   - Some daemons handle scheduled tasks like starting programs at specific times.
+
+---
+
+### **How Users Interact with the System:**
+
+- Users mainly interact with the **system services** through **application programs** (like web browsers or text editors) or through **system programs** that make the OS more user-friendly.
+- The **user interface** (GUI or command-line) is how users see and interact with the operating system. Even though two operating systems (like macOS and Windows) may use the same physical hardware, the user interface and system services can be very different, giving users different experiences.
+
+---
+
+### **Summary**
+
+System services are programs that help manage and interact with the computer system, like organizing files, managing memory, running applications, and communicating with other systems. While most users don’t interact directly with the system calls, they use the system through the helpful **services** and **programs** the OS provides.
+
+---
+
+<br>
+
+## **Linkers and Loaders**
+
+click [here](./chap2/linker&loader/Readme.md) to learn about linkers and loader
+
+---
+
+<br>
+
+## **Why Applications Are Operating-System Specific**
+
+click [here](./chap2/os_specific_executables/Readme.md)
+
+---
+
+<br>
+<br>
+
+## **Operating-System Design and Implementation**
+
+click [here](./chap2/os_design&implimentation/Readme.md)

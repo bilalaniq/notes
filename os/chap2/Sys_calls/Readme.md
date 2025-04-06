@@ -444,12 +444,289 @@ File management system calls provide the necessary mechanisms for interacting wi
 > [!NOTE]
 > A file descriptor is an integer value used to represent an open file or other I/O resources (like sockets or pipes) in a program. It is used by the operating system to track and manage the state of an open file or I/O resource. When a file is opened (using the open() system call), the operating system returns a file descriptor that acts as an index for accessing and performing operations on that file.
 
+| **System Call**         | **Description**                                                            |
+| ----------------------- | -------------------------------------------------------------------------- |
+| `create()`              | Creates a new file. Requires the file name and possibly some attributes.   |
+| `delete()`              | Deletes an existing file.                                                  |
+| `open()`                | Opens an existing file for use (read, write, etc.).                        |
+| `close()`               | Closes a file once it is no longer needed.                                 |
+| `read()`                | Reads data from a file into a buffer.                                      |
+| `write()`               | Writes data from a buffer to a file.                                       |
+| `reposition()`          | Changes the current file pointer (e.g., move to beginning or end).         |
+| `get_file_attributes()` | Retrieves metadata or attributes of a file (e.g., size, permissions).      |
+| `set_file_attributes()` | Changes metadata or attributes of a file.                                  |
+| `move()`                | Moves a file from one location to another (may be done by system program). |
+| `copy()`                | Copies a file (often implemented using other file system calls).           |
+
 ---
 
 <br>
 <br>
 <br>
 
-# 2. **File Management**
+# 3. **Device Management**
 
+### **Device Management in Operating Systems**
 
+A process (like a running program) often needs **hardware resources** to complete its tasks — things like memory, disk drives, printers, and so on. These resources are often treated as **devices** by the OS.
+
+---
+
+### Types of Devices:
+
+- **Physical devices** – Like hard disks, printers, network cards.
+- **Virtual/abstract devices** – Like files, or memory-mapped I/O.
+
+---
+
+### How Device Management Works:
+
+1. **Requesting a Device:**
+
+   - A process **asks the OS** for a device using a `request()` system call.
+   - If the device is available, the OS **allocates it**.
+   - If it's busy, the process **waits**.
+
+2. **Using the Device:**
+
+   - Once granted, the process can:
+     - `read()` from the device.
+     - `write()` to it.
+     - `reposition()` (e.g., skip to another part on a disk).
+
+3. **Releasing the Device:**
+   - When done, the process uses `release()` to **give up control** of the device.
+   - This allows others to use it.
+
+---
+
+### Example:
+
+Imagine two users trying to print documents:
+
+- Each must **request** the printer.
+- One waits until the other **releases** it.
+- Then it uses the printer and finally **releases** it for others.
+
+---
+
+Here is a table of common **Device Management System Calls** used in operating systems:
+
+| **System Call** | **Description**                                                             |
+| --------------- | --------------------------------------------------------------------------- |
+| `request()`     | Requests access to a device (e.g., printer, disk) for exclusive use.        |
+| `release()`     | Releases the device after use so other processes can access it.             |
+| `read()`        | Reads data from a device (e.g., from a disk or sensor).                     |
+| `write()`       | Writes data to a device (e.g., sends data to a printer).                    |
+| `reposition()`  | Moves the read/write pointer on the device (e.g., seek to a disk position). |
+| `open()`        | Opens a connection to the device (especially in UNIX-like systems).         |
+| `close()`       | Closes the connection to the device.                                        |
+
+<br>
+<br>
+
+> [!NOTE]
+>
+> - In Unix-like systems, **devices are treated like files**, so the same system calls (like `open()`, `read()`, `write()`, `close()`) are reused.
+> - However, some devices have special file names (like `/dev/usb0`).
+> - If devices are not managed properly, it can lead to **conflicts** or **deadlocks** (e.g., two processes endlessly waiting for each other's device).
+
+---
+
+<br>
+<br>
+<br>
+
+# 4. **Information Maintenance**
+
+The **Information Maintenance** system calls are used to **retrieve or update system-related data** that is maintained by the operating system. These are not used for process control or file/device operations, but for monitoring, debugging, and querying system information.
+
+---
+
+### Purpose:
+
+These system calls enable a **user program** to interact with the OS to:
+
+- Get status/info about the system
+- Get/set information about processes
+- Help debug or trace a program
+- Profile how time is spent during execution
+
+---
+
+### Common Information Maintenance System Calls:
+
+| **System Call**            | **Description**                                                            |
+| -------------------------- | -------------------------------------------------------------------------- |
+| `time()`                   | Returns the current system time.                                           |
+| `date()`                   | Returns the current system date.                                           |
+| `get_system_info()`        | Retrieves information about the OS (e.g., version, number of users, etc.). |
+| `get_memory_status()`      | Reports available and used memory.                                         |
+| `get_disk_usage()`         | Provides info about used/free disk space.                                  |
+| `dump_memory()`            | Dumps the contents of memory (useful for debugging).                       |
+| `get_process_attributes()` | Returns details like PID, priority, state, etc. of a process.              |
+| `set_process_attributes()` | Changes process attributes like scheduling priority.                       |
+| `trace()`                  | Traces system calls made by a process (e.g., `strace` in Linux).           |
+| `profile()`                | Monitors how much time the program spends in different parts of the code.  |
+
+---
+
+### 🛠 Debugging Support
+
+- **Memory dump**: Helps developers examine what was in memory during a crash.
+- **Tracing**: Tools like `strace` show each system call being made in real time.
+- **Single Step**: Some CPUs allow stepping through instructions one at a time using a debugger.
+- **Profiling**: Useful for performance optimization by showing where most execution time is spent.
+
+---
+
+### Example Use Cases:
+
+- Displaying current system time/date in a terminal
+- Debugging a crashed program using memory dump
+- Checking free memory before starting a large computation
+- Changing process priority to improve performance
+
+---
+
+<br>
+<br>
+<br>
+
+# 5. **Communication - Interprocess Communication (IPC)**
+
+Modern operating systems allow **processes** to communicate with each other to coordinate actions and share data. This communication is essential in multi-process systems and is handled through **Interprocess Communication (IPC)** mechanisms.
+
+There are **two major models** of communication:
+
+---
+
+### 1. Message-Passing Model
+
+In this model, **processes exchange messages** with each other to communicate. The OS manages the sending and receiving of messages.
+
+#### Key Concepts:
+
+- Processes use system calls to **send and receive messages**.
+- Communication can be:
+  - **Direct** (process-to-process)
+  - **Indirect** (via a **mailbox** or **message queue**)
+
+#### Requirements:
+
+- A **connection** must be opened first (like opening a file).
+- The communicating processes must know each other’s **identifiers** (like host ID, process ID).
+
+#### Typical System Calls:
+
+| **System Call**         | **Description**                                     |
+| ----------------------- | --------------------------------------------------- |
+| `get_hostid()`          | Gets the host ID (e.g., IP address or hostname).    |
+| `get_processid()`       | Gets the process ID of the calling process.         |
+| `open_connection()`     | Opens a communication channel with another process. |
+| `accept_connection()`   | Accepts a connection request from a client process. |
+| `wait_for_connection()` | Waits for incoming communication requests.          |
+| `read_message()`        | Receives a message from another process.            |
+| `write_message()`       | Sends a message to another process.                 |
+| `close_connection()`    | Closes the communication link.                      |
+
+#### Used in:
+
+- Network services (client-server architecture)
+- Microkernel OS designs (where most services use message-passing)
+
+---
+
+### 2. Shared-Memory Model
+
+In this model, processes **share a portion of memory** and communicate by **reading/writing to that common space**.
+
+#### Key Concepts:
+
+- Faster than message passing (since it uses direct memory access).
+- The **OS must allow** the memory to be shared, but the **processes must manage** data consistency and synchronization.
+
+#### Typical System Calls:
+
+| **System Call**          | **Description**                                    |
+| ------------------------ | -------------------------------------------------- |
+| `shared_memory_create()` | Allocates a region of shared memory.               |
+| `shared_memory_attach()` | Allows a process to access a shared memory region. |
+
+#### Considerations:
+
+- **Race conditions** may occur if two processes write to the same memory at the same time.
+- Synchronization mechanisms like **semaphores** or **mutexes** are usually needed.
+
+#### Used in:
+
+- High-performance systems
+- Threads (which typically share memory by default)
+- Multiprocessing environments
+
+---
+
+### ⚖️ Message Passing vs. Shared Memory
+
+| Feature         | Message Passing                   | Shared Memory                    |
+| --------------- | --------------------------------- | -------------------------------- |
+| **Speed**       | Slower (uses kernel intervention) | Faster (direct memory access)    |
+| **Complexity**  | Easier to implement               | Requires careful synchronization |
+| **Best for**    | Inter-computer communication      | Communication on same system     |
+| **Data Volume** | Small amounts of data             | Large data transfers             |
+
+---
+
+### 🛠 Real-world Analogy:
+
+- **Message Passing**: Like sending a letter — a process packages information and sends it; the receiver unpacks it.
+- **Shared Memory**: Like writing on a whiteboard — all involved can read/write directly, but they must be careful not to overwrite each other.
+
+---
+
+<br>
+<br>
+<br>
+
+# 6. **Protection**
+
+**Protection** in an operating system is about **controlling access** to system resources (like files, memory, or devices). This ensures that only authorized users or processes can access or modify these resources. Protection is critical, especially in systems with multiple users or networked systems, to prevent unauthorized actions.
+
+---
+
+### **Key System Calls for Protection**
+
+1. **`set permission()`**:
+
+   - **Sets access rights** for resources (like files or devices). For example, it can make a file **read-only** or **writeable** for certain users.
+
+2. **`get permission()`**:
+
+   - **Retrieves** the current access rights for a resource. This helps users or programs check what permissions they or others have on a file or device.
+
+3. **`allow user()`**:
+
+   - **Grants permission** for a specific user or process to access a resource, like allowing them to read or write a file.
+
+4. **`deny user()`**:
+   - **Blocks access** for a specific user or process to a resource, stopping them from interacting with it.
+
+---
+
+### **Why Protection Matters**
+
+- **Multi-User Systems**: Protects each user’s data from being accessed or modified by others.
+- **Networked Systems**: Helps prevent unauthorized access to resources over the internet, which is important for security.
+
+---
+
+### **Summary of Protection System Calls**
+
+| System Call            | What it Does                                                           |
+| ---------------------- | ---------------------------------------------------------------------- |
+| **`set permission()`** | Sets or changes who can access a resource and how (e.g., read, write). |
+| **`get permission()`** | Checks who can access a resource and what they can do with it.         |
+| **`allow user()`**     | Gives a specific user or process permission to access a resource.      |
+| **`deny user()`**      | Blocks a specific user or process from accessing a resource.           |
+
+---
