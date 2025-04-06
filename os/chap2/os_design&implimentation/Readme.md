@@ -86,12 +86,50 @@ On the other hand, deciding **how to implement that resource allocation** — us
 
 ---
 
-### **Summary**
+<br>
+<br>
 
-- **Mechanism = how something is done.**
-- **Policy = what decision is made.**
-- Keeping them separate leads to better flexibility and maintainability.
-- Microkernels favor this separation; monolithic kernels often mix both.
-- Open-source OSes like Linux allow easier customization of policies than commercial OSes.
+# Implementation
+
+Once the **design** of an operating system (OS) is ready, the next step is to actually **build it**—this is called **implementation**.
+
+#### **Languages Used**
+
+- **In the early days**, operating systems were written completely in **assembly language**, which is low-level and specific to the hardware. It gave programmers total control over the system, but it was hard to write and maintain.
+- **Today**, most operating systems are written in **higher-level programming languages** like **C** or **C++**. These languages are easier to read, write, and debug. Only a small part—usually the very low-level code that interacts directly with hardware—is still written in **assembly language**.
+
+#### **Example: Android**
+
+- The **Android OS** is a good example:
+  - Its **kernel** (core part) is written mainly in **C** with some assembly.
+  - Its **system libraries** are in **C and C++**.
+  - Its **app development framework** is in **Java**, which is even higher-level.
+
+#### **Why Use High-Level Languages?**
+
+- **Faster Development:** Programmers can write code more quickly.
+- **Easier to Understand and Fix:** The code is easier to maintain.
+- **Smaller Code Size:** High-level languages are more concise.
+- **Easy to Port:** If the OS is written in a high-level language, it’s easier to move it to **different hardware** platforms (like from a laptop to a smartphone).
+- **Better Compiler Support:** As compilers get better, they can **automatically improve** the OS code when it's recompiled.
+
+#### **Any Downsides?**
+
+- In theory, **high-level code might be slower or use more memory** than assembly.
+- But modern compilers and CPUs are very powerful and can **optimize** the code better than most humans can. So the performance difference is usually very small.
+
+#### **Focus on Performance**
+
+- Not all OS code needs to be extremely fast.
+- The parts that matter most for performance are:
+  - **Interrupt handlers** (handle sudden hardware signals),
+  - **I/O manager** (handles devices like disk and network),
+  - **Memory manager**, and
+  - **CPU scheduler**.
+- After the OS is built and tested, developers can focus on making these specific parts faster if needed.
 
 ---
+
+### **In Short:**
+
+Modern operating systems are mostly written in C or C++, with a little assembly for hardware interaction. Using high-level languages makes development easier and more portable, and performance is still excellent thanks to modern compilers and processors. Only a small part of the code is truly performance-critical, and that can be fine-tuned later.

@@ -310,3 +310,11 @@ click [here](./chap2/os_specific_executables/Readme.md)
 ## **Operating-System Design and Implementation**
 
 click [here](./chap2/os_design&implimentation/Readme.md)
+
+---
+
+## **Operating-System Structure**
+
+click [here](./chap2/OS_Structure/Readme.md) to learn about Operating-System Structure
+
+---
