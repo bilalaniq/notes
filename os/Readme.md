@@ -318,3 +318,11 @@ click [here](./chap2/os_design&implimentation/Readme.md)
 click [here](./chap2/OS_Structure/Readme.md) to learn about Operating-System Structure
 
 ---
+
+## **Building and Booting an Operating System**
+
+click [here](./chap2/Building&Booting_os/Readme.md)
+
+---
+
+
