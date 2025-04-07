@@ -376,7 +376,7 @@ Modules are **loaded into the kernel** either:
 
 ---
 
-### 🎯 Why Use Modules?
+### Why Use Modules?
 
 Let’s say you’re developing a new file system or a new type of device driver. If the kernel was **not modular**, you would have to:
 
@@ -461,7 +461,317 @@ These blended designs are what we call **hybrid systems**. They aim to avoid the
 
 ## macOS and iOS
 
+**macOS and iOS** are two operating systems developed by Apple, designed for different device types—**macOS** for desktops and laptops, and **iOS** for smartphones and tablets. Despite their different hardware targets, they share much of their architecture, which is why they are often studied together. Their structure is **layered**, with each layer handling specific system responsibilities.
+
+### 1. **User Experience Layer**
+
+This is the topmost layer that handles the user interface:
+
+- On **macOS**, this is called **Aqua**, designed for use with a mouse or trackpad.
+- On **iOS**, the UI layer is called **Springboard**, optimized for **touch input** on mobile devices.
+
+### 2. **Application Frameworks Layer**
+
+This layer provides developers with **APIs** (Application Programming Interfaces) via frameworks like:
+
+- **Cocoa** for macOS applications.
+- **Cocoa Touch** for iOS applications.
+  Both are built to work with **Objective-C** and **Swift**, but Cocoa Touch includes special tools to support mobile-specific features like touchscreens and sensors.
+
+### 3. **Core Frameworks Layer**
+
+This includes the system-level frameworks responsible for media and graphics, such as:
+
+- **QuickTime** (for media handling),
+- **OpenGL** (for 2D/3D graphics rendering).
+
+### 4. **Kernel Environment: Darwin**
+
+At the lowest level, macOS and iOS share a **common kernel environment** called **Darwin**. Darwin itself is a **hybrid kernel** composed of:
+
+- The **Mach microkernel**, which provides low-level services like CPU scheduling, memory management, and interprocess communication (IPC),
+- The **BSD (Berkeley Software Distribution)** kernel, which brings in the **UNIX** features, including POSIX-compliant system calls, user accounts, file systems, and more.
+
+Applications on macOS and iOS may interact with the system through any layer. Some may go through all UI and framework layers (e.g., standard apps), while others (like a simple C program) may bypass them and talk directly to the Darwin kernel through **POSIX system calls**.
+
+---
+
+### Key Differences Between macOS and iOS:
+
+- **Hardware Architecture**:
+  - macOS is compiled for **Intel** (and now also Apple Silicon like M1/M2).
+  - iOS is compiled for **ARM** processors (used in mobile devices).
+- **System Customization and Access**:
+
+  - **macOS** offers developers full access to **POSIX and BSD APIs**, which means more control and flexibility.
+  - **iOS** is more **restricted**—developers have **limited access** to low-level system interfaces, focusing instead on app development through higher-level APIs.
+
+- **Power and Memory Management**:
+  - iOS has more **aggressive power and memory management** features to conserve battery and resources on mobile hardware.
+
+---
+
+### More on **Darwin** (the kernel environment):
+
+Darwin blends the microkernel and monolithic ideas. It provides **two system-call interfaces**:
+
+- **Mach traps** (microkernel system calls),
+- **BSD system calls** (POSIX interface used by C programs).
+
+Darwin handles system services using **kernel abstractions** such as:
+
+- **Tasks** (processes),
+- **Threads** (units of execution within tasks),
+- **Ports** (used for message passing),
+- **Memory objects** (for managing shared memory).
+
+For example, if a program uses the `fork()` system call to create a new process, it's implemented by the BSD side, but internally, Darwin creates a **Mach task** to represent the process.
+
+Darwin also includes:
+
+- **I/O Kit** – a framework for creating device drivers.
+- **Kernel Extensions (kexts)** – dynamically loadable modules for adding extra kernel functionality without rebooting.
+
+---
+
+### Performance Considerations
+
+While Mach is technically a **microkernel**, Darwin avoids traditional microkernel overhead by running **all key components (Mach, BSD, I/O Kit, etc.) in a single address space**. This means message passing doesn’t require costly memory copying between separate address spaces, which improves performance. So although Darwin **uses message passing**, it keeps everything in one address space—**blending microkernel structure with monolithic performance**.
+
+---
+
+### Open Source and Proprietary Aspects
+
+Apple released **Darwin** as **open source**, allowing other developers and projects to use or modify it (for example, adding support for different file systems or GUIs like X11). However, upper layers like **Cocoa**, **Aqua**, and **other proprietary frameworks** remain **closed source** and are only available for official Apple platforms.
+
+---
+
+### Summary
+
+Apple's macOS and iOS operating systems combine **modular**, **microkernel**, and **monolithic** concepts in a hybrid architecture. They share a common foundation in **Darwin**, use **layered designs**, and tailor their features to suit either desktop or mobile use. Their combination of flexibility, performance, and controlled access is what defines modern Apple system architecture.
+
+![darwin](https://o.quizlet.com/AsxXHLhESfO-qP4hQ7qZag.png)
+
 <br>
 <br>
 
 # Android
+
+**Android** is a mobile operating system developed by the **Open Handset Alliance**, primarily led by **Google**. Unlike **iOS**, which is **closed-source** and runs only on Apple hardware, Android is **open-source** and can run on a **wide variety of devices**, which is a major reason for its widespread global adoption. Android’s architecture is **layered**, with each layer providing specific services and functionalities to support application development and execution on mobile devices.
+
+---
+
+### **1. Layered Structure of Android**
+
+Like iOS, Android uses a **software stack architecture**. Here's how each layer works:
+
+#### **A. Application Layer**
+
+At the top are the **applications** that users interact with—like phone apps, web browsers, and games. These apps are developed by third-party developers using **Java** or **Kotlin**, and they run in their own **sandboxed environments** for security.
+
+#### **B. Application Framework**
+
+This layer provides high-level **framework APIs** to developers. These APIs allow access to Android system services such as:
+
+- Activity management
+- Location services
+- Notifications
+- Content providers
+- Resource management (for UI, images, etc.)
+
+Developers use these APIs to build rich and responsive mobile apps.
+
+#### **C. Android Runtime (ART)**
+
+- Apps are **written in Java** but compiled into **Dalvik Executable (.dex) files**, which are optimized for the **Android Runtime (ART)**.
+- Android doesn’t use the **standard Java Virtual Machine (JVM)** or APIs. Instead, it uses its **own Android-specific APIs** and runtime.
+- The ART performs **Ahead-Of-Time (AOT)** compilation. This means that instead of interpreting Java bytecode or using JIT compilation at runtime, it **compiles apps into native machine code during installation**.
+  - This approach improves **performance** and **power efficiency**, which is essential for mobile devices.
+- Developers can also use **JNI (Java Native Interface)** to write parts of the app in native languages like C or C++ for direct access to hardware or performance-critical tasks. However, these parts are usually **not portable** across different devices due to hardware differences.
+
+---
+
+### **2. Native Libraries**
+
+Below the runtime, Android provides a set of **native C/C++ libraries**. These offer performance-efficient functionalities, such as:
+
+- **WebKit**: Web browser engine
+- **SQLite**: Lightweight database engine
+- **SSL**: Secure sockets for encrypted communication
+- **SurfaceManager, OpenGL/ES**: Graphics libraries for rendering
+
+These native libraries can be used directly by the runtime or by native code written via JNI.
+
+---
+
+### **3. Hardware Abstraction Layer (HAL)**
+
+The **HAL** is an intermediate layer that abstracts the **underlying hardware** from higher-level software. Each piece of hardware (like GPS, Bluetooth, camera, fingerprint scanner) has a corresponding **HAL module**.
+
+- HAL provides a **consistent API** to the Android system, so developers and the system can interact with hardware **without knowing the hardware details**.
+- This is what allows Android to run on such a **diverse set of devices** made by different manufacturers.
+
+---
+
+### **4. Bionic C Library**
+
+Instead of using the typical **glibc** used in Linux systems, Android uses its own **Bionic C Library**, which is:
+
+- **Lightweight and faster**, with a **smaller memory footprint**.
+- **Optimized for mobile CPUs**, which are slower and less powerful than desktop/server CPUs.
+- **Licensed differently**, allowing Google to avoid the **GPL license restrictions** of glibc, giving it more control over Android’s licensing and distribution.
+
+---
+
+### **5. Linux Kernel**
+
+At the bottom of the Android stack lies a **customized Linux kernel**. Though Android is based on Linux, Google has made **significant modifications** to adapt it for mobile use:
+
+- **Power management improvements** to extend battery life.
+- **Enhanced memory management** for resource-constrained environments.
+- Introduction of **Binder IPC (Inter-Process Communication)**:
+  - A **new IPC mechanism** developed specifically for Android.
+  - It allows processes (like apps and system services) to **communicate efficiently and securely**.
+  - It's also more lightweight and faster than traditional UNIX IPC methods like pipes or message queues.
+
+---
+
+### **Key Differences from iOS**
+
+| Feature                | Android                 | iOS                              |
+| ---------------------- | ----------------------- | -------------------------------- |
+| **Source Code**        | Open source (AOSP)      | Closed source (except Darwin)    |
+| **Hardware**           | Runs on many devices    | Only Apple devices               |
+| **API Access**         | More open to developers | More restricted (esp. low-level) |
+| **Virtual Machine**    | Android Runtime (ART)   | None; uses compiled native code  |
+| **IPC Mechanism**      | Binder                  | Mach message passing (Darwin)    |
+| **Standard C Library** | Bionic                  | BSD lib + XNU (Darwin)           |
+
+---
+
+### **Conclusion**
+
+Android is a highly modular, flexible, and efficient operating system optimized for mobile environments. It combines a **custom Java-like environment**, a **special runtime (ART)**, and a **lightweight C library (Bionic)** on top of a **modified Linux kernel**. Its **hardware abstraction** and **open-source nature** allow it to run on a vast range of devices, from phones and tablets to smart TVs and even embedded systems.
+
+This layered and hybrid structure provides both **portability** and **performance**, making Android one of the most widely used operating systems in the world.
+
+![android](https://velog.velcdn.com/images/choihjin/post/b77c37f1-31a1-4005-8b8d-16db0d9284fe/image.png)
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# wsl (WINDOWS SUBSYSTEM FOR LINUX) 1
+
+Windows uses a **hybrid operating system architecture**, meaning it combines features of **monolithic** and **microkernel** designs. It offers **user-mode subsystems**—essentially separate environments that allow Windows to support multiple operating systems or APIs. One powerful example of this is the **Windows Subsystem for Linux (WSL)**, which was introduced in Windows 10.
+
+---
+
+### **What is WSL?**
+
+WSL allows you to **run native Linux programs** on Windows **without needing a virtual machine or dual boot**. It does this by creating a **compatibility layer** within Windows that can interpret Linux system calls and translate them to Windows equivalents.
+
+---
+
+### **How It Works (Process Flow)**
+
+1. **bash.exe**  
+   When a user launches **`bash.exe`**, they are presented with a Linux terminal shell inside Windows. This gives the appearance and functionality of using Linux, but it's happening inside Windows.
+
+2. **Linux Instance**  
+   `bash.exe` starts a **Linux instance**, which includes an **`init` process** (the first process in any Unix-like system). The init process creates the **`/bin/bash`** process, which is the actual terminal the user interacts with.
+
+3. **Pico Process**  
+   Both `init` and `bash` run inside special Windows processes called **Pico processes**. A **Pico process** is a lightweight container designed specifically to run non-Windows binaries, like **ELF binaries** (Executable and Linkable Format, the standard format for Linux executables). These processes have their **own address space** and behave similarly to native Linux processes—but inside Windows.
+
+4. **Linux System Call Translation**  
+   When the Linux application inside the Pico process makes a **system call** (a request to the OS to perform some low-level task), that call is intercepted by two special Windows services:
+   - **LXCore** (Linux Core Services)
+   - **LXSS** (Linux SubSystem Services)
+
+---
+
+### **How Translation Happens**
+
+There are a few scenarios here:
+
+- **1-to-1 Mapping**:  
+  If the Linux system call has a **direct equivalent** in Windows (e.g., reading a file), the system call is passed straight through to the Windows kernel.
+- **Similar but Not Identical**:  
+  If the Linux system call is **similar but not identical** to its Windows counterpart, **LXSS** handles part of the request using custom logic, then calls the Windows equivalent for the rest.
+
+  - **Example**: The Linux `fork()` system call, which duplicates a process, has no exact match in Windows. Instead, `CreateProcess()` is used (though it's not identical). LXSS bridges this gap by doing some of the `fork()` logic and finishing it with `CreateProcess()`.
+
+- **No Equivalent Exists**:  
+  If there is **no Windows counterpart**, LXSS has to fully emulate the behavior in software.
+
+---
+
+### Summary
+
+WSL is an ingenious system that lets Linux apps run **natively** on Windows by translating Linux system calls using **Pico processes** and services like **LXCore** and **LXSS**. While Linux and Windows differ internally, WSL bridges that gap by translating Linux behavior to the Windows kernel level. This shows the power of **hybrid architecture**—offering both compatibility and performance.
+
+![wsl1](https://velog.velcdn.com/images/hoyeon94/post/8731286e-8776-4c88-8abf-a9e419a490a9/Untitled%2012.png)
+
+---
+
+<br>
+<br>
+<br>
+
+# wsl 2
+
+**WSL 2** is the second generation of the Windows Subsystem for Linux. Unlike WSL 1, which used **system call translation**, WSL 2 runs a **real Linux kernel** in a **lightweight virtual machine (VM)**. This change gives WSL 2 much better **compatibility** with Linux applications, including full support for tools like Docker, `fork()`, and more.
+
+WSL 2 is still tightly integrated with Windows — it **boots in seconds**, supports Windows file access, and allows seamless use of Linux apps side by side with Windows apps.
+
+---
+
+### **How WSL 2 Works (Architecture Explained)**
+
+1. **Real Linux Kernel in a VM**  
+   WSL 2 uses a **real Linux kernel** (custom built by Microsoft), which runs inside a **lightweight virtual machine** managed by **Hyper-V**. This kernel is **open-source** and maintained by Microsoft.
+
+   - The use of a full kernel means **no need to translate system calls** like in WSL 1 — Linux apps run natively.
+
+2. **Init System and Processes**  
+   When you start a WSL 2 distro (e.g., Ubuntu), the Linux kernel inside the VM launches the standard **`init`** system (like in a real Linux system), which manages other Linux processes like `/bin/bash`, background services, etc.
+
+3. **File Systems**
+
+   - WSL 2 uses a **virtual disk file** (`ext4.vhdx`) for your Linux filesystem, which supports **ext4**, a standard Linux file system.
+   - You can also access the **Windows file system from Linux** via `/mnt/c/` and **Linux files from Windows** via `\\wsl$\` network paths.
+
+4. **Networking**  
+   WSL 2 runs in its own **virtualized network environment**. That means it has its **own IP address**, like any VM, but port forwarding is handled automatically.
+
+5. **Startup & Memory Efficiency**  
+   Even though WSL 2 uses virtualization, it **does not behave like a heavy traditional VM**.
+
+   - It's **optimized for speed**, starts almost instantly, and **only uses as much RAM as needed**.
+   - It can also **shrink memory usage dynamically**, which is useful on laptops or limited-resources systems.
+
+6. **System Call Support**  
+   Since WSL 2 uses a **real kernel**, it supports **100% of Linux system calls** (e.g., `fork()`, `ioctl()`, `mount()`, etc.).  
+   This is **crucial** for apps like:
+   - Docker
+   - compilers
+   - package managers (e.g., `apt`)
+   - system-level debugging tools (`strace`, `lsof`, etc.)
+
+---
+
+### **Docker and WSL 2**
+
+One of the biggest advantages of WSL 2 is **full Docker support**. Because the Linux kernel supports **cgroups**, **namespaces**, and other container features, you can run Docker containers **natively** inside WSL 2 without needing Docker Desktop (after initial setup). This was **not possible** in WSL 1.
+
+---
+
+### Summary
+
+WSL 2 completely changes the game from WSL 1. It replaces the syscall translation layer with a **real Linux kernel** running in a **lightweight virtual machine**. This gives full compatibility, better performance for many workloads, and support for advanced Linux features like Docker and containerization. At the same time, WSL 2 remains tightly integrated with Windows, so it feels fast and native to use.
+
+---
