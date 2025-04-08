@@ -325,4 +325,8 @@ click [here](./chap2/Building&Booting_os/Readme.md)
 
 ---
 
+## **Operating-System Debugging**
 
+click [here](./chap2/os_Debugging/Readme.md)
+
+---
