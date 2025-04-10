@@ -332,3 +332,9 @@ click [here](./chap2/Building&Booting_os/Readme.md)
 click [here](./chap2/os_Debugging/Readme.md)
 
 ---
+
+## Chapter #2 Exercise
+
+click [here](./chap2/Exercise/Readme.md)
+
+---
