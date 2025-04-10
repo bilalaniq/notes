@@ -97,6 +97,8 @@ if you want to learn about Interrupts click [here](./chap1/interrupts/Interrupts
 
 if you want to learn about Storage Structure click [here](./chap1/Storage_Structure/Readme.md)
 
+also click [here](./chap1/Input_output/Readme.md) to learn about Input/output structure
+
 ---
 
 ## Computer-System Architecture
