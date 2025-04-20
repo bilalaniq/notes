@@ -33,3 +33,96 @@ In summary:
 - **Failure Analysis** helps find and fix problems when programs or the operating system fail.
 - **Core dumps** and **crash dumps** are snapshots of memory that help analyze what went wrong.
 - Debugging the kernel is harder than debugging regular programs, so special techniques are used to save important memory data safely during a crash.
+
+---
+
+<br>
+<br>
+
+## Performance Monitoring and Tuning
+
+### **Why Performance Monitoring is Important**
+
+When an operating system is **running slow**, it might be because of a **bottleneck** — something that is slowing everything else down (like a traffic jam on one part of the highway).
+
+To **fix performance issues**, we first need to **measure what's happening inside the system** — kind of like using a speedometer or fuel gauge in a car.
+
+This is where **performance monitoring tools** come in.
+
+---
+
+### Two Types of Performance Monitoring Tools
+
+1. **Per-Process Tools** – Show info about individual processes (programs).
+2. **System-Wide Tools** – Show info about the entire system (CPU, memory, disk, etc.).
+
+---
+
+### 1. **Counters** (Checking Stats)
+
+Counters are **numbers** kept by the OS about how often certain things happen.
+
+#### Examples of Counter Tools in Linux:
+
+- **Per-Process Tools:**
+
+  - `ps`: Shows details about a specific process.
+  - `top`: Shows live stats of processes like CPU and memory usage.
+
+- **System-Wide Tools:**
+  - `vmstat`: Shows memory usage.
+  - `netstat`: Shows network activity.
+  - `iostat`: Shows disk usage.
+
+---
+
+### 📂 `/proc` File System in Linux
+
+Linux has a special folder called **`/proc`** that acts like a window into the kernel's brain.
+
+- It doesn't store files on disk — it's in **RAM only**.
+- It has folders like `/proc/1234`, where **1234** is a process ID.
+- Inside, you can find info about what that process is doing.
+- It also has files with system-wide stats.
+
+So `/proc` is a **treasure chest of real-time system info**.
+
+---
+
+### 2. **Tracing** (Following Events Step by Step)
+
+While counters show **"how many times"** something happened, tracing tools show **"exactly what happened and when"**.
+
+These tools **trace the steps** a program takes — like watching a detective following a suspect.
+
+#### Examples of Tracing Tools:
+
+- **Per-Process:**
+
+  - `strace`: Shows system calls a process makes (like opening a file).
+  - `gdb`: A debugger to watch what your code is doing line by line.
+
+- **System-Wide:**
+  - `perf`: A powerful set of tools to measure system performance.
+  - `tcpdump`: Captures and shows network packets.
+
+---
+
+### Summary
+
+| Feature      | Description                                          | Examples                                   |
+| ------------ | ---------------------------------------------------- | ------------------------------------------ |
+| **Counters** | Count how often something happens                    | `ps`, `top`, `vmstat`, `iostat`, `netstat` |
+| **Tracing**  | Follow events in detail as they happen               | `strace`, `gdb`, `perf`, `tcpdump`         |
+| **/proc**    | Special folder to get real-time info from the kernel | `/proc/[PID]`, `/proc/cpuinfo`, etc.       |
+
+---
+
+<br>
+
+to learn how to use the debuging tools click [here](./debuging_tools.md)
+
+<br>
+<br>
+
+click [here](./BCC.md) to learn about BCC
