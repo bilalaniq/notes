@@ -216,7 +216,11 @@
 
   To obtain a statistical profile of how much time a program spends in different code sections, you can use **profilers** or **manual timing**. Profilers like `gprof` (C/C++), `perf` (Linux), or `cProfile` (Python) automatically collect timing data. Manual instrumentation involves placing timing functions (like `time.perf_counter()` in Python) before and after code blocks. These methods help identify performance bottlenecks. Profiling shows which functions or sections consume the most CPU time. This is important for optimizing performance-critical code. It helps in reducing execution time and improving resource usage. Profiling is also valuable for debugging slowdowns. It supports better design decisions during development. Overall, profiling is a key part of performance tuning.
 
+  if you want to do benchmarking of cpp code [heres](https://github.com/bilalaniq/visual-benchmarking.git) my git repo to do this
+
 ---
 
 <br>
 <br>
+
+- ## 
