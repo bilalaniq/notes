@@ -109,6 +109,34 @@ A **calling convention** defines how functions in C (or any other language) pass
 ---
 
 <br>
+
+### 📊 C Calling Conventions Comparison (Windows vs. Linux)
+
+| Feature / Platform         | **Windows x86 (32-bit)**                      | **Linux x86 (32-bit)** | **Windows x64 (64-bit)**                              | **Linux x64 (64-bit)**                                              |
+| -------------------------- | --------------------------------------------- | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------------------- |
+| **Calling Convention**     | `stdcall` / `cdecl` / `fastcall` / `thiscall` | `cdecl`                | **Microsoft x64** calling convention                  | **System V AMD64 ABI**                                              |
+| **Argument Passing Order** | Right to left                                 | Right to left          | Left to right (logical), in registers                 | Left to right (logical), in registers                               |
+| **Registers for Args**     | Stack (few via regs in `fastcall`)            | Stack only             | `RCX`, `RDX`, `R8`, `R9` (ints); `XMM0–XMM3` (floats) | `RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9` (ints); `XMM0–XMM7` (floats) |
+| **Remaining Args**         | Stack                                         | Stack                  | Stack                                                 | Stack                                                               |
+| **Return Value Register**  | `EAX`                                         | `EAX`                  | `RAX` (ints), `XMM0` (floats)                         | `RAX` (ints), `XMM0` (floats)                                       |
+| **Stack Cleanup**          | Callee (`stdcall`), Caller (`cdecl`)          | Caller                 | Caller                                                | Caller                                                              |
+| **Caller-Saved Registers** | `EAX`, `ECX`, `EDX`                           | Same                   | `RAX`, `RCX`, `RDX`, `R8–R11`                         | Same                                                                |
+| **Callee-Saved Registers** | `EBX`, `ESI`, `EDI`, `EBP`                    | Same                   | `RBX`, `RBP`, `R12–R15`                               | Same                                                                |
+| **Stack Alignment**        | 4 bytes                                       | 4 bytes                | 16 bytes                                              | 16 bytes                                                            |
+
+---
+
+### 📝 Notes:
+
+- **Windows x86** has multiple conventions (`cdecl`, `stdcall`, `fastcall`), with `stdcall` being common for Windows APIs.
+- **Linux x86** sticks with `cdecl` by default (GCC and Clang).
+- **Windows x64** mandates the Microsoft x64 convention, regardless of compiler.
+- **Linux x64** uses the System V AMD64 ABI, which differs in register usage and alignment rules.
+
+
+click here to learn more about the difference between Ccalling convention in linux & windows (x86_x64)
+
+<br>
 <br>
 <br>
 
@@ -123,7 +151,7 @@ int add(int num1,int num2){
     return a;
 }
 
-main()
+int main()
 {
     return add(3,7);
 }

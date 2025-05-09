@@ -184,7 +184,7 @@ we store -1 with a sign bit and then the value we would get
 -1 =   1000 0001
  1 =   0000 0001
 ---------------
--1+1 = 1000 0002
+-1+1 = 1000 0010
 ```
 
 Oops! We end up with -2 rather than 0.
@@ -199,7 +199,7 @@ the absolute value part of the number:
 -1+1 = 1111 1111
 ```
 
-Now this is interesting: the result is actually -0, rather than 0. This
+Now this is interesting: the result is actually -0 (in 1st compliment), rather than 0. This
 sounds somewhat hopeful. Let's try a different pair of numbers:
 
 Too bad! It was close. What we need it to add one to the complemented
