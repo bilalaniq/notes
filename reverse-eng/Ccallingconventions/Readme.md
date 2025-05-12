@@ -133,8 +133,7 @@ A **calling convention** defines how functions in C (or any other language) pass
 - **Windows x64** mandates the Microsoft x64 convention, regardless of compiler.
 - **Linux x64** uses the System V AMD64 ABI, which differs in register usage and alignment rules.
 
-
-click here to learn more about the difference between Ccalling convention in linux & windows (x86_x64)
+click [here](./linux_vs_win.md) to learn more about the difference between Ccalling convention in linux & windows (x86_x64)
 
 <br>
 <br>
