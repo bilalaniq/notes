@@ -221,7 +221,7 @@ struct LargeStruct {
 
 LargeStruct fun(const LargeStruct& x)
 {
-    return x;   //returning by value so a copy is made
+    return x;
 }
 
 int main()
@@ -495,7 +495,269 @@ this is how the stack will look like
 
 ---
 
+you may be asking why use this when we are passing the first 4 parameters using register so why we have reserved this place (shadow space) for saving the registers the reason is that the callee spill RCX, RDX, R8, and R9 safely
 
-now lets take a look at the function prolog
+spilling means saving register values to memory (usually the stack) because there are not enough registers to hold everything, or because a function needs to preserve them.
+
+If the callee doesn't spill and then calls another function, that other function might overwrite RCX, RDX, etc., and the original argument values would be lost.
+
+It helps preserve important values, especially function arguments.
+
+you will understand it more inn detail when the function is called
+
+heres the dissassemblly of the function
+
+```bash
+int fun(int a, int b, int c, int d, int e, int f)
+{
+00007FF69FCC1DB0 44 89 4C 24 20       mov         dword ptr [rsp+20h],r9d
+00007FF69FCC1DB5 44 89 44 24 18       mov         dword ptr [rsp+18h],r8d
+00007FF69FCC1DBA 89 54 24 10          mov         dword ptr [rsp+10h],edx
+00007FF69FCC1DBE 89 4C 24 08          mov         dword ptr [rsp+8],ecx
+00007FF69FCC1DC2 55                   push        rbp
+00007FF69FCC1DC3 57                   push        rdi
+00007FF69FCC1DC4 48 81 EC E8 00 00 00 sub         rsp,0E8h
+00007FF69FCC1DCB 48 8D 6C 24 20       lea         rbp,[rsp+20h]
+00007FF69FCC1DD0 48 8D 0D 91 12 01 00 lea         rcx,[__2398A6F0_FileName@cpp (07FF69FCD3068h)]
+00007FF69FCC1DD7 E8 25 F6 FF FF       call        __CheckForDebuggerJustMyCode (07FF69FCC1401h)
+00007FF69FCC1DDC 90                   nop
+    return (a + b + c + d + e + f);
+00007FF69FCC1DDD 8B 85 E8 00 00 00    mov         eax,dword ptr [b]
+00007FF69FCC1DE3 8B 8D E0 00 00 00    mov         ecx,dword ptr [a]
+00007FF69FCC1DE9 03 C8                add         ecx,eax
+00007FF69FCC1DEB 8B C1                mov         eax,ecx
+00007FF69FCC1DED 03 85 F0 00 00 00    add         eax,dword ptr [c]
+00007FF69FCC1DF3 03 85 F8 00 00 00    add         eax,dword ptr [d]
+00007FF69FCC1DF9 03 85 00 01 00 00    add         eax,dword ptr [e]
+00007FF69FCC1DFF 03 85 08 01 00 00    add         eax,dword ptr [f]
+}
+00007FF69FCC1E05 48 8D A5 C8 00 00 00 lea         rsp,[rbp+0C8h]
+00007FF69FCC1E0C 5F                   pop         rdi
+00007FF69FCC1E0D 5D                   pop         rbp
+00007FF69FCC1E0E C3                   ret
+```
+
+now we are filling the shadow space which was reserved for the four register
+
+```bash
+00007FF69FCC1DB0 44 89 4C 24 20       mov         dword ptr [rsp+20h],r9d
+00007FF69FCC1DB5 44 89 44 24 18       mov         dword ptr [rsp+18h],r8d
+00007FF69FCC1DBA 89 54 24 10          mov         dword ptr [rsp+10h],edx
+00007FF69FCC1DBE 89 4C 24 08          mov         dword ptr [rsp+8],ecx
+```
+
+This is shadow space (32 bytes: rsp+08 to rsp+28), pre-allocated by the caller before calling fun.
+
+These moves spill the arguments from registers to the stack, making them accessible as locals (like &a or reusing values).
+
+Save rbp and rdi on stack.
+
+Subtract 0xE8 = 232 bytes → allocate space for local variables, alignment, and temporary use.
+
+Sets rbp = rsp + 0x20 → allows structured access to locals.
+
+The +0x20 skips over shadow space.
+
+It reads each variable (a through f) from their stack offsets relative to rbp, and sums them up into eax (return value).
+
+Epilogue (cleanup) : Clean up the stack frame and return.
+
+```bash
+00007FF69FCC1E05 lea rsp,[rbp+0C8h]   ; restore original rsp (undo sub rsp, 0E8)
+00007FF69FCC1E0C pop rdi
+00007FF69FCC1E0D pop rbp
+00007FF69FCC1E0E ret
+```
+
+1. The function reserves 232 bytes on the stack with `sub rsp, 0E8h`.
+2. It sets `rbp` 32 bytes above `rsp` using `lea rbp, [rsp + 20h]`.
+3. In the epilogue, `lea rsp, [rbp + 0C8h]` restores the full 232 bytes by adding back both 32 and 200.
+
+on the caller side we can access the return value by the eax
+
+now by looking at the assemblly you may be asking where is the stack clean up the caller is risponsible for cleaning up the stack but There is no explicit cleanup instruction like add rsp, 10h — and that’s fine, because…
+
+The cleanup happens implicitly later when restoring the rsp via:
+
+```bash
+lea rsp,[rbp+188h]  ; <-- this resets the stack
+```
+
+This line restores rsp to its original value before the sub rsp,1B8h, effectively deallocating:
+
+- Local variables
+- Shadow space
+- Any extra space used for e and f
+
+so the caller is risponible for cleaning up the stack
+
+---
+
+<br>
+<br>
+
+now lets see another example where we have an large data type which is returned by the function
+
+```cpp
+#include <iostream>
+
+struct LargeStruct {
+    int data[100];
+};
+
+LargeStruct fun(const LargeStruct& x)
+{
+    return x;
+}
+
+int main()
+{
+    LargeStruct x;
+
+    for (int i = 0; i < 100; ++i)
+        x.data[i] = i;
+
+    LargeStruct y = fun(x);
+
+    std::cout << "y.data[0] = " << y.data[1] << std::endl;
+
+    return 0;
+}
+```
+
+now lets see the dissassemblly
+
+```bash
+    LargeStruct y = fun(x);
+00007FF6FD312295 48 8D 55 10          lea         rdx,[x]
+00007FF6FD312299 48 8D 8D 38 08 00 00 lea         rcx,[rbp+838h]
+00007FF6FD3122A0 E8 01 F2 FF FF       call        fun (07FF6FD3114A6h)
+00007FF6FD3122A5 48 8D 8D 90 06 00 00 lea         rcx,[rbp+690h]
+00007FF6FD3122AC 48 8B F9             mov         rdi,rcx
+00007FF6FD3122AF 48 8B F0             mov         rsi,rax
+00007FF6FD3122B2 B9 90 01 00 00       mov         ecx,190h
+00007FF6FD3122B7 F3 A4                rep movs    byte ptr [rdi],byte ptr [rsi]
+00007FF6FD3122B9 48 8D 85 E0 01 00 00 lea         rax,[y]
+00007FF6FD3122C0 48 8D 8D 90 06 00 00 lea         rcx,[rbp+690h]
+00007FF6FD3122C7 48 8B F8             mov         rdi,rax
+00007FF6FD3122CA 48 8B F1             mov         rsi,rcx
+00007FF6FD3122CD B9 90 01 00 00       mov         ecx,190h
+00007FF6FD3122D2 F3 A4                rep movs    byte ptr [rdi],byte ptr [rsi]
+```
+
+first we move the x in the rdx register then we also push the temporary plac where the oject is stored in the rcx register. then we call the functtion
+
+now lets look into fun()
+
+```bash
+LargeStruct fun(const LargeStruct& x)
+{
+00007FF6FD312190 48 89 54 24 10       mov         qword ptr [rsp+10h],rdx
+00007FF6FD312195 48 89 4C 24 08       mov         qword ptr [rsp+8],rcx
+00007FF6FD31219A 55                   push        rbp
+00007FF6FD31219B 56                   push        rsi
+00007FF6FD31219C 57                   push        rdi
+00007FF6FD31219D 48 81 EC E0 00 00 00 sub         rsp,0E0h
+00007FF6FD3121A4 48 8D 6C 24 20       lea         rbp,[rsp+20h]
+00007FF6FD3121A9 48 8D 0D B8 0E 01 00 lea         rcx,[__2398A6F0_FileName@cpp (07FF6FD323068h)]
+00007FF6FD3121B0 E8 4C F2 FF FF       call        __CheckForDebuggerJustMyCode (07FF6FD311401h)
+00007FF6FD3121B5 90                   nop
+    return x;
+00007FF6FD3121B6 48 8B BD E0 00 00 00 mov         rdi,qword ptr [rbp+0E0h]
+00007FF6FD3121BD 48 8B B5 E8 00 00 00 mov         rsi,qword ptr [x]
+00007FF6FD3121C4 B9 90 01 00 00       mov         ecx,190h
+00007FF6FD3121C9 F3 A4                rep movs    byte ptr [rdi],byte ptr [rsi]
+00007FF6FD3121CB 48 8B 85 E0 00 00 00 mov         rax,qword ptr [rbp+0E0h]
+}
+00007FF6FD3121D2 48 8D A5 C0 00 00 00 lea         rsp,[rbp+0C0h]
+00007FF6FD3121D9 5F                   pop         rdi
+00007FF6FD3121DA 5E                   pop         rsi
+00007FF6FD3121DB 5D                   pop         rbp
+00007FF6FD3121DC C3                   ret
+```
+
+mov qword ptr [rsp+10h], rdx and mov qword ptr [rsp+8], rcx: These instructions save the registers rdx and rcx to the stack. rdx typically holds the second argument (const LargeStruct& x), and rcx holds the first argument (which is typically a pointer to the return value, but this is not being used directly in this context).
+
+Push registers: The push instructions save the values of rbp, rsi, and rdi to the stack. This is the standard function prologue to preserve register values that will be used in the function.
+
+sub rsp, 0E0h: This instruction allocates space on the stack by adjusting the stack pointer (rsp).
+
+lea rbp, [rsp+20h]: This loads the address of the local variables into the rbp register.
+
+mov rdi, qword ptr [rbp+0E0h]: This loads the address where the return value will be stored (likely the temporary buffer or the return address).
+
+mov rsi, qword ptr [x]: This loads the address of the input x into the rsi register.
+
+mov ecx, 190h: The value 190h (400 in decimal) is placed into ecx. This is the size of the LargeStruct in bytes (since it has 100 integers, each 4 bytes, for a total of 400 bytes).
+
+rep movs byte ptr [rdi], byte ptr [rsi]: This copies 400 bytes (the size of LargeStruct) from x (which is in rsi) to the return address (stored in rdi). The rep movs instruction is a string operation that copies memory efficiently, byte by byte.
+
+mov rax, qword ptr [rbp+0E0h]: This moves the address of the return value (the temporary object containing x) into rax, which is used to return the value to the caller.
+
+lea rsp, [rbp+0C0h]: This restores the stack pointer (rsp) to its original position before the function call.
+
+pop instructions: These restore the rdi, rsi, and rbp registers that were saved at the beginning of the function.
+
+ret: This returns control to the caller, with the result (the copy of x) in rax
+
+---
+
+now lets take at look at the caller
+
+in the caller side the temporary object is just copied in the y
+
+In both 32-bit and 64-bit systems, when a function returns an object (in this case, a LargeStruct), it needs to know where to place the returned object in memory. Instead of creating a new object on the stack or directly returning the object by value (which would involve copying), the function uses a return buffer that contains the returned object
+
+- First rep movs:
+
+MSVC first copies the object into a temporary buffer in memory. This temporary space holds the returned object for the duration of the return process.
+
+This is done to preserve the prvalue-then-copy semantics. So when the temporary object is returned to the caller, it is initially placed in a temporary space, but it's not yet directly written to y.
+
+- Second rep movs:
+
+After the object has been copied to the temporary buffer, MSVC uses a second rep movs to copy the object from that temporary buffer into the variable y. This is necessary because MSVC's ABI insists on using a temporary buffer to hold the returned value before copying it to the final destination.
+
+The reason for doing this in two steps (temporary copy + final copy) is that prvalue semantics dictate that the returned object should be treated as an rvalue initially, so a temporary is created. Only after that can the actual copy/move into y happen.
+
+Why Does This Differ from 32-bit?
+In 32-bit MSVC, the return buffer pointer (sret) is passed, but since 32-bit systems typically have less memory and more direct handling of data, the compiler chooses to write directly into y. So, when fun returns, it can just write directly into y (since y is already allocated). Thus, only one rep movs is needed.
+
+In 64-bit systems, however, the larger memory address space and slightly more complex calling convention make it easier (and perhaps more reliable) to first copy the object into a temporary before finally copying it into the actual destination. This allows the compiler to handle the return process in two steps.
+
+Why Does MSVC Choose to Do This?
+C++ Prvalue Semantics: C++ requires that when returning an object (especially large ones), the return should be treated as a prvalue first, which allows for optimizations like copy elision or move semantics. The temporary buffer helps ensure that this semantic rule is followed strictly by the compiler.
+
+Performance Considerations: While this two-step process (temporary buffer then final copy) might seem inefficient, MSVC likely implements it in a way that balances correctness and performance, considering factors like alignment, memory access patterns, and how the compiler optimizes data handling.
+
+Key Takeaways:
+First rep movs copies the data into a temporary buffer, honoring the C++ prvalue semantics and ensuring that the object is returned as a temporary before any copy/move operations are done.
+
+Second rep movs moves the data from the temporary buffer into the actual return variable (y).
+
+In 32-bit MSVC, this is optimized differently, with the compiler writing directly into y without needing a temporary, because of a simpler ABI and fewer constraints.
+
+This two-step process with a temporary buffer and subsequent copy is a direct consequence of how 64-bit MSVC ABI and C++ prvalue semantics work together to ensure safe and efficient handling of returned objects, even though it might look like redundant copying at first glance.
+
+### Why Does This Differ from 32-bit?
+
+In 32-bit MSVC, the return buffer pointer (sret) is passed, but since 32-bit systems typically have less memory and more direct handling of data, the compiler chooses to write directly into y. So, when fun returns, it can just write directly into y (since y is already allocated). Thus, only one rep movs is needed.
+
+In 64-bit systems, however, the larger memory address space and slightly more complex calling convention make it easier (and perhaps more reliable) to first copy the object into a temporary before finally copying it into the actual destination. This allows the compiler to handle the return process in two steps.
+
+### Why Does MSVC Choose to Do This?
+
+C++ Prvalue Semantics: C++ requires that when returning an object (especially large ones), the return should be treated as a prvalue first, which allows for optimizations like copy elision or move semantics. The temporary buffer helps ensure that this semantic rule is followed strictly by the compiler.
+
+Performance Considerations: While this two-step process (temporary buffer then final copy) might seem inefficient, MSVC likely implements it in a way that balances correctness and performance, considering factors like alignment, memory access patterns, and how the compiler optimizes data handling.
+
+so that is why we see two rep movs
+
+---
+
+<br>
+<br>
+<br>
+<br>
 
 
